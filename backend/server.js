@@ -128,3 +128,9 @@ app.delete('/tasks/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+//Start Server
+app.listen(port, () => {
+  console.log(`SERVER Started on http://localhost:${port}`);
+});
