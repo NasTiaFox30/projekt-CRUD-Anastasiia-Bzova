@@ -26,7 +26,7 @@ const pool = new Pool({
 
 
 // Routes
-// GET /tasks 
+// GET /tasks     (get all tasks)
 app.get('/tasks', async (req, res) => {
   try {
     console.log("> GET all Tasks");
@@ -38,7 +38,7 @@ app.get('/tasks', async (req, res) => {
   }
 });
 
-// GET /tasks/:id 
+// GET /tasks/:id       (get task by ID)
 app.get('/tasks/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -57,4 +57,4 @@ app.get('/tasks/:id', async (req, res) => {
 });
 
 
-//POST /tasks
+//POST /tasks     (add new tas)
