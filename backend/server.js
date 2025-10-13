@@ -113,7 +113,16 @@ app.put('/tasks/:id', async (req, res) => {
 //DELETE /tasks/:id     (delete task)
 app.delete('/tasks/:id', async (req, res) => {
   try {
+    const { id } = req.params;
+    console.log(`> DELETE Task by ID - ${id}`);
+    const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 RETURNING *', [id]);
     
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    
+    console.log('Success!');
+    res.status(204).send();
   } catch (error) {
     console.error('Error fetch data', error);
     res.status(500).json({ error: 'Internal server error' });
