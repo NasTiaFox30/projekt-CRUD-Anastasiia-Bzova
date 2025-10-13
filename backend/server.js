@@ -58,3 +58,11 @@ app.get('/tasks/:id', async (req, res) => {
 
 
 //POST /tasks     (add new tas)
+app.post('/tasks', async (req, res) => {
+  try {
+   
+  } catch (error) {
+    console.error('Error fetch data', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
