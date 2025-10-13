@@ -108,3 +108,14 @@ app.put('/tasks/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+//DELETE /tasks/:id     (delete task)
+app.delete('/tasks/:id', async (req, res) => {
+  try {
+    
+  } catch (error) {
+    console.error('Error fetch data', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
