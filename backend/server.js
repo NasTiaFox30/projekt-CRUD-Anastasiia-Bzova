@@ -12,3 +12,5 @@ const port = process.env.PORT;
 
 // Middleware (working Frontend with Backend)
 app.use(cors());
+//parsing
+app.use(express.json());
