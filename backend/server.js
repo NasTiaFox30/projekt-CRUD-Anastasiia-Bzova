@@ -60,7 +60,20 @@ app.get('/tasks/:id', async (req, res) => {
 //POST /tasks     (add new task)
 app.post('/tasks', async (req, res) => {
   try {
-   
+    const { title_name, description, deadline_date, priority, status } = req.body;
+    console.log('> Creat new Task - ', title_name);
+    
+    if (!title_name || title_name.trim() === '') {
+      return res.status(400).json({ error: 'Title of Task - required!' });
+    }
+    
+    const result = await pool.query(
+      'INSERT INTO tasks (title_name, description, deadline_date, priority, status) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [title_name.trim(), description?.trim(), deadline_date, priority, status]
+    );
+    
+    console.log('Success!');
+    res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error fetch data', error);
     res.status(500).json({ error: 'Internal server error' });
