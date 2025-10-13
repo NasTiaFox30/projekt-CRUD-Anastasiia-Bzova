@@ -7,6 +7,7 @@ CREATE TABLE Tasks (
     title_name VARCHAR(150) NOT NULL,
     description TEXT,
     deadline_date DATE,
+    status VARCHAR(50) CHECK (status IN('pending', 'in-progress', 'completed')),
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
