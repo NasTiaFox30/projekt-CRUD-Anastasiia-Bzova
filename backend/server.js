@@ -8,3 +8,4 @@ dotenv.config();
 //initialization of App:
 const { Pool } = pkg;
 const app = express();
+const port = process.env.PORT;
