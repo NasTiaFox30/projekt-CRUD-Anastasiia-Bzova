@@ -30,7 +30,7 @@ const pool = new Pool({
 app.get('/tasks', async (req, res) => {
   try {
     console.log("> GET all Tasks");
-    const result = await pool.query('SELECT * FROM Tasks ORDER BY created_at DESC');
+    const result = await pool.query('SELECT * FROM Tasks ORDER BY created_date DESC');
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetch data', error);
@@ -43,7 +43,7 @@ app.get('/tasks/:id', async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`> GET task by ID: ${id}`);
-    const result = await pool.query('SELECT * FROM Tasks WHERE id = $1', [id]);
+    const result = await pool.query('SELECT * FROM Tasks WHERE ID = $1', [id]);
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found!' });
