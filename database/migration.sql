@@ -14,6 +14,6 @@ CREATE TABLE Tasks (
 );
 
 --Test Data:
-INSERT INTO tasks (title_name, description, deadline_date,) VALUES
-('Learn React', 'Complete React tutorial', '2025-10-20'),
-('Prepare presentation', 'Slides for team meeting', '2025-10-16');
+INSERT INTO tasks (title_name, description, deadline_date, priority, status) VALUES
+('Learn React', 'Complete React tutorial', '2025-10-20', 'high', 'in-progress'),
+('Prepare presentation', 'Slides for team meeting', '2025-10-16', 'medium', 'pending');
