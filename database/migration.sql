@@ -5,5 +5,6 @@ CREATE DATABASE crud_app_1_db;
 CREATE TABLE Tasks (
     ID SERIAL PRIMARY KEY,
     title_name VARCHAR(150) NOT NULL,
-    
+    description TEXT,
+     
 );
