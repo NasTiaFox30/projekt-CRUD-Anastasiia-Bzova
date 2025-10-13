@@ -79,3 +79,32 @@ app.post('/tasks', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+//PUT /tasks/:id      (update task)
+app.put('/tasks/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title_name, description, deadline_date, priority, status } = req.body;
+    console.log(`> UPDATE Task - ${id}`);
+    
+    if (!title_name || title_name.trim() === '') {
+      return res.status(400).json({ error: 'Title of Task - required!' });
+    }
+    
+    const result = await pool.query(
+      'UPDATE Tasks SET title_name = $1, description = $2, deadline_date = $3, priority = $4, status = $5, updated_date = CURRENT_TIMESTAMP WHERE ID = $6 RETURNING *',
+      [title_name.trim(), description?.trim(), deadline_date, priority, status, id]
+    );
+    
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Task not found' });
+    }
+    
+    console.log('Success!');
+    res.status(200).json(result.rows[0]);
+  } catch (error) {
+    console.error('Error fetch data', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
