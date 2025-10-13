@@ -57,7 +57,7 @@ app.get('/tasks/:id', async (req, res) => {
 });
 
 
-//POST /tasks     (add new tas)
+//POST /tasks     (add new task)
 app.post('/tasks', async (req, res) => {
   try {
    
