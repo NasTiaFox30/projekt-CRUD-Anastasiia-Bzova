@@ -9,3 +9,6 @@ dotenv.config();
 const { Pool } = pkg;
 const app = express();
 const port = process.env.PORT;
+
+// Middleware (working Frontend with Backend)
+app.use(cors());
