@@ -10,3 +10,8 @@ CREATE TABLE Tasks (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+--Test Data:
+INSERT INTO tasks (title_name, description, deadline_date,) VALUES
+('Learn React', 'Complete React tutorial', '2025-10-20'),
+('Prepare presentation', 'Slides for team meeting', '2025-10-16');
