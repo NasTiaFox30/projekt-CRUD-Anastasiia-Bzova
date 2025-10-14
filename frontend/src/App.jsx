@@ -33,6 +33,18 @@ export default function App() {
     <div className="app">
       <h1>Mój menedżer zadań 📃</h1>
       
+      {error && <div className="error-message">{error}</div>}
+
+      {/* Task List */}
+      <div className="tasks-list">
+        <h2>Lista zadań ({tasks.length})</h2>
+        
+        {loading && <div className="loading">Ładowanie...</div>}
+        
+        {!loading && tasks.length === 0 && (
+          <div className="no-tasks">Niema zadań. Stwórz nowe!</div>
+        )}
+      </div>
     </div>
   );
 }
