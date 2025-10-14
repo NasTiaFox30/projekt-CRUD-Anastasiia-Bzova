@@ -56,6 +56,29 @@ npm start
 npm run dev
 ```
 
+## API Endpoints
+- GET /tasks - otrzymanie wszystkish zadań
+- GET /tasks/:id - otrzymanie zadania po ID
+- DELETE /tasks/:id - usuń zadanie
+  
+- POST /task
+```
+{
+  "title_name": "New Task",
+  "description": "Description",
+  "deadline_date": "2025-00-00",
+  "priority": "medium",
+  "status": "pending"
+}
+```
+- PUT /tasks/:id - aktualizacja zadania
+```
+{
+  "title_name": "Update name",
+  "status": "completed"
+}
+```
+
 ## Access in browser:
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:3001
