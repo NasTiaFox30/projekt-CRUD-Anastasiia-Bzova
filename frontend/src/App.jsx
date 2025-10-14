@@ -106,7 +106,7 @@ export default function App() {
             type="text"
             placeholder="Wprowadź nazwę"
             value={currentTask.title_name}
-            onChange={(e) => setCurrentTask({...currentTask, title: e.target.value})}
+            onChange={(e) => setCurrentTask({...currentTask, title_name: e.target.value})}
             required
           />
         </div>
