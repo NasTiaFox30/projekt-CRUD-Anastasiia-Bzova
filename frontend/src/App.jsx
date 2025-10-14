@@ -44,6 +44,14 @@ export default function App() {
         {!loading && tasks.length === 0 && (
           <div className="no-tasks">Niema zadań. Stwórz nowe!</div>
         )}
+
+        <div className="tasks-grid">
+        {tasks.map(task => (
+          <div key={task.id} className="task-card">
+            
+          </div>
+        ))}
+        </div>
       </div>
     </div>
   );
