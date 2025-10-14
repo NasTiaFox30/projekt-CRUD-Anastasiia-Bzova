@@ -96,6 +96,16 @@ export default function App() {
           />
         </div>
         
+        <div className="form-block">
+          <label>Opis: </label>
+          <textarea
+            placeholder="Opisz zadanie.."
+            value={currentTask.description}
+            onChange={(e) => setCurrentTask({...currentTask, description: e.target.value})}
+            rows="3"
+          />
+        </div>
+        
       </form>
 
       {/* Task List */}
