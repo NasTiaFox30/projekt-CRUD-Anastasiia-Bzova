@@ -42,6 +42,7 @@ export default function App() {
       else
         await axios.post(API_URL, currentTask);
       
+      resetForm();
       fetchTasks();
     } catch (error) {
       console.error('Fetch error:', error);
