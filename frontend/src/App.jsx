@@ -115,7 +115,31 @@ export default function App() {
           />
         </div>
         
-        
+        <div className="form-row">
+          <div className="form-block">
+            <label>Status: </label>
+            <select
+              value={currentTask.status}
+              onChange={(e) => setCurrentTask({...currentTask, status: e.target.value})}
+            >
+              <option value="pending">⏳ Oczekuje</option>
+              <option value="in-progress">🔄 w procesie</option>
+              <option value="completed">✅ Zrobiono</option>
+            </select>
+          </div>
+
+          <div className="form-block">
+            <label>Pryoritet: </label>
+            <select
+              value={currentTask.priority}
+              onChange={(e) => setCurrentTask({...currentTask, priority: e.target.value})}
+            >
+              <option value="low">🟢 Niski</option>
+              <option value="medium">🟡 Średni</option>
+              <option value="high">🔴 Wysoki</option>
+            </select>
+          </div>
+        </div>
         
         <div className="form-actions">
           <button type="submit" className="btn-primary">
