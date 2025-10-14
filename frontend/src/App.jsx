@@ -62,7 +62,19 @@ export default function App() {
       setError('Nie udało się usunąć zadanie.');
     }
   };
-  
+
+  // Edit Task
+  const editTask = (task) => {
+    setCurrentTask({
+      title_name: task.title_name,
+      description: task.description || '',
+      deadline_date: task.deadline_date || '',
+      priority: task.priority,
+      status: task.status
+    });
+    setEditingId(task.id);
+  };
+
   return (
     <div className="app">
       <h1>Mój menedżer zadań 📃</h1>
