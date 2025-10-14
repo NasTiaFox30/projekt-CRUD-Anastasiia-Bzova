@@ -63,7 +63,7 @@ npm run dev
 - GET /tasks/:id - otrzymanie zadania po ID
 - DELETE /tasks/:id - usuń zadanie
   
-- POST /task
+- POST /task - dodawanie nowego zadania
 ```
 {
   "title_name": "New Task",
