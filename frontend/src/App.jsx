@@ -211,7 +211,17 @@ export default function App() {
                 </span>
               )}
             </div>
-            
+
+            <div className="task-actions">
+              <button onClick={() => editTask(task)} className="btn-edit">📝Edytuj</button>
+              <button 
+                onClick={() => deleteTask(task.id)}
+                className="btn-delete"
+              >
+                🗑️Usuń
+              </button>
+            </div>
+
           </div>
         ))}
         </div>
