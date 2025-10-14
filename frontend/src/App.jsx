@@ -17,6 +17,10 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  // GET all tasks
+  
+
+
   return (
     <div className="app">
       
