@@ -216,3 +216,48 @@ h2 {
   grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
   gap: 25px;
 }
+
+/* Task card */
+.task-card {
+  background: var(--gradient-card);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.task-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+}
+
+.task-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), var(--shadow-glowing);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.task-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  flex: 1;
+  margin-right: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
