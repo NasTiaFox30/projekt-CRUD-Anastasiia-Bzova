@@ -22,12 +22,10 @@ Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał)
 
 ### Step 1: PostgreSQL DataBase
 ```bash
-# Create DB
-createdb crud_app_1_db
+cd database
 
 # Migration
-psql -d crud_app_1_db -f database/migration.sql
-
+psql -U postgres -f migration.sql
 ```
 
 ### Step 2: Backend configuration
@@ -55,6 +53,9 @@ npm start
 ### Step 3: Start Frontend
 
 ```bash
+# Install requirements
+npm install
+
 # Dev mode
 npm run dev
 ```
