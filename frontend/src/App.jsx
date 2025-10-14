@@ -62,6 +62,16 @@ export default function App() {
               <p className="task-description">{task.description}</p>
             )}
             
+            <div className="task-details">
+              <span className={`status-badge status-${task.status}`}>
+                {task.status === 'pending' && 'Peding ⏳'}
+                {task.status === 'in-progress' && 'In-progress 🔄'}
+                {task.status === 'completed' && 'Complete ✅'}
+                {task.status}
+              </span>
+              
+            </div>
+            
           </div>
         ))}
         </div>
