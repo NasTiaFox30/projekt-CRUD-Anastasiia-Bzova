@@ -125,8 +125,8 @@ export default function App() {
           <label>Deadline: </label>
           <input
             type="date"
-            value={currentTask.deadline}
-            onChange={(e) => setCurrentTask({...currentTask, deadline: e.target.value})}
+            value={currentTask.deadline_date}
+            onChange={(e) => setCurrentTask({...currentTask, deadline_date: e.target.value})}
           />
         </div>
         
