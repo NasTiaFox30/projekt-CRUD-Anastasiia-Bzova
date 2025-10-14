@@ -75,6 +75,20 @@ export default function App() {
     setEditingId(task.id);
   };
 
+  // Reset Form Task
+  const resetForm = () => {
+    setCurrentTask({
+      title_name: '',
+      description: '',
+      deadline_date: '',
+      priority: 'medium',
+      status: 'pending'
+    });
+    setEditingId(null);
+    setError('');
+  };
+
+
   return (
     <div className="app">
       <h1>Mój menedżer zadań 📃</h1>
