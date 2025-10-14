@@ -49,7 +49,20 @@ export default function App() {
     }
   };
 
-
+  // DELETE Task
+  const deleteTask = async (id) => {
+    if (!window.confirm('Chcesz napewno usunąć zadanie ?')) return;
+    
+    try {
+      setError('');
+      await axios.delete(`${API_URL}/${id}`);
+      fetchTasks();
+    } catch (error) {
+      console.error('Error delete task:', error);
+      setError('Nie udało się usunąć zadanie.');
+    }
+  };
+  
   return (
     <div className="app">
       <h1>Mój menedżer zadań 📃</h1>
