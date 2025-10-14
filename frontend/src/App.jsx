@@ -105,6 +105,16 @@ export default function App() {
             rows="3"
           />
         </div>
+
+        <div className="form-block">
+          <label>Deadline: </label>
+          <input
+            type="date"
+            value={currentTask.deadline}
+            onChange={(e) => setCurrentTask({...currentTask, deadline: e.target.value})}
+          />
+        </div>
+        
         
       </form>
 
