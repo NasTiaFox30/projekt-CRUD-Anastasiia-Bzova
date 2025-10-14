@@ -3,8 +3,9 @@
 ![UI preview 2](./screens/Screen2.png)
 
 ## Description:
-Prosty menedżer zadań (pełny CRUD funkcjonał)
+Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał)
 - Wyświetlanie zadań
+- Dodawanie nowych zadań
 - Edytowanie
 - Usuwanie
 
