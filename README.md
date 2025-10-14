@@ -59,6 +59,8 @@ npm run dev
 ```
 
 ## API Endpoints
+(Każdy endpoint zwraca błędy 400,404,500 + validacja + success 200,201,204)
+
 - GET /tasks - otrzymanie wszystkish zadań
 - GET /tasks/:id - otrzymanie zadania po ID
 - DELETE /tasks/:id - usuń zadanie
