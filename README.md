@@ -1,5 +1,6 @@
 # CRUD Project - Task Manager
-![UI preview]()
+![UI preview 1](Screen1.png)
+![UI preview 2](Screen2.png)
 
 ## Description:
 Prosty menedżer zadań (pełny CRUD funkcjonał)
