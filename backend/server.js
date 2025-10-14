@@ -93,7 +93,7 @@ app.put('/tasks/:id', async (req, res) => {
     }
     
     const result = await pool.query(
-      'UPDATE Tasks SET title_name = $1, description = $2, deadline_date = $3, priority = $4, status = $5, updated_date = CURRENT_TIMESTAMP WHERE ID = $6 RETURNING *',
+      'UPDATE Tasks SET title_name = $1, description = $2, deadline_date = $3, priority = $4, status = $5, update_date = CURRENT_TIMESTAMP WHERE ID = $6 RETURNING *',
       [title_name.trim(), description?.trim(), deadline_date, priority, status, id]
     );
     
