@@ -164,3 +164,43 @@ h2 {
   grid-template-columns: 1fr 1fr;
   gap: 25px;
 }
+
+/* Tasks list */
+.tasks-list h2 {
+  border-bottom: 3px solid var(--accent-primary);
+  padding-bottom: 15px;
+  margin-bottom: 30px;
+}
+
+.loading,
+.no-tasks {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  background: var(--bg-card);
+  border-radius: 15px;
+  border: 2px dashed #374151;
+}
+
+.loading {
+  background: linear-gradient(90deg, var(--bg-card) 0%, var(--bg-secondary) 50%, var(--bg-card) 100%);
+  background-size: 200% 100%;
+  animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 25px;
+}
