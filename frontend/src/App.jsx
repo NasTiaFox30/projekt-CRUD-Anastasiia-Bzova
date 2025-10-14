@@ -48,6 +48,15 @@ export default function App() {
         <div className="tasks-grid">
         {tasks.map(task => (
           <div key={task.id} className="task-card">
+            <div className="task-header">
+              <h3>{task.title_name}</h3>
+              <span className={`priority-badge priority-${task.priority}`}>
+                {task.priority === 'high' && '🔴'}
+                {task.priority === 'medium' && '🟡'}
+                {task.priority === 'low' && '🟢'}
+                {task.priority}
+              </span>
+            </div>
             
           </div>
         ))}
