@@ -24,3 +24,73 @@ h2 {
   font-weight: 600;
   color: var(--text-primary);
 }
+
+/* Form */
+.task-form {
+  background: var(--gradient-card);
+  padding: 35px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.task-form h2 {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 30px;
+}
+
+.form-block {
+  margin-bottom: 25px;
+}
+
+.form-block label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.form-block input,
+.form-block textarea,
+.form-block select {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #374151;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.form-block input::placeholder,
+.form-block textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.form-block input:focus,
+.form-block textarea:focus,
+.form-block select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.form-block textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
