@@ -94,6 +94,18 @@ h2 {
   box-shadow: 0 8px 25px rgba(239, 68, 68, 0.6);
 }
 
+/* Error message */
+.error-message {
+  background: linear-gradient(135deg, var(--accent-danger) 0%, #dc2626 100%);
+  color: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: var(--shadow-glowing);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
 
 /* Form */
 .task-form {
