@@ -58,6 +58,10 @@ export default function App() {
               </span>
             </div>
             
+            {task.description && (
+              <p className="task-description">{task.description}</p>
+            )}
+            
           </div>
         ))}
         </div>
