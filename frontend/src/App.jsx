@@ -32,6 +32,23 @@ export default function App() {
     }
   };
 
+  // Create/Update Task
+  const saveTask = async (e) => {
+    e.preventDefault();
+    try {
+      setError('');
+      if (editingId)
+        await axios.put(`${API_URL}/${editingId}`, currentTask);
+      else
+        await axios.post(API_URL, currentTask);
+      
+      fetchTasks();
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setError(error.response?.data?.error || 'Nie zapisano dane.');
+    }
+  };
+
 
   return (
     <div className="app">
