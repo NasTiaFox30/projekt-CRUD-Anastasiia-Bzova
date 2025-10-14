@@ -90,7 +90,7 @@ export default function App() {
           <input
             type="text"
             placeholder="Wprowadź nazwę"
-            value={currentTask.title}
+            value={currentTask.title_name}
             onChange={(e) => setCurrentTask({...currentTask, title: e.target.value})}
             required
           />
