@@ -116,6 +116,16 @@ export default function App() {
         </div>
         
         
+        
+        <div className="form-actions">
+          <button type="submit" className="btn-primary">
+            {editingId ? 'Zapisz' : 'Stwórz'}
+          </button>
+          {editingId && (
+            <button type="button" onClick={resetForm} className="btn-secondary">Reset</button>
+          )}
+        </div>
+        
       </form>
 
       {/* Task List */}
