@@ -85,6 +85,17 @@ export default function App() {
       <form onSubmit={saveTask} className="task-form">
         <h2>{editingId ? '✏️ Edytuj zadanie:' : '➕ Stwórz nowe'}</h2>
         
+        <div className="form-block">
+          <label>Nazwa: </label>
+          <input
+            type="text"
+            placeholder="Wprowadź nazwę"
+            value={currentTask.title}
+            onChange={(e) => setCurrentTask({...currentTask, title: e.target.value})}
+            required
+          />
+        </div>
+        
       </form>
 
       {/* Task List */}
