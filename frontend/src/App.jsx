@@ -18,7 +18,15 @@ export default function App() {
   const [error, setError] = useState('');
 
   // GET all tasks
-  
+  const fetchTasks = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      setTasks(response.data);
+    } catch (error) {
+      console.error('Fetch error:', error);
+      setError('Nie udało się załadować dane.');
+    }
+  };
 
 
   return (
