@@ -39,6 +39,7 @@ npm install
 # Create .env file (fill your own values) 
 cp .env.example .env
 ```
+(You must chnage _<User password>_ into your own)
 
 ### Step 3: Start Backend server
 
