@@ -20,11 +20,15 @@ export default function App() {
   // GET all tasks
   const fetchTasks = async () => {
     try {
+      setLoading(true);
+      setError('');
       const response = await axios.get(API_URL);
       setTasks(response.data);
     } catch (error) {
       console.error('Fetch error:', error);
       setError('Nie udało się załadować dane.');
+    } finally {
+      setLoading(false);
     }
   };
 
