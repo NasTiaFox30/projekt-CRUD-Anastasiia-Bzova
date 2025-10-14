@@ -17,6 +17,10 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
   // GET all tasks
   const fetchTasks = async () => {
     try {
