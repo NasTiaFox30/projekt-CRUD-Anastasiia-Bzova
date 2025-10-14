@@ -69,7 +69,15 @@ export default function App() {
                 {task.status === 'completed' && 'Complete ✅'}
                 {task.status}
               </span>
-              
+
+              <span className="created-date">
+                🕐 {new Date(task.created_date).toLocaleDateString('pl-PL')}
+              </span>
+              {task.deadline_date && (
+                <span className="deadline-date">
+                  📅 {new Date(task.deadline_date).toLocaleDateString('pl-PL')}
+                </span>
+              )}
             </div>
             
           </div>
