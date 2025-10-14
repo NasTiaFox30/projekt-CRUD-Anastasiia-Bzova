@@ -81,6 +81,12 @@ export default function App() {
       
       {error && <div className="error-message">{error}</div>}
 
+      {/* Form tasks */}
+      <form onSubmit={saveTask} className="task-form">
+        <h2>{editingId ? '✏️ Edytuj zadanie:' : '➕ Stwórz nowe'}</h2>
+        
+      </form>
+
       {/* Task List */}
       <div className="tasks-list">
         <h2>Lista zadań ({tasks.length})</h2>
