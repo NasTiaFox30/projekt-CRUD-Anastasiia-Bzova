@@ -44,11 +44,11 @@ app.get('/tasks/:id', async (req, res) => {
     const { id } = req.params;
     console.log(`> GET task by ID: ${id}`);
     const result = await pool.query('SELECT * FROM Tasks WHERE ID = $1', [id]);
-    
+
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found!' });
     }
-    
+
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error fetch data', error);
@@ -60,22 +60,45 @@ app.get('/tasks/:id', async (req, res) => {
 //POST /tasks     (add new task)
 app.post('/tasks', async (req, res) => {
   try {
-    const { title_name, description, deadline_date, priority, status } = req.body;
-    console.log('> Creat new Task - ', title_name);
-    
+    const {
+      title_name,
+      description,
+      deadline_date,
+      priority,
+      status,
+      category,
+      assigned_to,
+      estimated_time,
+      notes
+    } = req.body;
+
     if (!title_name || title_name.trim() === '') {
       return res.status(400).json({ error: 'Title of Task - required!' });
     }
     
     const result = await pool.query(
-      'INSERT INTO Tasks (title_name, description, deadline_date, priority, status) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [title_name.trim(), description?.trim(), deadline_date, priority, status]
+      `INSERT INTO tasks
+        (title_name, description, deadline_date, priority, status,
+         category, assigned_to, estimated_time, notes)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       RETURNING *`,
+      [
+        title_name.trim(),
+        description?.trim(),
+        deadline_date,
+        priority,
+        status,
+        category,
+        assigned_to,
+        estimated_time,
+        notes?.trim()
+      ]
     );
     
     console.log('Success!');
     res.status(201).json(result.rows[0]);
   } catch (error) {
-    console.error('Error fetch data', error);
+    console.error('Error creating task:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -85,22 +108,54 @@ app.post('/tasks', async (req, res) => {
 app.put('/tasks/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { title_name, description, deadline_date, priority, status } = req.body;
-    console.log(`> UPDATE Task - ${id}`);
-    
+    const {
+      title_name,
+      description,
+      deadline_date,
+      priority,
+      status,
+      category,
+      assigned_to,
+      estimated_time,
+      notes
+    } = req.body;
+
     if (!title_name || title_name.trim() === '') {
       return res.status(400).json({ error: 'Title of Task - required!' });
     }
     
     const result = await pool.query(
-      'UPDATE Tasks SET title_name = $1, description = $2, deadline_date = $3, priority = $4, status = $5, update_date = CURRENT_TIMESTAMP WHERE ID = $6 RETURNING *',
-      [title_name.trim(), description?.trim(), deadline_date, priority, status, id]
+      `UPDATE tasks
+       SET title_name = $1,
+           description = $2,
+           deadline_date = $3,
+           priority = $4,
+           status = $5,
+           category = $6,
+           assigned_to = $7,
+           estimated_time = $8,
+           notes = $9,
+           update_date = CURRENT_TIMESTAMP
+       WHERE id = $10
+       RETURNING *`,
+      [
+        title_name.trim(),
+        description?.trim(),
+        deadline_date,
+        priority,
+        status,
+        category,
+        assigned_to,
+        estimated_time,
+        notes?.trim(),
+        id
+      ]
     );
     
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
     }
-    
+
     console.log('Success!');
     res.status(200).json(result.rows[0]);
   } catch (error) {
@@ -116,11 +171,11 @@ app.delete('/tasks/:id', async (req, res) => {
     const { id } = req.params;
     console.log(`> DELETE Task by ID - ${id}`);
     const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 RETURNING *', [id]);
-    
+
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
     }
-    
+
     console.log('Success!');
     res.status(204).send();
   } catch (error) {
