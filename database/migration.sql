@@ -9,6 +9,8 @@ CREATE TABLE Tasks (
     deadline_date DATE,
     status VARCHAR(50) CHECK (status IN('pending', 'in-progress', 'completed')),
     priority VARCHAR(50) CHECK (priority IN ('low', 'medium', 'high')),
+    notes TEXT,
+    estimated_time VARCHAR(50),
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

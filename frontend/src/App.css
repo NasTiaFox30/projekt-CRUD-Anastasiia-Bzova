@@ -348,3 +348,15 @@ h2 {
   font-size: 14px;
   font-weight: 600;
 }
+
+.estimated-time {
+  color: var(--accent-primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.task-notes {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 0.95rem;
+}

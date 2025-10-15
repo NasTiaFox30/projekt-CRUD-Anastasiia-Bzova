@@ -13,7 +13,9 @@ export default function App() {
     description: '',
     deadline_date: '',
     priority: 'medium',
-    status: 'pending'
+    status: 'pending',
+    notes: '',
+    estimated_time: ''
   });
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -77,7 +79,9 @@ export default function App() {
       description: task.description || '',
       deadline_date: task.deadline_date || '',
       priority: task.priority,
-      status: task.status
+      status: task.status,
+      notes: task.notes || '',
+      estimated_time: task.estimated_time || ''
     });
     setEditingId(task.id);
   };
@@ -89,7 +93,9 @@ export default function App() {
       description: '',
       deadline_date: '',
       priority: 'medium',
-      status: 'pending'
+      status: 'pending',
+      notes: '',
+      estimated_time: ''
     });
     setEditingId(null);
     setError('');
@@ -125,6 +131,26 @@ export default function App() {
             onChange={(e) => setCurrentTask({...currentTask, description: e.target.value})}
             rows="3"
           />
+        </div>
+
+        <div className='form-block'>
+          <label>Uwagi (notatki):</label>
+          <textarea
+          placeholder='Dodatkowe informacje...'
+          value={currentTask.notes}
+          onChange={(e) => setCurrentTask({...currentTask, notes: e.target.value})}
+          rows="2"
+          />
+        </div>
+
+        <div className="form-block">
+           <label>Szacowany czas</label>
+           <input
+            type="text"
+            placeholder="np. 5 godzin"
+            value={currentTask.estimated_time}
+            onChange={(e) => setCurrentTask({...currentTask, estimated_time: e.target.value})}
+           />
         </div>
 
         <div className="form-block">
@@ -215,7 +241,21 @@ export default function App() {
                 <span className="deadline-date">
                   📅 {new Date(task.deadline_date).toLocaleDateString('pl-PL')}
                 </span>
+
+                
               )}
+
+                 {task.estimated_time && (
+                  <span className="estimated-time">
+                  ⏱️ {task.estimated_time}
+                  </span>
+                )}
+
+                {task.notes && (
+                  <span className="task-notes">
+                    🗒️ {task.notes}
+                  </span>
+                )}
             </div>
 
             <div className="task-actions">
