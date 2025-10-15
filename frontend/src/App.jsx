@@ -13,7 +13,11 @@ export default function App() {
     description: '',
     deadline_date: '',
     priority: 'medium',
-    status: 'pending'
+    status: 'pending',
+    category: '',
+    assigned_to: '',
+    estimated_time: '',
+    notes: ''
   });
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -47,11 +51,11 @@ export default function App() {
         await axios.put(`${API_URL}/${editingId}`, currentTask);
       else
         await axios.post(API_URL, currentTask);
-      
+
       resetForm();
       fetchTasks();
     } catch (error) {
-      console.error('Fetch error:', error);
+      console.error('Save error:', err);
       setError(error.response?.data?.error || 'Nie zapisano dane.');
     }
   };
@@ -59,16 +63,17 @@ export default function App() {
   // DELETE Task
   const deleteTask = async (id) => {
     if (!window.confirm('Chcesz napewno usunąć zadanie ?')) return;
-    
+
     try {
       setError('');
       await axios.delete(`${API_URL}/${id}`);
       fetchTasks();
     } catch (error) {
-      console.error('Error delete task:', error);
+      console.error('Delete error:', error);
       setError('Nie udało się usunąć zadanie.');
     }
   };
+
 
   // Edit Task
   const editTask = (task) => {
@@ -77,7 +82,11 @@ export default function App() {
       description: task.description || '',
       deadline_date: task.deadline_date || '',
       priority: task.priority,
-      status: task.status
+      status: task.status,
+      category: task.category || '',
+      assigned_to: task.assigned_to || '',
+      estimated_time: task.estimated_time ?? '',
+      notes: task.notes || ''
     });
     setEditingId(task.id);
   };
@@ -89,7 +98,11 @@ export default function App() {
       description: '',
       deadline_date: '',
       priority: 'medium',
-      status: 'pending'
+      status: 'pending',
+      category: '',
+      assigned_to: '',
+      estimated_time: '',
+      notes: ''
     });
     setEditingId(null);
     setError('');
@@ -99,49 +112,60 @@ export default function App() {
   return (
     <div className="app">
       <h1>Mój menedżer zadań 📃</h1>
-      
+
       {error && <div className="error-message">{error}</div>}
 
       {/* Form tasks */}
       <form onSubmit={saveTask} className="task-form">
         <h2>{editingId ? '✏️ Edytuj zadanie:' : '➕ Stwórz nowe'}</h2>
-        
+
         <div className="form-block">
           <label>Nazwa: </label>
           <input
             type="text"
             placeholder="Wprowadź nazwę"
             value={currentTask.title_name}
-            onChange={(e) => setCurrentTask({...currentTask, title_name: e.target.value})}
+            onChange={(e) => setCurrentTask({ ...currentTask, title_name: e.target.value })}
             required
           />
         </div>
-        
+
         <div className="form-block">
           <label>Opis: </label>
           <textarea
             placeholder="Opisz zadanie.."
             value={currentTask.description}
-            onChange={(e) => setCurrentTask({...currentTask, description: e.target.value})}
+            onChange={(e) => setCurrentTask({ ...currentTask, description: e.target.value })}
             rows="3"
           />
         </div>
 
-        <div className="form-block">
-          <label>Deadline: </label>
-          <input
-            type="date"
-            value={currentTask.deadline_date}
-            onChange={(e) => setCurrentTask({...currentTask, deadline_date: e.target.value})}
-          />
+        <div className="form-row">
+          <div className="form-block">
+            <label>Deadline: </label>
+            <input
+              type="date"
+              value={currentTask.deadline_date}
+              onChange={(e) => setCurrentTask({ ...currentTask, deadline_date: e.target.value })}
+            />
+          </div>
+          <div className="form-block">
+            <label>Kategoria:</label>
+            <input
+              type="text"
+              placeholder="np. Praca, Nauka..."
+              value={currentTask.category}
+              onChange={(e) => setCurrentTask({ ...currentTask, category: e.target.value })}
+            />
+          </div>
         </div>
-        
+
         <div className="form-row">
           <div className="form-block">
             <label>Status: </label>
             <select
               value={currentTask.status}
-              onChange={(e) => setCurrentTask({...currentTask, status: e.target.value})}
+              onChange={(e) => setCurrentTask({ ...currentTask, status: e.target.value })}
             >
               <option value="pending">⏳ Oczekuje</option>
               <option value="in-progress">🔄 w procesie</option>
@@ -153,7 +177,7 @@ export default function App() {
             <label>Pryoritet: </label>
             <select
               value={currentTask.priority}
-              onChange={(e) => setCurrentTask({...currentTask, priority: e.target.value})}
+              onChange={(e) => setCurrentTask({ ...currentTask, priority: e.target.value })}
             >
               <option value="low">🟢 Niski</option>
               <option value="medium">🟡 Średni</option>
@@ -161,7 +185,40 @@ export default function App() {
             </select>
           </div>
         </div>
-        
+
+        <div className="form-block">
+          <label>Przypisane do:</label>
+          <input
+            type="text"
+            placeholder="Imię osoby..."
+            value={currentTask.assigned_to}
+            onChange={(e) => setCurrentTask({ ...currentTask, assigned_to: e.target.value })}
+          />
+        </div>
+
+        <div className="form-row">
+          <div className="form-block">
+            <label>Szacowany czas:</label>
+            <input
+              type="number"
+              min="0"
+              placeholder="Na przykład 3"
+              value={currentTask.estimated_time}
+              onChange={(e) => setCurrentTask({ ...currentTask, estimated_time: e.target.value })}
+            />
+          </div>
+
+          <div className="form-block">
+            <label>Notatki:</label>
+            <input
+              type="text"
+              placeholder="Dodatkowe uwagi"
+              value={currentTask.notes}
+              onChange={(e) => setCurrentTask({ ...currentTask, notes: e.target.value })}
+            />
+          </div>
+        </div>
+
         <div className="form-actions">
           <button type="submit" className="btn-primary">
             {editingId ? 'Zapisz' : 'Stwórz'}
@@ -170,21 +227,16 @@ export default function App() {
             <button type="button" onClick={resetForm} className="btn-secondary">Reset</button>
           )}
         </div>
-        
+
       </form>
 
-      {/* Task List */}
       <div className="tasks-list">
         <h2>Lista zadań ({tasks.length})</h2>
-        
         {loading && <div className="loading">Ładowanie...</div>}
-        
-        {!loading && tasks.length === 0 && (
-          <div className="no-tasks">Niema zadań. Stwórz nowe!</div>
-        )}
+        {!loading && tasks.length === 0 && (<div className="no-tasks">Niema zadań. Stwórz nowe!</div>)}
 
         <div className="tasks-grid">
-        {tasks.map(task => (
+          {tasks.map(task => (
           <div key={task.id} className="task-card">
             <div className="task-header">
               <h3>{task.title_name}</h3>
@@ -195,11 +247,9 @@ export default function App() {
                 {task.priority}
               </span>
             </div>
-            
-            {task.description && (
-              <p className="task-description">{task.description}</p>
-            )}
-            
+
+            {task.description && <p className="task-description">{task.description}</p>}
+
             <div className="task-details">
               <span className={`status-badge status-${task.status}`}>
                 {task.status === 'pending' && '⏳'}
@@ -208,32 +258,29 @@ export default function App() {
                 {task.status}
               </span>
 
-              <span className="created-date">
-                🕐 {new Date(task.created_date).toLocaleDateString('pl-PL')}
-              </span>
+              {task.category && <span className="category">🏷️ {task.category}</span>}
+              {task.assigned_to && <span className="assigned">👤 {task.assigned_to}</span>}
+              
+              {task.estimated_time !== null && task.estimated_time !== undefined &&
+                <span className="estimated">⏱ {task.estimated_time} h.</span>}
+              
+              {task.notes && <span className="notes">💬 {task.notes}</span>}
+              
               {task.deadline_date && (
-                <span className="deadline-date">
-                  📅 {new Date(task.deadline_date).toLocaleDateString('pl-PL')}
-                </span>
+                <span className="deadline-date">📅 {new Date(task.deadline_date).toLocaleDateString('pl-PL')}</span>
               )}
             </div>
 
             <div className="task-actions">
               <button onClick={() => editTask(task)} className="btn-edit">📝Edytuj</button>
-              <button 
-                onClick={() => deleteTask(task.id)}
-                className="btn-delete"
-              >
-                🗑️Usuń
-              </button>
+              <button onClick={() => deleteTask(task.id)} className="btn-delete">🗑️Usuń</button>
             </div>
-
           </div>
-        ))}
+          ))}
         </div>
       </div>
-      
-      <Footer/>
+
+      <Footer />
     </div>
   );
 }
