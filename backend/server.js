@@ -20,11 +20,23 @@ app.use(cors({
 //parsing
 app.use(express.json());
 
-// Postgre Conn Config: 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
-});
+// Postgre Conn Config for both environments:
+const pool = new Pool(
+  process.env.DATABASE_URL 
+  ? {
+      // For Render product:
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false }
+    }
+  : {
+      // For local dev:
+      user: process.env.DB_USER,
+      host: process.env.DB_HOST,
+      database: process.env.DB_NAME,
+      password: process.env.DB_PASSWORD,
+      port: process.env.DB_PORT
+    }
+);
 
 // Health check endpoint for Render
 app.get('/health', (req, res) => {
