@@ -15,12 +15,14 @@ Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał)
 - Database: PostgreSQL
 
 ## How to start app local?
-
 ### Versions:
 - Node.js 16+
 - PostgreSQL
 
+### **All steps bellow we do in VS Code Terminals:**
+
 ### Step 1: PostgreSQL DataBase
+(new terminal)
 ```bash
 cd database
 
@@ -38,6 +40,7 @@ psql -U postgres -h localhost -d crud_app_1_db -f migration.sql
 ```
 
 ### Step 2: Backend configuration
+(new terminal)
 ```bash
 cd backend
 
@@ -58,8 +61,11 @@ npm run dev
 npm start
 ```
 
-### Step 3: Frontend start server
+### Step 4: Frontend configure & start server
+(new terminal)
 ```bash
+cd frontend
+
 # Install requirements
 npm install
 
