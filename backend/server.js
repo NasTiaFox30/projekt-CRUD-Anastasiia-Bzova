@@ -11,7 +11,12 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Middleware (working Frontend with Backend)
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://your-frontend-service.onrender.com'  // Change later!
+  ]
+}));
 //parsing
 app.use(express.json());
 
