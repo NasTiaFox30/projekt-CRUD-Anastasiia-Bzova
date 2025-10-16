@@ -56,7 +56,7 @@ export default function App() {
       resetForm();
       fetchTasks();
     } catch (error) {
-      console.error('Save error:', err);
+      console.error('Save error:', error);
       setError(error.response?.data?.error || 'Nie zapisano dane.');
     }
   };
