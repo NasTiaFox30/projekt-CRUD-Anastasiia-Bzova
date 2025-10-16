@@ -5,7 +5,9 @@ import './App_anim.css';
 import './App_adapt.css';
 import Footer from './Footer';
 
-const API_URL = 'http://localhost:3001/tasks';
+const API_URL = import.meta.env.VITE_API_URL 
+  ? `${import.meta.env.VITE_API_URL}/tasks`
+  : 'http://localhost:3001/tasks';
 
 export default function App() {
   const [tasks, setTasks] = useState([]);
@@ -56,7 +58,7 @@ export default function App() {
       resetForm();
       fetchTasks();
     } catch (error) {
-      console.error('Save error:', err);
+      console.error('Save error:', error);
       setError(error.response?.data?.error || 'Nie zapisano dane.');
     }
   };
