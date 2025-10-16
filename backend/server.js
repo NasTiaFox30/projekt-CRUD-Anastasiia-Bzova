@@ -197,5 +197,6 @@ app.delete('/tasks/:id', async (req, res) => {
 
 //Start Server
 app.listen(port, () => {
-  console.log(`SERVER Started on http://localhost:${port}`);
+  console.log(`SERVER Started on port ${port}`);
+  console.log(`Health check: http://localhost:${port}/health`);
 });
