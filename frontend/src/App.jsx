@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 import './App_anim.css';
+import './App_adapt.css';
 import Footer from './Footer';
 
 const API_URL = 'http://localhost:3001/tasks';
