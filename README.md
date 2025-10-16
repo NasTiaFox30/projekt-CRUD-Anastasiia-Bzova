@@ -2,6 +2,9 @@
 ![UI preview 1](./screens/Screen1_v2.png)
 ![UI preview 2](./screens/Screen2_v2.png)
 
+## Link to webpage: https://task-manger-mz7h.onrender.com/
+(Project was deployed on Render.com)
+
 ## Description:
 Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał)
 - Wyświetlanie zadań

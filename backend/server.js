@@ -8,22 +8,44 @@ dotenv.config();
 //initialization of App:
 const { Pool } = pkg;
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 // Middleware (working Frontend with Backend)
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://task-manger-mz7h.onrender.com'
+  ]
+}));
 //parsing
 app.use(express.json());
 
-// Postgre Conn Config: 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT
-});
+// Postgre Conn Config for both environments:
+const pool = new Pool(
+  process.env.DATABASE_URL 
+  ? {
+      // For Render product:
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false }
+    }
+  : {
+      // For local dev:
+      user: process.env.DB_USER,
+      host: process.env.DB_HOST,
+      database: process.env.DB_NAME,
+      password: process.env.DB_PASSWORD,
+      port: process.env.DB_PORT
+    }
+);
 
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Task Manager API is running',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Routes
 // GET /tasks     (get all tasks)
@@ -187,5 +209,6 @@ app.delete('/tasks/:id', async (req, res) => {
 
 //Start Server
 app.listen(port, () => {
-  console.log(`SERVER Started on http://localhost:${port}`);
+  console.log(`SERVER Started on port ${port}`);
+  console.log(`Health check: http://localhost:${port}/health`);
 });
