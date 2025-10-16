@@ -24,12 +24,20 @@ Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał)
 ```bash
 cd database
 
-# Migration
-psql -U postgres -f migration.sql
+#1) Delete table if exist in DB:
+psql -U postgres -h localhost -c "DROP TABLE IF EXISTS tasks;"
+
+#2) Delete DB:
+psql -U postgres -h localhost -c "DROP DATABASE crud_app_1_db;"
+
+#3) Create new DB:
+psql -U postgres -h localhost -c "CREATE DATABASE crud_app_1_db;"
+
+#4) Make Migration:
+psql -U postgres -h localhost -d crud_app_1_db -f migration.sql
 ```
 
 ### Step 2: Backend configuration
-
 ```bash
 cd backend
 
@@ -39,20 +47,18 @@ npm install
 # Create .env file (fill your own values) 
 cp .env.example .env
 ```
-(You must chnage _User_password_ into your own)
+(You must in _.env_ file - change field  _User_password_ into your own)
 
-### Step 3: Start Backend server
-
+### Step 3: Backend start server
 ```bash
 # Dev mode
 npm run dev
 
-# OR production mode
+# OR production mode (if not working dev mode)
 npm start
 ```
 
-### Step 3: Start Frontend
-
+### Step 3: Frontend start server
 ```bash
 # Install requirements
 npm install
