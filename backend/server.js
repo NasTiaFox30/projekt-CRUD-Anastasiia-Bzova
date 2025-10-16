@@ -26,6 +26,14 @@ const pool = new Pool({
   ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false
 });
 
+// Health check endpoint for Render
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Task Manager API is running',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // Routes
 // GET /tasks     (get all tasks)
