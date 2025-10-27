@@ -39,3 +39,6 @@ CREATE TABLE IF NOT EXISTS Users (
 
 -- adding user_id
 ALTER TABLE Tasks ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES Users(id);
+
+-- Index for search Task for User
+CREATE INDEX IF NOT EXISTS idx_tasks_user_id ON Tasks(user_id);
