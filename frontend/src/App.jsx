@@ -56,7 +56,15 @@ export default function App() {
     setCurrentView('tasks');
   };
 
-  
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    delete axios.defaults.headers.common['Authorization'];
+    setUser(null);
+    setIsAuthenticated(false);
+    setTasks([]);
+    setCurrentView('home');
+  };
 
   // Navigation views
   const showHome = () => setCurrentView('home');
