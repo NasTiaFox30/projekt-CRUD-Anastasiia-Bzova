@@ -49,6 +49,15 @@ export default function App() {
     if (isAuthenticated && currentView === 'tasks') { fetchTasks(); }
   }, [isAuthenticated, currentView]);
 
+  // Login functions:
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setIsAuthenticated(true);
+    setCurrentView('tasks');
+  };
+
+  
+
   // Navigation views
   const showHome = () => setCurrentView('home');
   const showLoginView = () => setCurrentView('login');
