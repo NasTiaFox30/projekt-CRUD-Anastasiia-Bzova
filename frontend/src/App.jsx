@@ -159,143 +159,43 @@ export default function App() {
     setCurrentTask(updatedTask);
   };
 
-  return (
-    <div className="app">
-      <h1>Mój menedżer zadań 📃</h1>
-
-      {error && <div className="error-message">{error}</div>}
-
-      {/* Form tasks */}
-      <form onSubmit={saveTask} className="task-form">
-        <h2>{editingId ? '✏️ Edytuj zadanie:' : '➕ Stwórz nowe'}</h2>
-
-        <div className="form-block">
-          <label>Nazwa: </label>
-          <input
-            type="text"
-            placeholder="Wprowadź nazwę"
-            value={currentTask.title_name}
-            onChange={(e) => setCurrentTask({ ...currentTask, title_name: e.target.value })}
-            required
-          />
-        </div>
-
-        <div className="form-block">
-          <label>Opis: </label>
-          <textarea
-            placeholder="Opisz zadanie.."
-            value={currentTask.description}
-            onChange={(e) => setCurrentTask({ ...currentTask, description: e.target.value })}
-            rows="3"
-          />
-        </div>
-
-        <div className="form-row">
-          <div className="form-block">
-            <label>Deadline: </label>
-            <input
-              type="date"
-              value={currentTask.deadline_date}
-              onChange={(e) => setCurrentTask({ ...currentTask, deadline_date: e.target.value })}
-            />
-          </div>
-          <div className="form-block">
-            <label>Kategoria:</label>
-            <input
-              type="text"
-              placeholder="np. Praca, Nauka..."
-              value={currentTask.category}
-              onChange={(e) => setCurrentTask({ ...currentTask, category: e.target.value })}
-            />
-          </div>
-        </div>
-
-        <div className="form-row">
-          <div className="form-block">
-            <label>Status: </label>
-            <select
-              value={currentTask.status}
-              onChange={(e) => setCurrentTask({ ...currentTask, status: e.target.value })}
+  // Not authenticated user view
+  if (!isAuthenticated) {
+    return (
+      <div className="app">
+        <header className="app-header">
+          <h1 onClick={showHome}>Menadżer Zadań 📃</h1>
+          <nav className="nav-buttons">
+            <button 
+              onClick={showLoginView} 
+              className={`nav-btn ${currentView === 'login' ? 'active' : ''}`}
             >
-              <option value="pending">⏳ Oczekuje</option>
-              <option value="in-progress">🔄 w procesie</option>
-              <option value="completed">✅ Zrobiono</option>
-            </select>
-          </div>
-
-          <div className="form-block">
-            <label>Pryoritet: </label>
-            <select
-              value={currentTask.priority}
-              onChange={(e) => setCurrentTask({ ...currentTask, priority: e.target.value })}
+              Zaloguj się
+            </button>
+            <button 
+              onClick={showRegisterView} 
+              className={`nav-btn ${currentView === 'register' ? 'active' : ''}`}
             >
-              <option value="low">🟢 Niski</option>
-              <option value="medium">🟡 Średni</option>
-              <option value="high">🔴 Wysoki</option>
-            </select>
-          </div>
-        </div>
+              Rejestracja
+            </button>
+          </nav>
+        </header>
 
-        <div className="form-block">
-          <label>Przypisane do:</label>
-          <input
-            type="text"
-            placeholder="Imię osoby..."
-            value={currentTask.assigned_to}
-            onChange={(e) => setCurrentTask({ ...currentTask, assigned_to: e.target.value })}
-          />
-        </div>
-
-        <div className="form-row">
-          <div className="form-block">
-            <label>Szacowany czas:</label>
-            <input
-              type="number"
-              min="0"
-              placeholder="Na przykład 3"
-              value={currentTask.estimated_time}
-              onChange={(e) => setCurrentTask({ ...currentTask, estimated_time: e.target.value })}
-            />
-          </div>
-
-          <div className="form-block">
-            <label>Notatki:</label>
-            <input
-              type="text"
-              placeholder="Dodatkowe uwagi"
-              value={currentTask.notes}
-              onChange={(e) => setCurrentTask({ ...currentTask, notes: e.target.value })}
-            />
-          </div>
-        </div>
-
-        <div className="form-actions">
-          <button type="submit" className="btn-primary">
-            {editingId ? 'Zapisz' : 'Stwórz'}
-          </button>
-          {editingId && (
-            <button type="button" onClick={resetForm} className="btn-secondary">Reset</button>
+        <main>
+          {currentView === 'home' && <Home />}
+          {currentView === 'login' && (
+            <Login onLogin={handleLogin} onSwitchToRegister={showRegisterView} />
           )}
-        </div>
-
-      </form>
-
-      <div className="tasks-list">
-        <h2>Lista zadań ({tasks.length})</h2>
-        {loading && <div className="loading">Ładowanie...</div>}
-        {!loading && tasks.length === 0 && (<div className="no-tasks">Niema zadań. Stwórz nowe!</div>)}
-
-        <div className="tasks-grid">
-          {tasks.map(task => (
-          <div key={task.id} className="task-card">
-            <div className="task-header">
-              <h3>{task.title_name}</h3>
-              <span className={`priority-badge priority-${task.priority}`}>
-                {task.priority === 'high' && '🔴'}
-                {task.priority === 'medium' && '🟡'}
-                {task.priority === 'low' && '🟢'}
-                {task.priority}
-              </span>
+          {currentView === 'register' && (
+            <Register onRegister={handleLogin} onSwitchToLogin={showLoginView} />
+          )}
+          {currentView === 'home' && (
+            <div className="auth-prompt">
+              <p>Zaloguj się lub zarejestruj, aby rozpocząć korzystanie z aplikacji!</p>
+              <div className="auth-prompt-buttons">
+                <button onClick={showLoginView} className="btn-primary">Zaloguj się</button>
+                <button onClick={showRegisterView} className="btn-secondary">Zarejestruj się</button>
+              </div>
             </div>
 
             {task.description && <p className="task-description">{task.description}</p>}
