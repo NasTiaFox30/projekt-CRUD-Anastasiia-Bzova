@@ -45,6 +45,11 @@ export default function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isAuthenticated && currentView === 'tasks') { fetchTasks(); }
+  }, [isAuthenticated, currentView]);
+
+
   // GET all tasks
   const fetchTasks = async () => {
     try {
