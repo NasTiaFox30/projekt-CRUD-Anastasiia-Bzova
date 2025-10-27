@@ -55,6 +55,7 @@ export default function App() {
   const showRegisterView = () => setCurrentView('register');
   const showTasks = () => setCurrentView('tasks');
 
+// TASKS CRUD:
   // GET all tasks
   const fetchTasks = async () => {
     try {
