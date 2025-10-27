@@ -10,6 +10,10 @@ const API_URL = import.meta.env.VITE_API_URL
   : 'http://localhost:3001/tasks';
 
 export default function App() {
+  const [user, setUser] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentView, setCurrentView] = useState('home'); // 'home', 'login', 'register', 'tasks'
+  
   const [tasks, setTasks] = useState([]);
   const [currentTask, setCurrentTask] = useState({
     title_name: '',
