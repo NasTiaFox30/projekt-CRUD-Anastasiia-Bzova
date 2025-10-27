@@ -154,6 +154,10 @@ export default function App() {
     setError('');
   };
 
+  // Change handler Task
+  const handleTaskChange = (updatedTask) => {
+    setCurrentTask(updatedTask);
+  };
 
   return (
     <div className="app">
