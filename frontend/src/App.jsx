@@ -3,6 +3,8 @@ import axios from 'axios';
 import './App.css';
 import './App_anim.css';
 import './App_adapt.css';
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
 import Footer from './Footer';
 
 const API_URL = import.meta.env.VITE_API_URL 
