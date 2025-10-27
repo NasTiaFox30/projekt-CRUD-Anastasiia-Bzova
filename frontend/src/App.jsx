@@ -31,7 +31,15 @@ export default function App() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchTasks();
+    const token = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    
+    if (token && savedUser) {
+      setUser(JSON.parse(savedUser));
+      setIsAuthenticated(true);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      setCurrentView('tasks');
+    }
   }, []);
 
   // GET all tasks
