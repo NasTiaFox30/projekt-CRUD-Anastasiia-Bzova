@@ -13,7 +13,7 @@ export default function Tasks({
   onResetForm 
 }) {
   return (
-    <>
+    <div className="tasks-container" >
       {/* Formularz zadania */}
       <form onSubmit={onSaveTask} className="task-form">
         <h2>{editingId ? '✏️ Edytuj zadanie:' : '➕ Utwórz nowe zadanie'}</h2>
@@ -186,6 +186,6 @@ export default function Tasks({
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
