@@ -84,6 +84,7 @@ export default function App() {
       setTasks(response.data);
     } catch (error) {
       console.error('Fetch error:', error);
+      if (error.response?.status === 401) { handleLogout(); }
       setError('Nie udało się załadować dane.');
     } finally {
       setLoading(false);
@@ -104,6 +105,7 @@ export default function App() {
       fetchTasks();
     } catch (error) {
       console.error('Save error:', error);
+      if (error.response?.status === 401) { handleLogout();}
       setError(error.response?.data?.error || 'Nie zapisano dane.');
     }
   };
@@ -118,6 +120,7 @@ export default function App() {
       fetchTasks();
     } catch (error) {
       console.error('Delete error:', error);
+      if (error.response?.status === 401) { handleLogout();}
       setError('Nie udało się usunąć zadanie.');
     }
   };
