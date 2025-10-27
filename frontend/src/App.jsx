@@ -5,6 +5,8 @@ import './App_anim.css';
 import './App_adapt.css';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
+import Home from './components/Home/Home';
+import Tasks from './components/Tasks/Tasks';
 import Footer from './Footer';
 
 const API_URL = import.meta.env.VITE_API_URL 
