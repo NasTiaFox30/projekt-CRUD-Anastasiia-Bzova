@@ -1,0 +1,191 @@
+import './Tasks.css';
+import './Tasks_adapt.css';
+
+export default function Tasks({ 
+  tasks, 
+  loading,
+  currentTask, 
+  editingId,
+  onTaskChange,
+  onSaveTask,
+  onDeleteTask,
+  onEditTask,
+  onResetForm 
+}) {
+  return (
+    <>
+      {/* Formularz zadania */}
+      <form onSubmit={onSaveTask} className="task-form">
+        <h2>{editingId ? '✏️ Edytuj zadanie:' : '➕ Utwórz nowe zadanie'}</h2>
+
+        <div className="form-block">
+          <label>Nazwa: </label>
+          <input
+            type="text"
+            placeholder="Wprowadź nazwę zadania"
+            value={currentTask.title_name}
+            onChange={(e) => onTaskChange({ ...currentTask, title_name: e.target.value })}
+            required
+          />
+        </div>
+
+        <div className="form-block">
+          <label>Opis: </label>
+          <textarea
+            placeholder="Opisz zadanie..."
+            value={currentTask.description}
+            onChange={(e) => onTaskChange({ ...currentTask, description: e.target.value })}
+            rows="3"
+          />
+        </div>
+
+        <div className="form-row">
+          <div className="form-block">
+            <label>Termin: </label>
+            <input
+              type="date"
+              value={currentTask.deadline_date}
+              onChange={(e) => onTaskChange({ ...currentTask, deadline_date: e.target.value })}
+            />
+          </div>
+          <div className="form-block">
+            <label>Kategoria:</label>
+            <input
+              type="text"
+              placeholder="np.: Praca, Nauka..."
+              value={currentTask.category}
+              onChange={(e) => onTaskChange({ ...currentTask, category: e.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className="form-row">
+          <div className="form-block">
+            <label>Status: </label>
+            <select
+              value={currentTask.status}
+              onChange={(e) => onTaskChange({ ...currentTask, status: e.target.value })}
+            >
+              <option value="pending">⏳ Oczekuje</option>
+              <option value="in-progress">🔄 W toku</option>
+              <option value="completed">✅ Wykonane</option>
+            </select>
+          </div>
+
+          <div className="form-block">
+            <label>Priorytet: </label>
+            <select
+              value={currentTask.priority}
+              onChange={(e) => onTaskChange({ ...currentTask, priority: e.target.value })}
+            >
+              <option value="low">🟢 Niski</option>
+              <option value="medium">🟡 Średni</option>
+              <option value="high">🔴 Wysoki</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="form-block">
+          <label>Przypisane do:</label>
+          <input
+            type="text"
+            placeholder="Imię osoby..."
+            value={currentTask.assigned_to}
+            onChange={(e) => onTaskChange({ ...currentTask, assigned_to: e.target.value })}
+          />
+        </div>
+
+        <div className="form-row">
+          <div className="form-block">
+            <label>Przybliżony czas (godziny):</label>
+            <input
+              type="number"
+              min="0"
+              placeholder="np.: 3"
+              value={currentTask.estimated_time}
+              onChange={(e) => onTaskChange({ ...currentTask, estimated_time: e.target.value })}
+            />
+          </div>
+
+          <div className="form-block">
+            <label>Notatki:</label>
+            <input
+              type="text"
+              placeholder="Dodatkowe uwagi"
+              value={currentTask.notes}
+              onChange={(e) => onTaskChange({ ...currentTask, notes: e.target.value })}
+            />
+          </div>
+        </div>
+
+        <div className="form-actions">
+          <button type="submit" className="btn-primary">
+            {editingId ? 'Zapisz' : 'Utwórz'}
+          </button>
+          {editingId && (
+            <button type="button" onClick={onResetForm} className="btn-secondary">
+              Anuluj
+            </button>
+          )}
+        </div>
+      </form>
+
+      {/* Lista zadań */}
+      <div className="tasks-list">
+        <h2>Moje zadania ({tasks.length})</h2>
+        {loading && <div className="loading">Ładowanie...</div>}
+        {!loading && tasks.length === 0 && (
+          <div className="no-tasks">Brak zadań. Utwórz pierwsze zadanie!</div>
+        )}
+
+        <div className="tasks-grid">
+          {tasks.map(task => (
+            <div key={task.id} className="task-card">
+              <div className="task-header">
+                <h3>{task.title_name}</h3>
+                <span className={`priority-badge priority-${task.priority}`}>
+                  {task.priority === 'high' && '🔴 Wysoki'}
+                  {task.priority === 'medium' && '🟡 Średni'}
+                  {task.priority === 'low' && '🟢 Niski'}
+                </span>
+              </div>
+
+              {task.description && <p className="task-description">{task.description}</p>}
+
+              <div className="task-details">
+                <span className={`status-badge status-${task.status}`}>
+                  {task.status === 'pending' && '⏳ Oczekuje'}
+                  {task.status === 'in-progress' && '🔄 W toku'}
+                  {task.status === 'completed' && '✅ Wykonane'}
+                </span>
+
+                {task.category && <span className="category">🏷️ {task.category}</span>}
+                {task.assigned_to && <span className="assigned">👤 {task.assigned_to}</span>}
+                
+                {task.estimated_time !== null && task.estimated_time !== undefined &&
+                  <span className="estimated">⏱ {task.estimated_time} godz.</span>}
+                
+                {task.notes && <span className="notes">💬 {task.notes}</span>}
+                
+                {task.deadline_date && (
+                  <span className="deadline-date">
+                    📅 {new Date(task.deadline_date).toLocaleDateString('pl-PL')}
+                  </span>
+                )}
+              </div>
+
+              <div className="task-actions">
+                <button onClick={() => onEditTask(task)} className="btn-edit">
+                  📝 Edytuj
+                </button>
+                <button onClick={() => onDeleteTask(task.id)} className="btn-delete">
+                  🗑️ Usuń
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
