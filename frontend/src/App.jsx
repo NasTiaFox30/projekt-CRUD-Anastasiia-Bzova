@@ -197,38 +197,53 @@ export default function App() {
                 <button onClick={showRegisterView} className="btn-secondary">Zarejestruj się</button>
               </div>
             </div>
+          )}
+        </main>
 
-            {task.description && <p className="task-description">{task.description}</p>}
-
-            <div className="task-details">
-              <span className={`status-badge status-${task.status}`}>
-                {task.status === 'pending' && '⏳'}
-                {task.status === 'in-progress' && '🔄'}
-                {task.status === 'completed' && '✅'}
-                {task.status}
-              </span>
-
-              {task.category && <span className="category">🏷️ {task.category}</span>}
-              {task.assigned_to && <span className="assigned">👤 {task.assigned_to}</span>}
-              
-              {task.estimated_time !== null && task.estimated_time !== undefined &&
-                <span className="estimated">⏱ {task.estimated_time} h.</span>}
-              
-              {task.notes && <span className="notes">💬 {task.notes}</span>}
-              
-              {task.deadline_date && (
-                <span className="deadline-date">📅 {new Date(task.deadline_date).toLocaleDateString('pl-PL')}</span>
-              )}
-            </div>
-
-            <div className="task-actions">
-              <button onClick={() => editTask(task)} className="btn-edit">📝Edytuj</button>
-              <button onClick={() => deleteTask(task.id)} className="btn-delete">🗑️Usuń</button>
-            </div>
-          </div>
-          ))}
-        </div>
+        <Footer />
       </div>
+    );
+  }
+
+  // Authenticated user view
+  return (
+    <div className="app">
+      <header className="app-header">
+        <h1 onClick={showHome} style={{cursor: 'pointer'}}>Menadżer Zadań 📃</h1>
+        <nav className="nav-buttons">
+          <button 
+            onClick={showTasks} 
+            className={`nav-btn ${currentView === 'tasks' ? 'active' : ''}`}
+          >
+            Moje zadania ({tasks.length})
+          </button>
+          <div className="user-info">
+            <span>Witaj, {user?.login}!</span>
+            <button onClick={handleLogout} className="logout-btn">Wyloguj się</button>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        {currentView === 'home' && <Home />}
+        {currentView === 'tasks' && (
+          <>
+          {error && <div className="error-message">{error}</div>}
+          <Tasks 
+            tasks={tasks}
+            loading={loading}
+            error={error}
+            currentTask={currentTask}
+            editingId={editingId}
+            onTaskChange={handleTaskChange}
+            onSaveTask={saveTask}
+            onDeleteTask={deleteTask}
+            onEditTask={editTask}
+            onResetForm={resetForm}
+          />
+          </>
+        )}
+      </main>
 
       <Footer />
     </div>
