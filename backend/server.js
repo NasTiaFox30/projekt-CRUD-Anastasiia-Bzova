@@ -168,7 +168,7 @@ app.post('/login', async (req, res) => {
 app.get('/tasks', authenticateToken, async (req, res) => {
   try {
     console.log("> GET all Tasks");
-    const result = await pool.query('SELECT * FROM Tasks ORDER BY created_date DESC');
+    const result = await pool.query('SELECT * FROM Tasks WHERE user_id = $1 ORDER BY created_date DESC', [req.user.userId]);
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetch data', error);
