@@ -310,7 +310,7 @@ app.delete('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`> DELETE Task by ID - ${id}`);
-    const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 RETURNING *', [id]);
+    const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 AND user_id = $2 RETURNING *', [id, req.user.userId]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
