@@ -17,9 +17,11 @@ Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał) z systemem uwierzyt
 - Usuwanie
 
 ## Technologies:
-- Frontend: React + Vite
-- Backend: Node.js + Express
-- Database: PostgreSQL
+- **Frontend**: React + Vite, Axios
+- **Backend**: Node.js + Express, JWT, bcrypt
+- **Database**: PostgreSQL
+- **Authentication**: JWT tokens
+- **Deployment**: Render.com
 
 ## How to start app local?
 ### Versions:
