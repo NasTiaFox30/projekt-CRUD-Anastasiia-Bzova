@@ -124,6 +124,10 @@ app.post('/login', async (req, res) => {
   try {
     const { login, password } = req.body;
 
+    // Validation:
+    if (!login || !password) {return res.status(400).json({ error: 'Login & password - required' });}
+
+    
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Server Error' });
