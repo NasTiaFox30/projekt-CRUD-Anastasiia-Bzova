@@ -84,7 +84,7 @@ const authenticateToken = (req, res, next) => {
 
 // Routes
 // GET /tasks     (get all tasks)
-app.get('/tasks', async (req, res) => {
+app.get('/tasks', authenticateToken, async (req, res) => {
   try {
     console.log("> GET all Tasks");
     const result = await pool.query('SELECT * FROM Tasks ORDER BY created_date DESC');
@@ -96,7 +96,7 @@ app.get('/tasks', async (req, res) => {
 });
 
 // GET /tasks/:id       (get task by ID)
-app.get('/tasks/:id', async (req, res) => {
+app.get('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`> GET task by ID: ${id}`);
@@ -115,7 +115,7 @@ app.get('/tasks/:id', async (req, res) => {
 
 
 //POST /tasks     (add new task)
-app.post('/tasks', async (req, res) => {
+app.post('/tasks', authenticateToken, async (req, res) => {
   try {
     const {
       title_name,
@@ -162,7 +162,7 @@ app.post('/tasks', async (req, res) => {
 
 
 //PUT /tasks/:id      (update task)
-app.put('/tasks/:id', async (req, res) => {
+app.put('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -223,7 +223,7 @@ app.put('/tasks/:id', async (req, res) => {
 
 
 //DELETE /tasks/:id     (delete task)
-app.delete('/tasks/:id', async (req, res) => {
+app.delete('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`> DELETE Task by ID - ${id}`);
