@@ -23,6 +23,9 @@ app.use(cors({
 //parsing
 app.use(express.json());
 
+// JWT
+const JWT_SECRET = process.env.JWT_SECRET;
+
 // Postgre Conn Config for both environments:
 const pool = new Pool(
   process.env.DATABASE_URL 
