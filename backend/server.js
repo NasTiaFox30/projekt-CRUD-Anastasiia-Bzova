@@ -133,7 +133,11 @@ app.post('/login', async (req, res) => {
 
     const user = result.rows[0];
 
-   
+    // Check password
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    if (!isPasswordValid) {return res.status(401).json({ error: 'Wrong login or password' });}
+
+    
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Server Error' });
