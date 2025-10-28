@@ -84,6 +84,8 @@ const authenticateToken = (req, res, next) => {
 // Registration
 app.post('/register', async (req, res) => {
   try {
+    const { login, password } = req.body;
+
     
   } catch (error) {
     console.error('Registration error:', error);
