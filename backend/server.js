@@ -229,7 +229,8 @@ app.post('/tasks', authenticateToken, async (req, res) => {
         category,
         assigned_to,
         estimated_time,
-        notes?.trim()
+        notes?.trim(),
+        req.user.userId
       ]
     );
     
