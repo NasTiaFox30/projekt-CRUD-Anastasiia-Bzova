@@ -170,7 +170,7 @@ app.post('/login', async (req, res) => {
 // GET /tasks     (get all tasks)
 app.get('/tasks', authenticateToken, async (req, res) => {
   try {
-    console.log("> GET all Tasks");
+    console.log("> GET all Tasks for user:", req.user.userId);
     const result = await pool.query('SELECT * FROM Tasks WHERE user_id = $1 ORDER BY created_date DESC', [req.user.userId]);
     res.json(result.rows);
   } catch (error) {
@@ -183,7 +183,7 @@ app.get('/tasks', authenticateToken, async (req, res) => {
 app.get('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(`> GET task by ID: ${id}`);
+    console.log(`> GET task by ID: ${id} for user: ${req.user.userId}`);
     const result = await pool.query('SELECT * FROM Tasks WHERE ID = $1 AND user_id = $2', [id, req.user.userId]);
 
     if (result.rows.length === 0) {
@@ -237,7 +237,7 @@ app.post('/tasks', authenticateToken, async (req, res) => {
       ]
     );
     
-    console.log('Success!');
+    console.log('Success! Task created by user:', req.user.userId);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating task:', error);
@@ -299,7 +299,7 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    console.log('Success!');
+    console.log('Success! Task updated by user:', req.user.userId);
     res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error('Error fetch data', error);
@@ -312,14 +312,14 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
 app.delete('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(`> DELETE Task by ID - ${id}`);
+    console.log(`> DELETE Task by ID - ${id} for user: ${req.user.userId}`);
     const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 AND user_id = $2 RETURNING *', [id, req.user.userId]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    console.log('Success!');
+    console.log('Success! Task deleted by user:', req.user.userId);
     res.status(204).send();
   } catch (error) {
     console.error('Error fetch data', error);
