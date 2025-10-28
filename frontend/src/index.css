@@ -29,7 +29,7 @@
 }
 
 body {
-  background: var(--bg-primary);
+  background: var(--gradient-dark);
   color: var(--text-primary);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   line-height: 1.6;
