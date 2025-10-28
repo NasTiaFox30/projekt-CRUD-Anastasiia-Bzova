@@ -23,7 +23,19 @@ Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał) z systemem uwierzyt
 - **Authentication**: JWT tokens
 - **Deployment**: Render.com
 
-## How to start app local?
+## Security:
+Hashowanie haseł - hasła są bezpiecznie przechowywane w bazie
+- JWT Tokens - stateless authentication
+- CORS protection - skonfigurowane dla określonych domen
+- Input validation - walidacja danych wejściowych
+- Private data - użytkownicy widzą tylko swoje zadania
+- Token JWT wygasa po 24 godzinach
+- Po wylogowaniu token jest usuwany z localStorage
+- Każdy użytkownik ma pełną prywatność swoich danych
+- Minimalna długość hasła: 6 znaków
+- Minimalna długość loginu: 3 znaki
+
+## 🚀 How to start app local?
 ### Versions:
 - Node.js 16+
 - PostgreSQL
