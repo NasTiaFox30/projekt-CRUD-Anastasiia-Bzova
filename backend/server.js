@@ -17,7 +17,8 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://task-manger-mz7h.onrender.com'
-  ]
+  ],
+  credentials: true
 }));
 //parsing
 app.use(express.json());
