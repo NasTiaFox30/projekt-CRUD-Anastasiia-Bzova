@@ -1,0 +1,46 @@
+/* Auth Adaptation */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 5px;
+    min-height: 70vh;
+  }
+  
+  .auth-card {
+    padding: 30px 25px;
+  }
+  
+  .auth-card h2 {
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+  }
+  
+  .form-group input {
+    padding: 12px;
+    font-size: 15px;
+  }
+  
+  .auth-btn {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .auth-card {
+    padding: 25px 20px;
+  }
+  
+  .auth-card h2 {
+    font-size: 1.6rem;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .auth-btn {
+    padding: 10px;
+    font-size: 14px;
+  }
+}
