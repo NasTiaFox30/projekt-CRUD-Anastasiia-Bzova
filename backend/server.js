@@ -119,6 +119,16 @@ app.post('/register', async (req, res) => {
   }
 });
 
+// Login
+app.post('/login', async (req, res) => {
+  try {
+    
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'Server Error' });
+  }
+});
+
 // Routes
 // GET /tasks     (get all tasks)
 app.get('/tasks', authenticateToken, async (req, res) => {
