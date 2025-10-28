@@ -16,17 +16,17 @@ CREATE TABLE IF NOT EXISTS Tasks (
 );
 
 --Test Data:
-INSERT INTO Tasks (
-  title_name, description, deadline_date,
-  priority, status, category, assigned_to,
-  estimated_time, notes
-) VALUES
-('Learn React', 'Complete React tutorial', '2025-10-20',
- 'high', 'in-progress', 'Development', 'User1',
- 5, 'Finish before weekend'),
-('Prepare presentation', 'Slides for meeting', '2025-10-16',
- 'medium', 'pending', 'Meetings', 'User2',
- 2, 'Include charts and summary');
+-- INSERT INTO Tasks (
+--   title_name, description, deadline_date,
+--   priority, status, category, assigned_to,
+--   estimated_time, notes
+-- ) VALUES
+-- ('Learn React', 'Complete React tutorial', '2025-10-20',
+--  'high', 'in-progress', 'Development', 'User1',
+--  5, 'Finish before weekend'),
+-- ('Prepare presentation', 'Slides for meeting', '2025-10-16',
+--  'medium', 'pending', 'Meetings', 'User2',
+--  2, 'Include charts and summary');
 
 --Users table:
 CREATE TABLE IF NOT EXISTS Users (
