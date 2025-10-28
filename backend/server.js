@@ -81,6 +81,15 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
+// Registration
+app.post('/register', async (req, res) => {
+  try {
+    
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ error: 'Server Error' });
+  }
+});
 
 // Routes
 // GET /tasks     (get all tasks)
