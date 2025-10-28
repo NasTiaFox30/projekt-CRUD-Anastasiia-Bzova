@@ -302,7 +302,7 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
     console.log('Success! Task updated by user:', req.user.userId);
     res.status(200).json(result.rows[0]);
   } catch (error) {
-    console.error('Error fetch data', error);
+    console.error('Error updating task:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -322,7 +322,7 @@ app.delete('/tasks/:id', authenticateToken, async (req, res) => {
     console.log('Success! Task deleted by user:', req.user.userId);
     res.status(204).send();
   } catch (error) {
-    console.error('Error fetch data', error);
+    console.error('Error deleting task:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
