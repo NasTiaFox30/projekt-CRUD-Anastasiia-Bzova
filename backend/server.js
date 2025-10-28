@@ -137,7 +137,16 @@ app.post('/login', async (req, res) => {
     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
     if (!isPasswordValid) {return res.status(401).json({ error: 'Wrong login or password' });}
 
-    
+    // Generation JWT 
+    const token = jwt.sign(
+      { 
+        userId: user.id, 
+        login: user.login, 
+        role: user.role 
+      },
+      JWT_SECRET,
+      { expiresIn: '24h' }
+    );
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Server Error' });
