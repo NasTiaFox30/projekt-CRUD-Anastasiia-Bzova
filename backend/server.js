@@ -275,7 +275,7 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
            estimated_time = $8,
            notes = $9,
            update_date = CURRENT_TIMESTAMP
-       WHERE id = $10
+       WHERE id = $10 AND user_id = $11
        RETURNING *`,
       [
         title_name.trim(),
@@ -287,7 +287,8 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
         assigned_to,
         estimated_time,
         notes?.trim(),
-        id
+        id,
+        req.user.userId
       ]
     );
     
