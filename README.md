@@ -1,23 +1,45 @@
 # CRUD Project - Task Manager
-![UI preview 1](./screens/Screen1_v2.png)
-![UI preview 2](./screens/Screen2_v2.png)
+![UI preview 1](./screens/Screen1_v3.png)
+![UI preview 2](./screens/Screen2_v3.png)
+![UI preview 3](./screens/Screen3_v3.png)
+![UI preview 4](./screens/Screen4_v3.png)
+![UI preview 5](./screens/Screen5_v3.png)
+![UI preview 6](./screens/Screen6_v3.png)
 
 ## Link to webpage: https://task-manger-mz7h.onrender.com/
 (Project was deployed on Render.com)
 
 ## Description:
-Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał)
-- Wyświetlanie zadań
+Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał) z systemem uwierzytelniania
+- **Rejestracja i logowanie użytkowników**
+- **Bezpieczne hashowanie haseł**
+- **JWT token authentication**
+- **Prywatne zadania** - każdy użytkownik widzi tylko swoje zadania
+- Wyświetlanie zadań użytkownika
 - Dodawanie nowych zadań
 - Edytowanie
 - Usuwanie
 
 ## Technologies:
-- Frontend: React + Vite
-- Backend: Node.js + Express
-- Database: PostgreSQL
+- **Frontend**: React + Vite, Axios
+- **Backend**: Node.js + Express, JWT, bcrypt
+- **Database**: PostgreSQL
+- **Authentication**: JWT tokens
+- **Deployment**: Render.com
 
-## How to start app local?
+## Security:
+Hashowanie haseł - hasła są bezpiecznie przechowywane w bazie
+- JWT Tokens - stateless authentication
+- CORS protection - skonfigurowane dla określonych domen
+- Input validation - walidacja danych wejściowych
+- Private data - użytkownicy widzą tylko swoje zadania
+- Token JWT wygasa po 24 godzinach
+- Po wylogowaniu token jest usuwany z localStorage
+- Każdy użytkownik ma pełną prywatność swoich danych
+- Minimalna długość hasła: 6 znaków
+- Minimalna długość loginu: 3 znaki
+
+## 🚀 How to start app local?
 ### Versions:
 - Node.js 16+
 - PostgreSQL
@@ -29,8 +51,9 @@ Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał)
 ```bash
 cd database
 
-#1) Delete table if exist in DB:
+#1) Delete tables if exist in DB:
 psql -U postgres -h localhost -c "DROP TABLE IF EXISTS tasks;"
+psql -U postgres -h localhost -c "DROP TABLE IF EXISTS users;"
 
 #2) Delete DB:
 psql -U postgres -h localhost -c "DROP DATABASE crud_app_1_db;"
@@ -79,6 +102,26 @@ npm run dev
 ## API Endpoints
 (Każdy endpoint zwraca błędy 400,404,500 + validacja + success 200,201,204)
 
+### Public Endpoints:
+- GET / - informacje o API
+- GET /health - status serwera
+- POST /register - rejestracja nowego użytkownika
+```
+{
+  "login": "newuser",
+  "password": "password123"
+}
+```
+- POST /login - logowanie użytkownika
+```
+{
+  "login": "testuser",
+  "password": "password123"
+}
+```
+
+### Protected Endpoints (JWT token):
+- GET /me - informacje o zalogowanym użytkowniku
 - GET /tasks - otrzymanie wszystkish zadań
 - GET /tasks/:id - otrzymanie zadania po ID
 - DELETE /tasks/:id - usuń zadanie

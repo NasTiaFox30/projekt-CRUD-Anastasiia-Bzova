@@ -8,27 +8,28 @@
   --bg-primary: #0f0f23;
   --bg-secondary: #1a1a2e;
   --bg-card: #16213e;
-  --bg-input: #2d3047;
+  --bg-input: #1e1e2e;
 
   --accent-primary: #6c63ff;
   --accent-secondary: #4cc9f0;
-  --accent-success: #4ade80;
+  --accent-success: #10b981;
   --accent-warning: #f59e0b;
   --accent-danger: #ef4444;
 
   --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
+  --text-secondary: #a0a0a0;
   --text-muted: #64748b;
 
-  --gradient-primary: linear-gradient(135deg, #6c63ff 0%, #4cc9f0 100%);
-  --gradient-card: linear-gradient(145deg, #16213e 0%, #1a1a2e 100%);
+  --gradient-primary: linear-gradient(135deg, #6c63ff 0%, #378fad 100%);
+  --gradient-card: linear-gradient(135deg, rgba(30, 30, 46, 0.8) 0%, rgba(26, 26, 46, 0.9) 100%);
+  --gradient-dark: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
 
   --shadow-glowing: 0 0 20px rgba(108, 99, 255, 0.3);
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
 body {
-  background: var(--bg-primary);
+  background: var(--gradient-dark);
   color: var(--text-primary);
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   line-height: 1.6;

@@ -27,3 +27,18 @@ INSERT INTO Tasks (
 ('Prepare presentation', 'Slides for meeting', '2025-10-16',
  'medium', 'pending', 'Meetings', 'User2',
  2, 'Include charts and summary');
+
+--Users table:
+CREATE TABLE IF NOT EXISTS Users (
+    id SERIAL PRIMARY KEY,
+    login VARCHAR(50) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role VARCHAR(20) DEFAULT 'USER' CHECK (role IN ('USER', 'ADMIN')),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- adding user_id
+ALTER TABLE Tasks ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES Users(id);
+
+-- Index for search Task for User
+CREATE INDEX IF NOT EXISTS idx_tasks_user_id ON Tasks(user_id);

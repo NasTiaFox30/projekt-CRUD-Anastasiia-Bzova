@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import pkg from 'pg';
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -15,10 +17,14 @@ app.use(cors({
   origin: [
     'http://localhost:5173',
     'https://task-manger-mz7h.onrender.com'
-  ]
+  ],
+  credentials: true
 }));
 //parsing
 app.use(express.json());
+
+// JWT
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Postgre Conn Config for both environments:
 const pool = new Pool(
@@ -38,6 +44,18 @@ const pool = new Pool(
     }
 );
 
+// Public endpoint
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Witamy w aplikacji - Task manager!',
+    version: '2.0.0',
+    endpoints: {
+      public: ['/register', '/login', '/health'],
+      protected: ['/tasks', '/tasks/:id']
+    }
+  });
+});
+
 // Health check endpoint for Render
 app.get('/health', (req, res) => {
   res.json({ 
@@ -47,12 +65,113 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Routes
-// GET /tasks     (get all tasks)
-app.get('/tasks', async (req, res) => {
+// Middleware (cheking JWT)
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+
+  if (!token) {
+    return res.status(401).json({ error: 'No access token provided' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, user) => {
+    if (err) { return res.status(403).json({ error: 'Invalid Token' });}
+    req.user = user;
+    next();
+  });
+};
+
+// ===== Routes for Auth =====:
+
+// Registration
+app.post('/register', async (req, res) => {
   try {
-    console.log("> GET all Tasks");
-    const result = await pool.query('SELECT * FROM Tasks ORDER BY created_date DESC');
+    const { login, password } = req.body;
+
+    // Validation:
+    if (!login || !password) {return res.status(400).json({ error: 'Login & password - required' });}
+    if (login.length < 3) {return res.status(400).json({ error: 'Login must contain at least 3 characters' });}
+    if (password.length < 6) {return res.status(400).json({ error: 'Password must contain at least 6 characters' });}
+
+    // Check existing user
+    const existingUser = await pool.query('SELECT id FROM Users WHERE login = $1', [login]);
+    if (existingUser.rows.length > 0) {return res.status(400).json({ error: 'User with that login already exists' });}
+
+    // Hashing password
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+    
+    // Create new user
+    const result = await pool.query(
+      'INSERT INTO Users (login, password_hash) VALUES ($1, $2) RETURNING id, login, role, created_at',
+      [login, passwordHash]
+    );
+
+    res.status(201).json({
+      message: 'User successfully registered',
+      user: {
+        id: result.rows[0].id,
+        login: result.rows[0].login,
+        role: result.rows[0].role
+      }
+    });
+  } catch (error) {
+    console.error('Registration error:', error);
+    res.status(500).json({ error: 'Server Error' });
+  }
+});
+
+// Login
+app.post('/login', async (req, res) => {
+  try {
+    const { login, password } = req.body;
+
+    // Validation:
+    if (!login || !password) {return res.status(400).json({ error: 'Login & password - required' });}
+
+    // Search user (login)
+    const result = await pool.query('SELECT * FROM Users WHERE login = $1', [login]);
+    if (result.rows.length === 0) {return res.status(401).json({ error: 'Wrong login or password' });}
+
+    const user = result.rows[0];
+
+    // Check password
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+    if (!isPasswordValid) {return res.status(401).json({ error: 'Wrong login or password' });}
+
+    // Generation JWT 
+    const token = jwt.sign(
+      { 
+        userId: user.id, 
+        login: user.login, 
+        role: user.role 
+      },
+      JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    res.status(200).json({
+      message: 'Successful login',
+      token,
+      user: {
+        id: user.id,
+        login: user.login,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ error: 'Server Error' });
+  }
+});
+
+// ===== Routes for Tasks =====:
+
+// GET /tasks     (get all tasks)
+app.get('/tasks', authenticateToken, async (req, res) => {
+  try {
+    console.log("> GET all Tasks for user:", req.user.userId);
+    const result = await pool.query('SELECT * FROM Tasks WHERE user_id = $1 ORDER BY created_date DESC', [req.user.userId]);
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetch data', error);
@@ -61,11 +180,11 @@ app.get('/tasks', async (req, res) => {
 });
 
 // GET /tasks/:id       (get task by ID)
-app.get('/tasks/:id', async (req, res) => {
+app.get('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(`> GET task by ID: ${id}`);
-    const result = await pool.query('SELECT * FROM Tasks WHERE ID = $1', [id]);
+    console.log(`> GET task by ID: ${id} for user: ${req.user.userId}`);
+    const result = await pool.query('SELECT * FROM Tasks WHERE ID = $1 AND user_id = $2', [id, req.user.userId]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found!' });
@@ -80,7 +199,7 @@ app.get('/tasks/:id', async (req, res) => {
 
 
 //POST /tasks     (add new task)
-app.post('/tasks', async (req, res) => {
+app.post('/tasks', authenticateToken, async (req, res) => {
   try {
     const {
       title_name,
@@ -101,8 +220,8 @@ app.post('/tasks', async (req, res) => {
     const result = await pool.query(
       `INSERT INTO tasks
         (title_name, description, deadline_date, priority, status,
-         category, assigned_to, estimated_time, notes)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+         category, assigned_to, estimated_time, notes, user_id)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
        RETURNING *`,
       [
         title_name.trim(),
@@ -113,11 +232,12 @@ app.post('/tasks', async (req, res) => {
         category,
         assigned_to,
         estimated_time,
-        notes?.trim()
+        notes?.trim(),
+        req.user.userId
       ]
     );
     
-    console.log('Success!');
+    console.log('Success! Task created by user:', req.user.userId);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating task:', error);
@@ -127,7 +247,7 @@ app.post('/tasks', async (req, res) => {
 
 
 //PUT /tasks/:id      (update task)
-app.put('/tasks/:id', async (req, res) => {
+app.put('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     const {
@@ -158,7 +278,7 @@ app.put('/tasks/:id', async (req, res) => {
            estimated_time = $8,
            notes = $9,
            update_date = CURRENT_TIMESTAMP
-       WHERE id = $10
+       WHERE id = $10 AND user_id = $11
        RETURNING *`,
       [
         title_name.trim(),
@@ -170,7 +290,8 @@ app.put('/tasks/:id', async (req, res) => {
         assigned_to,
         estimated_time,
         notes?.trim(),
-        id
+        id,
+        req.user.userId
       ]
     );
     
@@ -178,30 +299,30 @@ app.put('/tasks/:id', async (req, res) => {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    console.log('Success!');
+    console.log('Success! Task updated by user:', req.user.userId);
     res.status(200).json(result.rows[0]);
   } catch (error) {
-    console.error('Error fetch data', error);
+    console.error('Error updating task:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
 
 //DELETE /tasks/:id     (delete task)
-app.delete('/tasks/:id', async (req, res) => {
+app.delete('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(`> DELETE Task by ID - ${id}`);
-    const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 RETURNING *', [id]);
+    console.log(`> DELETE Task by ID - ${id} for user: ${req.user.userId}`);
+    const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 AND user_id = $2 RETURNING *', [id, req.user.userId]);
 
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Task not found' });
     }
 
-    console.log('Success!');
+    console.log('Success! Task deleted by user:', req.user.userId);
     res.status(204).send();
   } catch (error) {
-    console.error('Error fetch data', error);
+    console.error('Error deleting task:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });

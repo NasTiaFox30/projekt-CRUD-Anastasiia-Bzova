@@ -11,6 +11,21 @@
     }
 }
 
+/* Loading animation */
+.loading {
+    animation: loading 2s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Task card */
 .task-card {
     animation: fadeIn 0.6s ease-out;
 }
@@ -29,4 +44,14 @@
 
 .task-card:nth-child(4) {
     animation-delay: 0.4s;
+}
+
+/* Feature card */
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Link */
+.link-btn:hover {
+  color: var(--accent-secondary);
 }
