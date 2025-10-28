@@ -35,8 +35,9 @@ Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał) z systemem uwierzyt
 ```bash
 cd database
 
-#1) Delete table if exist in DB:
+#1) Delete tables if exist in DB:
 psql -U postgres -h localhost -c "DROP TABLE IF EXISTS tasks;"
+psql -U postgres -h localhost -c "DROP TABLE IF EXISTS users;"
 
 #2) Delete DB:
 psql -U postgres -h localhost -c "DROP DATABASE crud_app_1_db;"
