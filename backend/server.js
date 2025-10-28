@@ -89,8 +89,13 @@ app.post('/register', async (req, res) => {
     // Hashing password
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
-
     
+    // Create new user
+    const result = await pool.query(
+      'INSERT INTO Users (login, password_hash) VALUES ($1, $2) RETURNING id, login, role, created_at',
+      [login, passwordHash]
+    );
+
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({ error: 'Server Error' });
