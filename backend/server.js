@@ -44,6 +44,18 @@ const pool = new Pool(
     }
 );
 
+// Public endpoint
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Witamy w aplikacji - Task manager!',
+    version: '2.0.0',
+    endpoints: {
+      public: ['/register', '/login', '/health'],
+      protected: ['/tasks', '/tasks/:id']
+    }
+  });
+});
+
 // Health check endpoint for Render
 app.get('/health', (req, res) => {
   res.json({ 
