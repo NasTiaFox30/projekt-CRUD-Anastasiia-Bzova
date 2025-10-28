@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import './Auth.css';
+import './Auth_adapt.css';
 
 
 const API_URL = import.meta.env.VITE_API_URL 
