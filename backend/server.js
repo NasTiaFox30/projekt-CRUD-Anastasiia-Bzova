@@ -81,6 +81,8 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
+// ===== Routes for Auth =====:
+
 // Registration
 app.post('/register', async (req, res) => {
   try {
@@ -163,7 +165,8 @@ app.post('/login', async (req, res) => {
   }
 });
 
-// Routes
+// ===== Routes for Tasks =====:
+
 // GET /tasks     (get all tasks)
 app.get('/tasks', authenticateToken, async (req, res) => {
   try {
