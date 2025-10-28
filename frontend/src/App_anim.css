@@ -30,3 +30,13 @@
 .task-card:nth-child(4) {
     animation-delay: 0.4s;
 }
+
+/* Feature card */
+.feature-card:hover {
+  transform: translateY(-10px);
+}
+
+/* Link */
+.link-btn:hover {
+  color: var(--accent-secondary);
+}
