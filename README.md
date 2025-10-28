@@ -6,8 +6,12 @@
 (Project was deployed on Render.com)
 
 ## Description:
-Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał)
-- Wyświetlanie zadań
+Prosty menedżer zadań TO-DO list (pełny CRUD funkcjonał) z systemem uwierzytelniania
+- **Rejestracja i logowanie użytkowników**
+- **Bezpieczne hashowanie haseł**
+- **JWT token authentication**
+- **Prywatne zadania** - każdy użytkownik widzi tylko swoje zadania
+- Wyświetlanie zadań użytkownika
 - Dodawanie nowych zadań
 - Edytowanie
 - Usuwanie
