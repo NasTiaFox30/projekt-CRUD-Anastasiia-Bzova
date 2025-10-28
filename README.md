@@ -1,10 +1,10 @@
 # CRUD Project - Task Manager
-![UI preview 1](./screens/Screen1_v3.png)
-![UI preview 2](./screens/Screen2_v3.png)
-![UI preview 3](./screens/Screen3_v3.png)
-![UI preview 4](./screens/Screen4_v3.png)
-![UI preview 5](./screens/Screen5_v3.png)
-![UI preview 6](./screens/Screen6_v3.png)
+![UI preview 1](./screens/v3/Screen1_v3.png)
+![UI preview 2](./screens/v3/Screen2_v3.png)
+![UI preview 3](./screens/v3/Screen3_v3.png)
+![UI preview 4](./screens/v3/Screen4_v3.png)
+![UI preview 5](./screens/v3/Screen5_v3.png)
+![UI preview 6](./screens/v3/Screen6_v3.png)
 
 ## Link to webpage: https://task-manger-mz7h.onrender.com/
 (Project was deployed on Render.com)
