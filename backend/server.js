@@ -86,6 +86,10 @@ app.post('/register', async (req, res) => {
   try {
     const { login, password } = req.body;
 
+    // Hashing password
+    const saltRounds = 10;
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+
     
   } catch (error) {
     console.error('Registration error:', error);
