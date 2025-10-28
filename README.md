@@ -86,6 +86,26 @@ npm run dev
 ## API Endpoints
 (Każdy endpoint zwraca błędy 400,404,500 + validacja + success 200,201,204)
 
+### Public Endpoints:
+- GET / - informacje o API
+- GET /health - status serwera
+- POST /register - rejestracja nowego użytkownika
+```
+{
+  "login": "newuser",
+  "password": "password123"
+}
+```
+- POST /login - logowanie użytkownika
+```
+{
+  "login": "testuser",
+  "password": "password123"
+}
+```
+
+### Protected Endpoints (JWT token):
+- GET /me - informacje o zalogowanym użytkowniku
 - GET /tasks - otrzymanie wszystkish zadań
 - GET /tasks/:id - otrzymanie zadania po ID
 - DELETE /tasks/:id - usuń zadanie
