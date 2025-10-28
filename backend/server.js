@@ -86,6 +86,13 @@ app.post('/register', async (req, res) => {
   try {
     const { login, password } = req.body;
 
+    // Validation:
+    if (!login || !password) {return res.status(400).json({ error: 'Login & password - required' });}
+    if (login.length < 3) {return res.status(400).json({ error: 'Login must contain at least 3 characters' });}
+    if (password.length < 6) {return res.status(400).json({ error: 'Password must contain at least 6 characters' });}
+
+    
+
     // Hashing password
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
