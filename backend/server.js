@@ -96,6 +96,14 @@ app.post('/register', async (req, res) => {
       [login, passwordHash]
     );
 
+    res.status(201).json({
+      message: 'User successfully registered',
+      user: {
+        id: result.rows[0].id,
+        login: result.rows[0].login,
+        role: result.rows[0].role
+      }
+    });
   } catch (error) {
     console.error('Registration error:', error);
     res.status(500).json({ error: 'Server Error' });
