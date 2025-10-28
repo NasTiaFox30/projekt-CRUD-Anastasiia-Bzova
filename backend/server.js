@@ -122,7 +122,8 @@ app.post('/register', async (req, res) => {
 // Login
 app.post('/login', async (req, res) => {
   try {
-    
+    const { login, password } = req.body;
+
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Server Error' });
