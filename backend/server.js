@@ -147,6 +147,16 @@ app.post('/login', async (req, res) => {
       JWT_SECRET,
       { expiresIn: '24h' }
     );
+
+    res.status(200).json({
+      message: 'Successful login',
+      token,
+      user: {
+        id: user.id,
+        login: user.login,
+        role: user.role
+      }
+    });
   } catch (error) {
     console.error('Login error:', error);
     res.status(500).json({ error: 'Server Error' });
