@@ -23,7 +23,7 @@ export default function Tasks({
         <h2>{editingId ? '✏️ Edytuj zadanie:' : '➕ Utwórz nowe zadanie'}</h2>
 
         <div className="form-block">
-          <label>Nazwa: </label>
+          <label>Nazwa: *</label>
           <input
             type="text"
             placeholder="Wprowadź nazwę zadania"
