@@ -296,19 +296,7 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
            update_date = CURRENT_TIMESTAMP
        WHERE id = $10 AND user_id = $11
        RETURNING *`,
-      [
-        title_name.trim(),
-        description?.trim(),
-        deadline_date,
-        priority,
-        status,
-        category,
-        assigned_to,
-        estimated_time,
-        notes?.trim(),
-        id,
-        req.user.userId
-      ]
+      queryParams
     );
     
     if (result.rows.length === 0) {
