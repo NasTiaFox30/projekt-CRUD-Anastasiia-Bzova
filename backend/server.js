@@ -237,21 +237,8 @@ app.post('/tasks', authenticateToken, async (req, res) => {
          category, assigned_to, estimated_time, notes, user_id)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
        RETURNING *`,
-      [
-        title_name.trim(),
-        description?.trim(),
-        deadline_date,
-        priority,
-        status,
-        category,
-        assigned_to,
-        estimated_time,
-        notes?.trim(),
-        req.user.userId
-      ]
+      queryParams
     );
-    
-    console.log('Success! Task created by user:', req.user.userId);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating task:', error);
