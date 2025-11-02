@@ -13,6 +13,9 @@ export default function Tasks({
   onEditTask,
   onResetForm 
 }) {
+  const [validationErrors, setValidationErrors] = useState({});
+  const [touchedFields, setTouchedFields] = useState({});
+
   return (
     <div className="tasks-container" >
       {/* Formularz zadania */}
