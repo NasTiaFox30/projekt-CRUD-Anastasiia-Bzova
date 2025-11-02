@@ -19,7 +19,7 @@ export default function Tasks({
   return (
     <div className="tasks-container" >
       {/* Formularz zadania */}
-      <form onSubmit={onSaveTask} className="task-form">
+      <form onSubmit={handleSubmit} className="task-form" noValidate>
         <h2>{editingId ? '✏️ Edytuj zadanie:' : '➕ Utwórz nowe zadanie'}</h2>
 
         <div className="form-block">
