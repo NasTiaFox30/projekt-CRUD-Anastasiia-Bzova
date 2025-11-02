@@ -216,7 +216,21 @@ app.post('/tasks', authenticateToken, async (req, res) => {
     if (!title_name || title_name.trim() === '') {
       return res.status(400).json({ error: 'Title of Task - required!' });
     }
-    
+
+    // Prepare data with type conversions
+    const queryParams = [
+      title_name.trim(),
+      description && description.trim() !== '' ? description.trim() : null,
+      deadline_date && deadline_date !== '' ? deadline_date : null,
+      priority || 'medium',
+      status || 'pending',
+      category && category !== '' ? category : null,
+      assigned_to && assigned_to !== '' ? assigned_to : null,
+      estimated_time && estimated_time !== '' ? parseInt(estimated_time) : null,
+      notes && notes.trim() !== '' ? notes.trim() : null,
+      req.user.userId
+    ];
+
     const result = await pool.query(
       `INSERT INTO tasks
         (title_name, description, deadline_date, priority, status,
