@@ -166,6 +166,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               minLength="3"
               maxLength="30"
               placeholder="Wprowadź swój login (3-30 znaków)"
+              className={getFieldClassName('login')}
             />
             {renderFieldError('login')}
           </div>
@@ -181,6 +182,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               required
               minLength="6"
               placeholder="Wprowadź swoje hasło (min. 6 znaków)"
+              className={getFieldClassName('password')}
             />
             {renderFieldError('password')}
           </div>
@@ -188,7 +190,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
           <button 
             type="submit" 
             className="btn-primary auth-btn"
-            disabled={loading}
+            disabled={loading || hasRealErrors()}
           >
             {loading ? 'Logowanie...' : 'Zaloguj'}
           </button>
