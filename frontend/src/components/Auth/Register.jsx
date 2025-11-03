@@ -179,7 +179,8 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             type="password"
                             name="password"
                             value={formData.password}
-                            onChange={handleChange}
+                            onChange={handleFieldChange}
+                            onBlur={() => handleFieldBlurError('password')}
                             required
                             minLength="6"
                             placeholder="Wprowadź hasło (minimum 6 znaków)"
