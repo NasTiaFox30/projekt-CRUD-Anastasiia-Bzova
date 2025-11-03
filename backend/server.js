@@ -44,7 +44,7 @@ const pool = new Pool(
     }
 );
 
-// Public endpoint
+// Public endpoints:
 app.get('/', (req, res) => {
   res.json({
     message: 'Witamy w aplikacji - Task manager!',
@@ -65,7 +65,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Middleware (cheking JWT)
+// Middleware (checking JWT)
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
@@ -213,6 +213,7 @@ app.post('/tasks', authenticateToken, async (req, res) => {
       notes
     } = req.body;
 
+    // Required field: title_name
     if (!title_name || title_name.trim() === '') {
       return res.status(400).json({ error: 'Title of Task - required!' });
     }
