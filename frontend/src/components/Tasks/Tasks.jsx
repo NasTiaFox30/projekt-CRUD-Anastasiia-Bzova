@@ -18,6 +18,11 @@ export default function Tasks({
 
   const fieldsToValidate = ['title_name', 'description', 'deadline_date', 'estimated_time', 'category', 'assigned_to', 'notes'];
 
+  // Validation fileds rules:
+  const validateField = (name, value) => {
+    
+  };
+
 
   return (
     <div className="tasks-container" >
