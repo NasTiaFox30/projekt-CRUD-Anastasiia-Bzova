@@ -107,19 +107,30 @@ export default function Register({ onRegister, onSwitchToLogin }) {
     
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError('');
-
-        if (formData.password !== formData.confirmPassword) {
-            setError('Hasła nie są zgodne');
-            return;
-        }
-
-        if (formData.password.length < 6) {
-            setError('Hasło musi zawierać co najmniej 6 znaków');
-            return;
-        }
-
-        setLoading(true);
+        
+        // Mark all fields as touched
+        const allTouched = {
+            login: true,
+            email: true,
+            password: true,
+            confirmPassword: true
+        };
+        setTouchedFields(allTouched);
+        
+        // Validate all fields
+        const errors = {};
+        Object.keys(formData).forEach(field => {
+            const error = validateField(field, formData[field]);
+            if (error) {
+                errors[field] = error;
+            }
+        });
+        
+        setValidationErrors(errors);
+        
+        // If no errors:
+        if (Object.keys(errors).length === 0) {
+            setLoading(true);
 
         try {
             const response = await axios.post(`${API_URL}/register`, {
