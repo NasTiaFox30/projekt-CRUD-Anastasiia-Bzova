@@ -283,6 +283,7 @@ export default function Tasks({
             onBlur={() => handleFieldBlurError('assigned_to')}
             maxLength="50"
           />
+          {renderFieldError('assigned_to')}
         </div>
 
         <div className="form-row">
