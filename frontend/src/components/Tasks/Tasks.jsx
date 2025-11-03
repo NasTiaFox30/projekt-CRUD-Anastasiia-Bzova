@@ -39,6 +39,12 @@ export default function Tasks({
         }
         return null;
         
+      case 'deadline_date':
+        if (value && new Date(value) < new Date().setHours(0, 0, 0, 0)) {
+          return 'Termin nie może być w przeszłości';
+        }
+        return null;
+        
       case 'category':
         if(value && value.length < 2) {
           return 'Kategoria musi mieć co najmniej 2 znaki';
