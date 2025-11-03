@@ -19,6 +19,25 @@ export default function Register({ onRegister, onSwitchToLogin }) {
     const [validationErrors, setValidationErrors] = useState({});
     const [touchedFields, setTouchedFields] = useState({});
 
+    // Validation rules:
+    const validateField = (name, value) => {
+        switch (name) {
+            case 'login':
+                if (!value || value.trim() === '') {
+                    return 'Email jest wymagany';
+                } else if (!validateEmail(value)) {
+                    return 'Proszę wprowadzić poprawny adres email';
+                } else if (value.length > 100) {
+                    return 'Email nie może przekraczać 100 znaków';
+                }
+                return null;
+                
+            
+                
+            default:
+                return null;
+        }
+    };
 
     const handleChange = (e) => {
         setFormData({
