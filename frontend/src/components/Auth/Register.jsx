@@ -104,6 +104,18 @@ export default function Register({ onRegister, onSwitchToLogin }) {
         });
     };
 
+    // Field error rendering
+    const renderFieldError = (field) => {
+        if (validationErrors[field] && touchedFields[field]) {
+        return <div className="field-error">{validationErrors[field]}</div>;
+        }
+        return null;
+    };
+
+    // error class for field
+    const getFieldClassName = (field) => {
+        return validationErrors[field] && touchedFields[field] ? 'error' : '';
+    };
     
     const handleSubmit = async (e) => {
         e.preventDefault();
