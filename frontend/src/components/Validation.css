@@ -6,9 +6,9 @@
   animation: fadeIn 0.2s ease-out;
 }
 
-.form-block input.error,
-.form-block textarea.error,
-.form-block select.error {
+input.error,
+textarea.error,
+select.error {
   border-color: var(--accent-danger);
 }
 
