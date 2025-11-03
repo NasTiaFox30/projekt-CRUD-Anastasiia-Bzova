@@ -282,6 +282,7 @@ export default function Tasks({
             onChange={(e) => handleFieldChange('assigned_to', e.target.value)}
             onBlur={() => handleFieldBlurError('assigned_to')}
             maxLength="50"
+            className={getFieldClassName('assigned_to')}
           />
           {renderFieldError('assigned_to')}
         </div>
