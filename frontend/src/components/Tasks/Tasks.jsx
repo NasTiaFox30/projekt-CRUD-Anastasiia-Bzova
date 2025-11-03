@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './Tasks.css';
 import './Tasks_adapt.css';
+import './Validation.css';
 
 export default function Tasks({ 
   tasks, 
