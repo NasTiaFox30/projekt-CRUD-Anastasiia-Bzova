@@ -164,6 +164,15 @@ export default function Tasks({
     }
   };
 
+  useEffect(() => {
+    if (!editingId) {
+      //Clear validation
+      setValidationErrors({});
+      setTouchedFields({});
+    }
+  }, [editingId]);
+
+
   // Check if there are any errors
   const hasRealErrors = () => {
     return Object.values(validationErrors).some(error => error !== null && error !== undefined);
