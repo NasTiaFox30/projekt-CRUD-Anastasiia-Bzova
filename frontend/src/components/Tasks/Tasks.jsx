@@ -69,6 +69,11 @@ export default function Tasks({
         }
         return null;
         
+      case 'notes':
+        if (value && value.length > 200) {
+          return 'Notatki nie mogą przekraczać 200 znaków';
+        }
+        return null;
         
       default:
         return null;
