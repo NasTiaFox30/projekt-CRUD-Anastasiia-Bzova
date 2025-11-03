@@ -223,7 +223,8 @@ export default function Tasks({
             <input
               type="date"
               value={currentTask.deadline_date}
-              onChange={(e) => onTaskChange({ ...currentTask, deadline_date: e.target.value })}
+              onChange={(e) => handleFieldChange('deadline_date', e.target.value)}
+              onBlur={() => handleFieldBlurError('deadline_date')}
             />
           </div>
           <div className="form-block">
