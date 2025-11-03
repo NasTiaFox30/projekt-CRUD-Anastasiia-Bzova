@@ -164,6 +164,10 @@ export default function Tasks({
     }
   };
 
+  // Check if there are any errors
+  const hasRealErrors = () => {
+    return Object.values(validationErrors).some(error => error !== null && error !== undefined);
+  };
 
   return (
     <div className="tasks-container" >
