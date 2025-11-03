@@ -30,7 +30,17 @@ export default function Tasks({
           return 'Nazwa nie może przekraczać 50 znaków';
         }
         return null;
+        
+      case 'description':
+        if (value && value.length < 10) {
+          return 'Opis musi mieć co najmniej 10 znaków';
+        } else if (value && value.length > 500) {
+          return 'Opis nie może przekraczać 500 znaków';
+        }
+        return null;
+        
       
+        
       default:
         return null;
     }
