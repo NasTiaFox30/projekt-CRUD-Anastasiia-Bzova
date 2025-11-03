@@ -263,7 +263,8 @@ export default function Tasks({
             <label>Priorytet: *</label>
             <select
               value={currentTask.priority}
-              onChange={(e) => onTaskChange({ ...currentTask, priority: e.target.value })}
+              onChange={(e) => handleFieldChange('priority', e.target.value)}
+              required
             >
               <option value="low">🟢 Niski</option>
               <option value="medium">🟡 Średni</option>
