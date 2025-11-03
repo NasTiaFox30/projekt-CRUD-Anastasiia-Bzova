@@ -17,6 +17,32 @@ export default function Login({ onLogin, onSwitchToRegister }) {
   const [validationErrors, setValidationErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
 
+  // Validation fileds rules:
+  const validateField = (name, value) => {
+    switch (name) {
+      case 'login':
+        if (!value || value.trim() === '') {
+          return 'Login jest wymagany';
+        } else if (value.length < 3) {
+          return 'Login musi mieć co najmniej 3 znaki';
+        } else if (value.length > 30) {
+          return 'Login nie może przekraczać 30 znaków';
+        }
+        return null;
+        
+      case 'password':
+        if (!value || value.trim() === '') {
+          return 'Hasło jest wymagane';
+        } else if (value.length < 6) {
+          return 'Hasło musi mieć co najmniej 6 znaków';
+        }
+        return null;
+        
+      default:
+        return null;
+    }
+  };
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
