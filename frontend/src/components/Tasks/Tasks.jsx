@@ -214,6 +214,7 @@ export default function Tasks({
           <div className="char-counter">
             {currentTask.description?.length || 0}/500
           </div>
+          {renderFieldError('description')}
         </div>
 
         <div className="form-row">
