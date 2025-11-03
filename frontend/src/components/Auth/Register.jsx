@@ -16,6 +16,9 @@ export default function Register({ onRegister, onSwitchToLogin }) {
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [validationErrors, setValidationErrors] = useState({});
+    const [touchedFields, setTouchedFields] = useState({});
+
 
     const handleChange = (e) => {
         setFormData({
