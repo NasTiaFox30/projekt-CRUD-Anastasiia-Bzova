@@ -164,6 +164,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               required
               placeholder="Wprowadź swój login"
             />
+            {renderFieldError('login')}
           </div>
           
           <div className="form-group">
@@ -176,6 +177,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               required
               placeholder="Wprowadź swoje hasło"
             />
+            {renderFieldError('password')}
           </div>
           
           <button 
