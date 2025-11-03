@@ -225,6 +225,7 @@ export default function Tasks({
               value={currentTask.deadline_date}
               onChange={(e) => handleFieldChange('deadline_date', e.target.value)}
               onBlur={() => handleFieldBlurError('deadline_date')}
+              min={new Date().toISOString().split('T')[0]}
             />
           </div>
           <div className="form-block">
