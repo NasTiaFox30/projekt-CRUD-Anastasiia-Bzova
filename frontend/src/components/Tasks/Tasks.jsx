@@ -310,7 +310,8 @@ export default function Tasks({
               type="text"
               placeholder="Dodatkowe uwagi (max 200 znaków)"
               value={currentTask.notes}
-              onChange={(e) => onTaskChange({ ...currentTask, notes: e.target.value })}
+              onChange={(e) => handleFieldChange('notes', e.target.value)}
+              onBlur={() => handleFieldBlurError('notes')}
             />
             {renderFieldError('notes')}
           </div>
