@@ -91,6 +91,24 @@ export default function Tasks({
     return errors;
   };
 
+  const handleFieldChange = (field, value) => {
+    const updatedTask = { ...currentTask, [field]: value };
+    onTaskChange(updatedTask);
+
+    if (touchedFields[field]) {
+      const error = validateField(field, value);
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        if (error) {
+          newErrors[field] = error;
+        } else {
+          delete newErrors[field];
+        }
+        return newErrors;
+      });
+    }
+  };
+
 
   return (
     <div className="tasks-container" >
