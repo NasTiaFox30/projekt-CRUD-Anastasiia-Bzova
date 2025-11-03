@@ -193,7 +193,8 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             type="password"
                             name="confirmPassword"
                             value={formData.confirmPassword}
-                            onChange={handleChange}
+                            onChange={handleFieldChange}
+                            onBlur={() => handleFieldBlurError('confirmPassword')}
                             required
                             placeholder="Powtórz hasło"
                         />
