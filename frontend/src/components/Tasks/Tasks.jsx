@@ -136,6 +136,11 @@ export default function Tasks({
     return null;
   };
 
+   // error class for filed
+  const getFieldClassName = (field) => {
+    return validationErrors[field] && touchedFields[field] ? 'error' : '';
+  };
+
 
   return (
     <div className="tasks-container" >
