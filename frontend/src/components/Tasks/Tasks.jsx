@@ -208,6 +208,7 @@ export default function Tasks({
             onChange={(e) => handleFieldChange('description', e.target.value)}
             onBlur={() => handleFieldBlurError('description')}
             rows="3"
+            maxLength="500"
           />
         </div>
 
