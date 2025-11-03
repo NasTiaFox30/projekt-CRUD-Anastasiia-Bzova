@@ -99,6 +99,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
     return validationErrors[field] && touchedFields[field] ? 'error' : '';
   };
 
+  // Check form before submit
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
