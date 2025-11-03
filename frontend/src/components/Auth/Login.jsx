@@ -102,8 +102,30 @@ export default function Login({ onLogin, onSwitchToRegister }) {
   // Check form before submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
+    
+    // Mark all fields as touched
+    const allTouched = {
+      login: true,
+      password: true
+    };
+    setTouchedFields(allTouched);
+    
+    // Validate all fields
+    const errors = {};
+    Object.keys(formData).forEach(field => {
+      const error = validateField(field, formData[field]);
+      if (error) {
+        errors[field] = error;
+      }
+    });
+    
+    setValidationErrors(errors);
+    
+    // If no errors:
+    if (Object.keys(errors).length === 0) {
+      setLoading(true);
+      //Clear validation
+      setError('');
 
     try {
       const response = await axios.post(`${API_URL}/login`, formData);
