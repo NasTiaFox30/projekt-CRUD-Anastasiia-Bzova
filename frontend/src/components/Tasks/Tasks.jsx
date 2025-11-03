@@ -197,6 +197,7 @@ export default function Tasks({
             maxLength="50"
             className={getFieldClassName('title_name')}
           />
+          {renderFieldError('title_name')}
         </div>
 
         <div className="form-block">
