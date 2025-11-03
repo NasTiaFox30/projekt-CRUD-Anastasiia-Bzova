@@ -160,7 +160,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                 
                 <form onSubmit={handleSubmit} className="auth-form" noValidate>
                     <div className="form-group">
-                        <label>Login:</label>
+                        <label>Login: *</label>
                         <input
                             type="text"
                             name="login"
@@ -173,7 +173,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                     </div>
                     
                     <div className="form-group">
-                        <label>Hasło:</label>
+                        <label>Hasło: *</label>
                         <input
                             type="password"
                             name="password"
@@ -186,7 +186,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                     </div>
                     
                     <div className="form-group">
-                        <label>Potwierdzenie hasła:</label>
+                        <label>Potwierdzenie hasła: *</label>
                         <input
                             type="password"
                             name="confirmPassword"
