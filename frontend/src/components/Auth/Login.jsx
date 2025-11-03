@@ -162,7 +162,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               value={formData.login}
               onChange={handleFieldChange}
               required
-              placeholder="Wprowadź swój login"
+              placeholder="Wprowadź swój login (3-30 znaków)"
             />
             {renderFieldError('login')}
           </div>
