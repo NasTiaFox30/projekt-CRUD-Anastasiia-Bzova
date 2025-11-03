@@ -295,7 +295,8 @@ export default function Tasks({
               min="0"
               placeholder="np.: 3"
               value={currentTask.estimated_time}
-              onChange={(e) => onTaskChange({ ...currentTask, estimated_time: e.target.value })}
+              onChange={(e) => handleFieldChange('estimated_time', parseFloat(e.target.value) || '')}
+              onBlur={() => handleFieldBlurError('estimated_time')}
             />
           </div>
 
