@@ -67,6 +67,25 @@ export default function Login({ onLogin, onSwitchToRegister }) {
     }
   };
 
+  // Validate field on blur
+  const handleFieldBlurError = (field) => {
+    setTouchedFields(prev => ({
+      ...prev,
+      [field]: true
+    }));
+
+    const error = validateField(field, formData[field]);
+    setValidationErrors(prev => {
+      const newErrors = { ...prev };
+      if (error) {
+        newErrors[field] = error;
+      } else {
+        delete newErrors[field];
+      }
+      return newErrors;
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
