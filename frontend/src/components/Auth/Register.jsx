@@ -131,18 +131,19 @@ export default function Register({ onRegister, onSwitchToLogin }) {
         if (Object.keys(errors).length === 0) {
             setLoading(true);
 
-        try {
-            const response = await axios.post(`${API_URL}/register`, {
-                login: formData.login,
-                password: formData.password
-            });
-            
-            alert('Rejestracja udana! Teraz zaloguj się do systemu.');
-            onSwitchToLogin();
-        } catch (error) {
-            setError(error.response?.data?.error || 'Błąd rejestracji');
-        } finally {
-            setLoading(false);
+            try {
+                const response = await axios.post(`${API_URL}/register`, {
+                    login: formData.login,
+                    password: formData.password
+                });
+                
+                alert('Rejestracja udana! Teraz zaloguj się do systemu.');
+                onSwitchToLogin();
+            } catch (error) {
+                setError(error.response?.data?.error || 'Błąd rejestracji');
+            } finally {
+                setLoading(false);
+            }
         }
     };
 
