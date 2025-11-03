@@ -209,6 +209,7 @@ export default function Tasks({
             onBlur={() => handleFieldBlurError('description')}
             rows="3"
             maxLength="500"
+            className={getFieldClassName('description')}
           />
           <div className="char-counter">
             {currentTask.description?.length || 0}/500
