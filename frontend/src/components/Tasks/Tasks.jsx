@@ -60,7 +60,15 @@ export default function Tasks({
         }
         return null;
         
-      
+      case 'assigned_to':
+        if (value && value.length < 3) {
+          return 'Nazwa osoby musi mieć co najmniej 3 znaki';
+        }
+        if (value && value.length > 50) {
+          return 'Nazwa nie może przekraczać 50 znaków';
+        }
+        return null;
+        
         
       default:
         return null;
