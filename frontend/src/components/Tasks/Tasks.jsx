@@ -128,6 +128,14 @@ export default function Tasks({
     });
   };
 
+  // Field error rendering
+  const renderFieldError = (field) => {
+    if (validationErrors[field] && touchedFields[field]) {
+      return <div className="field-error">{validationErrors[field]}</div>;
+    }
+    return null;
+  };
+
 
   return (
     <div className="tasks-container" >
