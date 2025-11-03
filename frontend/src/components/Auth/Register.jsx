@@ -147,6 +147,11 @@ export default function Register({ onRegister, onSwitchToLogin }) {
         }
     };
 
+    // Check if there are any errors
+    const hasRealErrors = () => {
+        return Object.values(validationErrors).some(error => error !== null && error !== undefined);
+    };
+
     return (
         <div className="auth-container">
             <div className="auth-card">
