@@ -205,7 +205,8 @@ export default function Tasks({
           <textarea
             placeholder="Opisz zadanie (max 500 znaków)"
             value={currentTask.description}
-            onChange={(e) => onTaskChange({ ...currentTask, description: e.target.value })}
+            onChange={(e) => handleFieldChange('description', e.target.value)}
+            onBlur={() => handleFieldBlurError('description')}
             rows="3"
           />
         </div>
