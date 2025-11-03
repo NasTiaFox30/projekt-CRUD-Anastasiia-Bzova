@@ -141,6 +141,29 @@ export default function Tasks({
     return validationErrors[field] && touchedFields[field] ? 'error' : '';
   };
 
+  // Check form before submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    const allTouched = {};
+    
+    fieldsToValidate.forEach(field => {
+      allTouched[field] = true;
+    });
+    setTouchedFields(allTouched);
+    
+    const errors = validateAll(currentTask);
+    setValidationErrors(errors);
+    
+    // If no errors:
+    if (Object.keys(errors).length === 0) {
+      onSaveTask(e);
+      //Clear validation
+      setValidationErrors({});
+      setTouchedFields({});
+    }
+  };
+
 
   return (
     <div className="tasks-container" >
