@@ -193,6 +193,8 @@ export default function Tasks({
             onChange={(e) => handleFieldChange('title_name', e.target.value)}
             onBlur={() => handleFieldBlurError('title_name')}
             required
+            minLength="3"
+            maxLength="50"
           />
         </div>
 
