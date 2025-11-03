@@ -39,6 +39,15 @@ export default function Tasks({
         }
         return null;
         
+      case 'category':
+        if(value && value.length < 2) {
+          return 'Kategoria musi mieć co najmniej 2 znaki';
+        }
+        else if (value && value.length > 30) {
+          return 'Kategoria nie może przekraczać 30 znaków';
+        }
+        return null;
+        
       
         
       default:
