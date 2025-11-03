@@ -195,6 +195,7 @@ export default function Tasks({
             required
             minLength="3"
             maxLength="50"
+            className={getFieldClassName('title_name')}
           />
         </div>
 
