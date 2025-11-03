@@ -45,6 +45,12 @@ export default function Tasks({
         }
         return null;
         
+      case 'estimated_time':
+        if (value && (value < 0 || value > 1000)) {
+          return 'Czas musi być między 0 a 1000 godzin';
+        }
+        return null;
+        
       case 'category':
         if(value && value.length < 2) {
           return 'Kategoria musi mieć co najmniej 2 znaki';
