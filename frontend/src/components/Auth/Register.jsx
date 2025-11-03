@@ -143,6 +143,8 @@ export default function Register({ onRegister, onSwitchToLogin }) {
         // If no errors:
         if (Object.keys(errors).length === 0) {
             setLoading(true);
+            //Clear validation
+            setError('');
 
             try {
                 const response = await axios.post(`${API_URL}/register`, {
