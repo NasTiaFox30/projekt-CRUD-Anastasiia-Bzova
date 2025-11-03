@@ -111,7 +111,6 @@ export default function Register({ onRegister, onSwitchToLogin }) {
         // Mark all fields as touched
         const allTouched = {
             login: true,
-            email: true,
             password: true,
             confirmPassword: true
         };
