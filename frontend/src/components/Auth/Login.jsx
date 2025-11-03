@@ -160,7 +160,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               type="text"
               name="login"
               value={formData.login}
-              onChange={handleChange}
+              onChange={handleFieldChange}
               required
               placeholder="Wprowadź swój login"
             />
@@ -173,7 +173,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               type="password"
               name="password"
               value={formData.password}
-              onChange={handleChange}
+              onChange={handleFieldChange}
               required
               placeholder="Wprowadź swoje hasło"
             />
