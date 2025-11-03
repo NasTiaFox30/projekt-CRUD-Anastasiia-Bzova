@@ -299,7 +299,9 @@ export default function Tasks({
               value={currentTask.estimated_time}
               onChange={(e) => handleFieldChange('estimated_time', parseFloat(e.target.value) || '')}
               onBlur={() => handleFieldBlurError('estimated_time')}
+              className={getFieldClassName('estimated_time')}
             />
+            {renderFieldError('estimated_time')}
           </div>
 
           <div className="form-block">
