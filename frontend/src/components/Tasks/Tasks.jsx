@@ -112,7 +112,7 @@ export default function Tasks({
         <div className="form-block">
           <label>Opis: </label>
           <textarea
-            placeholder="Opisz zadanie..."
+            placeholder="Opisz zadanie (max 500 znaków)"
             value={currentTask.description}
             onChange={(e) => onTaskChange({ ...currentTask, description: e.target.value })}
             rows="3"
