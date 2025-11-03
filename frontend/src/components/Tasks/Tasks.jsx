@@ -313,6 +313,7 @@ export default function Tasks({
               onChange={(e) => handleFieldChange('notes', e.target.value)}
               onBlur={() => handleFieldBlurError('notes')}
               maxLength="200"
+              className={getFieldClassName('notes')}
             />
             {renderFieldError('notes')}
           </div>
