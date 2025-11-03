@@ -293,6 +293,8 @@ export default function Tasks({
             <input
               type="number"
               min="0"
+              max="1000"
+              step="0.5"
               placeholder="np.: 3"
               value={currentTask.estimated_time}
               onChange={(e) => handleFieldChange('estimated_time', parseFloat(e.target.value) || '')}
