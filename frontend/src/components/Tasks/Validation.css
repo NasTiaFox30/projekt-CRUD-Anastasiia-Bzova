@@ -1,0 +1,24 @@
+.field-error {
+  color: var(--accent-danger);
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.form-block input.error,
+.form-block textarea.error,
+.form-block select.error {
+  border-color: var(--accent-danger);
+}
+
+.char-counter {
+  text-align: right;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.char-counter.error {
+  color: var(--accent-danger);
+}
