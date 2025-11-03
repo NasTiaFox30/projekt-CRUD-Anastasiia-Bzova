@@ -80,6 +80,17 @@ export default function Tasks({
     }
   };
 
+  // Validation all fields:
+  const validateAll = (task) => {
+    const errors = {};
+    fieldsToValidate.forEach(field => {
+      const error = validateField(field, task[field]);
+      if (error) { errors[field] = error;}
+    });
+
+    return errors;
+  };
+
 
   return (
     <div className="tasks-container" >
