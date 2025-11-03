@@ -211,7 +211,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                     <button 
                         type="submit" 
                         className="btn-primary auth-btn"
-                        disabled={loading}
+                        disabled={loading || hasRealErrors()}
                     >
                         {loading ? 'Rejestracja...' : 'Zarejestruj się'}
                     </button>
