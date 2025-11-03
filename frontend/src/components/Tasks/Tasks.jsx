@@ -279,7 +279,8 @@ export default function Tasks({
             type="text"
             placeholder="Imię osoby... (max 50 znaków)"
             value={currentTask.assigned_to}
-            onChange={(e) => onTaskChange({ ...currentTask, assigned_to: e.target.value })}
+            onChange={(e) => handleFieldChange('assigned_to', e.target.value)}
+            onBlur={() => handleFieldBlurError('assigned_to')}
           />
         </div>
 
