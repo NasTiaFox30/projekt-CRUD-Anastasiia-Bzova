@@ -163,6 +163,8 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               onChange={handleFieldChange}
               onBlur={() => handleFieldBlurError('login')}
               required
+              minLength="3"
+              maxLength="30"
               placeholder="Wprowadź swój login (3-30 znaków)"
             />
             {renderFieldError('login')}
