@@ -216,28 +216,29 @@ app.post('/tasks', authenticateToken, async (req, res) => {
     if (!title_name || title_name.trim() === '') {
       return res.status(400).json({ error: 'Title of Task - required!' });
     }
-    
+
+    // Prepare data with type conversions
+    const queryParams = [
+      title_name.trim(),
+      description && description.trim() !== '' ? description.trim() : null,
+      deadline_date && deadline_date !== '' ? deadline_date : null,
+      priority || 'medium',
+      status || 'pending',
+      category && category !== '' ? category : null,
+      assigned_to && assigned_to !== '' ? assigned_to : null,
+      estimated_time && estimated_time !== '' ? parseInt(estimated_time) : null,
+      notes && notes.trim() !== '' ? notes.trim() : null,
+      req.user.userId
+    ];
+
     const result = await pool.query(
       `INSERT INTO tasks
         (title_name, description, deadline_date, priority, status,
          category, assigned_to, estimated_time, notes, user_id)
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
        RETURNING *`,
-      [
-        title_name.trim(),
-        description?.trim(),
-        deadline_date,
-        priority,
-        status,
-        category,
-        assigned_to,
-        estimated_time,
-        notes?.trim(),
-        req.user.userId
-      ]
+      queryParams
     );
-    
-    console.log('Success! Task created by user:', req.user.userId);
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating task:', error);
@@ -265,6 +266,21 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
     if (!title_name || title_name.trim() === '') {
       return res.status(400).json({ error: 'Title of Task - required!' });
     }
+
+    // Prepare data with type conversions
+    const queryParams = [
+      title_name.trim(),
+      description && description.trim() !== '' ? description.trim() : null,
+      deadline_date && deadline_date !== '' ? deadline_date : null,
+      priority || 'medium',
+      status || 'pending',
+      category && category !== '' ? category : null,
+      assigned_to && assigned_to !== '' ? assigned_to : null,
+      estimated_time && estimated_time !== '' ? parseInt(estimated_time) : null,
+      notes && notes.trim() !== '' ? notes.trim() : null,
+      id,
+      req.user.userId
+    ];
     
     const result = await pool.query(
       `UPDATE tasks
@@ -280,19 +296,7 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
            update_date = CURRENT_TIMESTAMP
        WHERE id = $10 AND user_id = $11
        RETURNING *`,
-      [
-        title_name.trim(),
-        description?.trim(),
-        deadline_date,
-        priority,
-        status,
-        category,
-        assigned_to,
-        estimated_time,
-        notes?.trim(),
-        id,
-        req.user.userId
-      ]
+      queryParams
     );
     
     if (result.rows.length === 0) {
