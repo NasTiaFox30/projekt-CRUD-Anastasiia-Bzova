@@ -241,6 +241,7 @@ export default function Tasks({
               maxLength="30"
               className={getFieldClassName('category')}
             />
+            {renderFieldError('category')}
           </div>
         </div>
 
