@@ -183,6 +183,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             onBlur={() => handleFieldBlurError('password')}
                             required
                             minLength="6"
+                            maxLength="50"
                             placeholder="Wprowadź hasło (minimum 6 znaków)"
                         />
                     </div>
