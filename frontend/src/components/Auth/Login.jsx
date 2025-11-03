@@ -155,7 +155,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label>Login:</label>
+            <label>Login: *</label>
             <input
               type="text"
               name="login"
@@ -167,7 +167,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
           </div>
           
           <div className="form-group">
-            <label>Hasło:</label>
+            <label>Hasło: *</label>
             <input
               type="password"
               name="password"
