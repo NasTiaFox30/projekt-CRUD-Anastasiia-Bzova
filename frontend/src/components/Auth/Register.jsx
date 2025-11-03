@@ -19,6 +19,12 @@ export default function Register({ onRegister, onSwitchToLogin }) {
     const [validationErrors, setValidationErrors] = useState({});
     const [touchedFields, setTouchedFields] = useState({});
 
+    // Email validation function
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+
     // Validation rules:
     const validateField = (name, value) => {
         switch (name) {
