@@ -281,6 +281,7 @@ export default function Tasks({
             value={currentTask.assigned_to}
             onChange={(e) => handleFieldChange('assigned_to', e.target.value)}
             onBlur={() => handleFieldBlurError('assigned_to')}
+            maxLength="50"
           />
         </div>
 
