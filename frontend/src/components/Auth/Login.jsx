@@ -161,6 +161,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               name="login"
               value={formData.login}
               onChange={handleFieldChange}
+              onBlur={() => handleFieldBlurError('login')}
               required
               placeholder="Wprowadź swój login (3-30 znaków)"
             />
@@ -174,6 +175,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
               name="password"
               value={formData.password}
               onChange={handleFieldChange}
+              onBlur={() => handleFieldBlurError('password')}
               required
               placeholder="Wprowadź swoje hasło"
             />
