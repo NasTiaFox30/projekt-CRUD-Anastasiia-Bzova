@@ -102,7 +102,7 @@ export default function Tasks({
           <label>Nazwa: *</label>
           <input
             type="text"
-            placeholder="Wprowadź nazwę zadania"
+            placeholder="Wprowadź nazwę zadania (3-50 znaków)"
             value={currentTask.title_name}
             onChange={(e) => onTaskChange({ ...currentTask, title_name: e.target.value })}
             required
