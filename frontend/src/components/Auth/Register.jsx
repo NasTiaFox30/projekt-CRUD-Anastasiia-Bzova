@@ -165,7 +165,8 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             type="text"
                             name="login"
                             value={formData.login}
-                            onChange={handleChange}
+                            onChange={handleFieldChange}
+                            onBlur={() => handleFieldBlurError('login')}
                             required
                             minLength="3"
                             placeholder="Wprowadź login (minimum 3 znaki)"
