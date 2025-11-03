@@ -236,7 +236,8 @@ export default function Tasks({
               type="text"
               placeholder="np.: Praca, Nauka... (max 30 znaków)"
               value={currentTask.category}
-              onChange={(e) => onTaskChange({ ...currentTask, category: e.target.value })}
+              onChange={(e) => handleFieldChange('category', e.target.value)}
+              onBlur={() => handleFieldBlurError('category')}
             />
           </div>
         </div>
