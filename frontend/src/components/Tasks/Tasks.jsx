@@ -312,6 +312,7 @@ export default function Tasks({
               value={currentTask.notes}
               onChange={(e) => handleFieldChange('notes', e.target.value)}
               onBlur={() => handleFieldBlurError('notes')}
+              maxLength="200"
             />
             {renderFieldError('notes')}
           </div>
