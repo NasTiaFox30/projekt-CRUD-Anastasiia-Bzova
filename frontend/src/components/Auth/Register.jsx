@@ -171,6 +171,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             minLength="3"
                             placeholder="Wprowadź login (3-30 znaków)"
                             maxLength="30"
+                            className={getFieldClassName('login')}
                         />
                     </div>
                     
