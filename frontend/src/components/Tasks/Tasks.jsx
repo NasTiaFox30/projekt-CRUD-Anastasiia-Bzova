@@ -16,6 +16,9 @@ export default function Tasks({
   const [validationErrors, setValidationErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
 
+  const fieldsToValidate = ['title_name', 'description', 'deadline_date', 'estimated_time', 'category', 'assigned_to', 'notes'];
+
+
   return (
     <div className="tasks-container" >
       {/* Formularz zadania */}
