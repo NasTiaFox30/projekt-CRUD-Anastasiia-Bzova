@@ -173,6 +173,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             maxLength="30"
                             className={getFieldClassName('login')}
                         />
+                        {renderFieldError('login')}
                     </div>
                     
                     <div className="form-group">
@@ -189,6 +190,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             placeholder="Wprowadź hasło (minimum 6 znaków)"
                             className={getFieldClassName('password')}
                         />
+                        {renderFieldError('password')}
                     </div>
                     
                     <div className="form-group">
@@ -203,6 +205,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             placeholder="Powtórz hasło"
                             className={getFieldClassName('confirmPassword')}
                         />
+                        {renderFieldError('confirmPassword')}
                     </div>
                     
                     <button 
