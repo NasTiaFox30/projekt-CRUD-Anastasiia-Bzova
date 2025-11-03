@@ -20,7 +20,20 @@ export default function Tasks({
 
   // Validation fileds rules:
   const validateField = (name, value) => {
-    
+    switch (name) {
+      case 'title_name':
+        if (!value || value.trim() === '') {
+          return 'Nazwa zadania jest wymagana';
+        } else if (value.length < 3) {
+          return 'Nazwa musi mieć co najmniej 3 znaki';
+        } else if (value.length > 50) {
+          return 'Nazwa nie może przekraczać 50 znaków';
+        }
+        return null;
+      
+      default:
+        return null;
+    }
   };
 
 
