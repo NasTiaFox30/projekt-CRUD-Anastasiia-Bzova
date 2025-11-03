@@ -169,7 +169,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             onBlur={() => handleFieldBlurError('login')}
                             required
                             minLength="3"
-                            placeholder="Wprowadź login (minimum 3 znaki)"
+                            placeholder="Wprowadź login (3-30 znaków)"
                         />
                     </div>
                     
