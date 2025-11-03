@@ -238,6 +238,7 @@ export default function Tasks({
               value={currentTask.category}
               onChange={(e) => handleFieldChange('category', e.target.value)}
               onBlur={() => handleFieldBlurError('category')}
+              maxLength="30"
             />
           </div>
         </div>
