@@ -132,7 +132,7 @@ export default function Tasks({
             <label>Kategoria:</label>
             <input
               type="text"
-              placeholder="np.: Praca, Nauka..."
+              placeholder="np.: Praca, Nauka... (max 30 znaków)"
               value={currentTask.category}
               onChange={(e) => onTaskChange({ ...currentTask, category: e.target.value })}
             />
