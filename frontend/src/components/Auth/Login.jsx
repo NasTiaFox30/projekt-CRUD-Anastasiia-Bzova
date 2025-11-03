@@ -127,22 +127,23 @@ export default function Login({ onLogin, onSwitchToRegister }) {
       //Clear validation
       setError('');
 
-    try {
-      const response = await axios.post(`${API_URL}/login`, formData);
-      const { token, user } = response.data;
-      
-      // Zapisujemy token w localStorage
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      
-      // Ustawiamy nagłówek dla przyszłych żądań
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      onLogin(user);
-    } catch (error) {
-      setError(error.response?.data?.error || 'Błąd logowania');
-    } finally {
-      setLoading(false);
+      try {
+        const response = await axios.post(`${API_URL}/login`, formData);
+        const { token, user } = response.data;
+
+        // Zapisujemy token w localStorage
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(user));
+        
+        // Ustawiamy nagłówek dla przyszłych żądań
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        
+        onLogin(user);
+      } catch (error) {
+        setError(error.response?.data?.error || 'Błąd logowania');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
