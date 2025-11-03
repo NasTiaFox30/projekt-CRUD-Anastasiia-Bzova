@@ -320,7 +320,7 @@ export default function Tasks({
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="btn-primary">
+          <button type="submit" className="btn-primary" disabled={hasRealErrors()}>
             {editingId ? 'Zapisz' : 'Utwórz'}
           </button>
           {editingId && (
