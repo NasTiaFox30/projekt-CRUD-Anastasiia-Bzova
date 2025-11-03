@@ -312,6 +312,7 @@ export default function Tasks({
               value={currentTask.notes}
               onChange={(e) => onTaskChange({ ...currentTask, notes: e.target.value })}
             />
+            {renderFieldError('notes')}
           </div>
         </div>
 
