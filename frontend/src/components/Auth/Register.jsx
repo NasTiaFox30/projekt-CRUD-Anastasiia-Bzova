@@ -25,7 +25,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
         return emailRegex.test(email);
     };
 
-    // Validation rules:
+    // Validation fileds rules:
     const validateField = (name, value) => {
         switch (name) {
             case 'login':
