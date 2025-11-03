@@ -32,7 +32,23 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                 }
                 return null;
                 
-            
+            case 'password':
+                if (!value || value.trim() === '') {
+                    return 'Hasło jest wymagane';
+                } else if (value.length < 6) {
+                    return 'Hasło musi mieć co najmniej 6 znaków';
+                } else if (value.length > 50) {
+                    return 'Hasło nie może przekraczać 50 znaków';
+                }
+                return null;
+                
+            case 'confirmPassword':
+                if (!value || value.trim() === '') {
+                    return 'Potwierdzenie hasła jest wymagane';
+                } else if (value !== formData.password) {
+                    return 'Hasła nie są zgodne';
+                }
+                return null;
                 
             default:
                 return null;
