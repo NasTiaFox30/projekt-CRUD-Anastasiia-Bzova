@@ -187,6 +187,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             minLength="6"
                             maxLength="50"
                             placeholder="Wprowadź hasło (minimum 6 znaków)"
+                            className={getFieldClassName('password')}
                         />
                     </div>
                     
