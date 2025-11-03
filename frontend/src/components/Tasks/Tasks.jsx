@@ -191,7 +191,7 @@ export default function Tasks({
             <label>Notatki:</label>
             <input
               type="text"
-              placeholder="Dodatkowe uwagi"
+              placeholder="Dodatkowe uwagi (max 200 znaków)"
               value={currentTask.notes}
               onChange={(e) => onTaskChange({ ...currentTask, notes: e.target.value })}
             />
