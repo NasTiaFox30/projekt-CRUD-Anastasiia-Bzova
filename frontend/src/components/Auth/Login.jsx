@@ -51,6 +51,20 @@ export default function Login({ onLogin, onSwitchToRegister }) {
     }));
     
     setError('');
+
+    // Real-time validation (touched)
+    if (touchedFields[name]) {
+      const error = validateField(name, value);
+      setValidationErrors(prev => {
+        const newErrors = { ...prev };
+        if (error) {
+          newErrors[name] = error;
+        } else {
+          delete newErrors[name];
+        }
+        return newErrors;
+      });
+    }
   };
 
   const handleSubmit = async (e) => {
