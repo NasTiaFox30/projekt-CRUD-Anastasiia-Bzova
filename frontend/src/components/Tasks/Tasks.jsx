@@ -251,6 +251,7 @@ export default function Tasks({
             <select
               value={currentTask.status}
               onChange={(e) => handleFieldChange('status', e.target.value)}
+              required
             >
               <option value="pending">⏳ Oczekuje</option>
               <option value="in-progress">🔄 W toku</option>
