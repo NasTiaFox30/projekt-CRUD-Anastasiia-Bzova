@@ -247,7 +247,7 @@ export default function Tasks({
 
         <div className="form-row">
           <div className="form-block">
-            <label>Status: </label>
+            <label>Status: *</label>
             <select
               value={currentTask.status}
               onChange={(e) => onTaskChange({ ...currentTask, status: e.target.value })}
@@ -259,7 +259,7 @@ export default function Tasks({
           </div>
 
           <div className="form-block">
-            <label>Priorytet: </label>
+            <label>Priorytet: *</label>
             <select
               value={currentTask.priority}
               onChange={(e) => onTaskChange({ ...currentTask, priority: e.target.value })}
