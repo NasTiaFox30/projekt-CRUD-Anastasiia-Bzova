@@ -169,7 +169,7 @@ export default function Tasks({
           <label>Przypisane do:</label>
           <input
             type="text"
-            placeholder="Imię osoby..."
+            placeholder="Imię osoby... (max 50 znaków)"
             value={currentTask.assigned_to}
             onChange={(e) => onTaskChange({ ...currentTask, assigned_to: e.target.value })}
           />
