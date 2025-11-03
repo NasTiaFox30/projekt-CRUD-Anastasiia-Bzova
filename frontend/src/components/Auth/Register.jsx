@@ -201,6 +201,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                             onBlur={() => handleFieldBlurError('confirmPassword')}
                             required
                             placeholder="Powtórz hasło"
+                            className={getFieldClassName('confirmPassword')}
                         />
                     </div>
                     
