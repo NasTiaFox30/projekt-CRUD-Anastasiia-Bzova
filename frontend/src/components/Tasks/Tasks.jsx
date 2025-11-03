@@ -210,6 +210,9 @@ export default function Tasks({
             rows="3"
             maxLength="500"
           />
+          <div className="char-counter">
+            {currentTask.description?.length || 0}/500
+          </div>
         </div>
 
         <div className="form-row">
