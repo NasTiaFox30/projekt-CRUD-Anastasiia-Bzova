@@ -227,6 +227,7 @@ export default function Tasks({
               onBlur={() => handleFieldBlurError('deadline_date')}
               min={new Date().toISOString().split('T')[0]}
             />
+            {renderFieldError('deadline_date')}
           </div>
           <div className="form-block">
             <label>Kategoria:</label>
