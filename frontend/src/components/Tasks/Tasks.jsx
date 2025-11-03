@@ -190,7 +190,8 @@ export default function Tasks({
             type="text"
             placeholder="Wprowadź nazwę zadania (3-50 znaków)"
             value={currentTask.title_name}
-            onChange={(e) => onTaskChange({ ...currentTask, title_name: e.target.value })}
+            onChange={(e) => handleFieldChange('title_name', e.target.value)}
+            onBlur={() => handleFieldBlurError('title_name')}
             required
           />
         </div>
