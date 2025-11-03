@@ -158,7 +158,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                 <h2>Rejestracja</h2>
                 {error && <div className="error-message">{error}</div>}
                 
-                <form onSubmit={handleSubmit} className="auth-form">
+                <form onSubmit={handleSubmit} className="auth-form" noValidate>
                     <div className="form-group">
                         <label>Login:</label>
                         <input
