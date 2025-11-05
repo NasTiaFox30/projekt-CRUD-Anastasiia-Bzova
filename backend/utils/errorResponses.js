@@ -24,3 +24,12 @@ export const sendForbiddenError = (res, message = "Forbidden") => {
     message
   });
 };
+
+export const sendNotFoundError = (res, message = "Not Found") => {
+  return res.status(404).json({
+    timestamp: new Date().toISOString(),
+    status: 404,
+    error: "Not Found",
+    message
+  });
+};
