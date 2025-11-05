@@ -229,10 +229,18 @@ export default function App() {
         <main>
           {currentView === 'home' && <Home />}
           {currentView === 'login' && (
-            <Login onLogin={handleLogin} onSwitchToRegister={showRegisterView} />
+            <Login 
+              onLogin={handleLogin} 
+              onSwitchToRegister={showRegisterView} 
+              onError={setGlobalError}
+            />
           )}
           {currentView === 'register' && (
-            <Register onRegister={handleLogin} onSwitchToLogin={showLoginView} />
+            <Register 
+              onRegister={handleLogin} 
+              onSwitchToLogin={showLoginView} 
+              onError={setGlobalError}
+            />
           )}
           {currentView === 'home' && (
             <div className="auth-prompt">
@@ -282,6 +290,7 @@ export default function App() {
             onDeleteTask={deleteTask}
             onEditTask={editTask}
             onResetForm={resetForm}
+            onError={setGlobalError}
           />
         )}
       </main>
