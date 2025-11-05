@@ -13,7 +13,6 @@ export default function Login({ onLogin, onSwitchToRegister, onError }) {
     login: '',
     password: ''
   });
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
