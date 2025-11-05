@@ -106,6 +106,11 @@ export const validateTaskData = (taskData) => {
   return fieldErrors;
 };
 
+export const validateUserData = (userData, isRegistration = false) => {
+  const fieldErrors = [];
+
+  return fieldErrors;
+};
 
 export const validateEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
