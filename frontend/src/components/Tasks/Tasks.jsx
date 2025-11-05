@@ -178,7 +178,7 @@ export default function Tasks({
 
   // Check if there are any errors
   const hasValidationErrors = () => {
-    return Object.values(validationErrors).some(error => error !== null && error !== undefined);
+    return Object.values(validationErrors).some(error => error !== null);
   };
 
   return (
