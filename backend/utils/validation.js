@@ -34,5 +34,20 @@ export const validateTaskData = (taskData) => {
     });
   }
 
+  // deadline_date: not past date
+  if (taskData.deadline_date && taskData.deadline_date !== '') {
+    const deadline = new Date(taskData.deadline_date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (deadline < today) {
+      fieldErrors.push({
+        field: 'deadline_date',
+        code: 'DATE_IN_PAST',
+        message: 'Termin nie może być w przeszłości'
+      });
+    }
+  }
+
   return fieldErrors;
 };
