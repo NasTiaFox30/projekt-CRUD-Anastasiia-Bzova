@@ -107,7 +107,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
     // Field error rendering
     const renderFieldError = (field) => {
         if (validationErrors[field] && touchedFields[field]) {
-        return <div className="field-error">{validationErrors[field]}</div>;
+            return <div className="field-error">{validationErrors[field]}</div>;
         }
         return null;
     };
