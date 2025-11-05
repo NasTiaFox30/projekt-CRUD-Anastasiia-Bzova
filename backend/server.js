@@ -269,6 +269,8 @@ app.post('/tasks', authenticateToken, async (req, res) => {
 app.put('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id || isNaN(parseInt(id))) return sendBadRequestError(res, 'Invalid task ID');
+
     const {
       title_name,
       description,
