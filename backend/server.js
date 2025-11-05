@@ -254,7 +254,7 @@ app.post('/tasks', authenticateToken, async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res, 'Wystąpił błąd podczas tworzenia zadania');
   }
 });
 
