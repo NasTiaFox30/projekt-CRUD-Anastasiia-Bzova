@@ -87,7 +87,7 @@ const authenticateToken = (req, res, next) => {
   if (!token) return sendUnauthorizedError(res, 'No access token provided');
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) { return res.status(403).json({ error: 'Invalid Token' });}
+    if (err) return sendForbiddenError(res, 'Invalid Token');
     req.user = user;
     next();
   });
