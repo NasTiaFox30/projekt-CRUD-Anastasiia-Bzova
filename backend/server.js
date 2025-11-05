@@ -282,6 +282,10 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
       notes
     } = req.body;
 
+    // Task uniqueness check
+    const existingTask = await pool.query('SELECT id FROM Tasks WHERE id = $1 AND user_id = $2', [id, req.user.userId]);
+    if (existingTask.rows.length === 0) return sendNotFoundError(res, 'Task not found');
+
     
     // Prepare data with type conversions
     const queryParams = [
