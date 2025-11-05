@@ -140,8 +140,13 @@ export default function App() {
       fetchTasks();
     } catch (error) {
       console.error('Delete error:', error);
-      if (error.response?.status === 401) { handleLogout();}
-      setError('Nie udało się usunąć zadanie.');
+      if (error.response?.status === 401) { 
+        handleLogout();
+      } else if (error.response?.status === 404) {
+        setGlobalError('Zadanie nie zostało znalezione');
+      } else {
+        setGlobalError('Nie udało się usunąć zadanie.');
+      }
     }
   };
 
