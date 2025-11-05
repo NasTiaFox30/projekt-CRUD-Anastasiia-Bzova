@@ -49,9 +49,6 @@ export default function Login({ onLogin, onSwitchToRegister, onError }) {
       ...prev,
       [name]: value
     }));
-    
-    setError('');
-
     // Real-time validation (touched)
     if (touchedFields[name]) {
       const error = validateField(name, value);
@@ -124,8 +121,6 @@ export default function Login({ onLogin, onSwitchToRegister, onError }) {
     // If no errors:
     if (Object.keys(errors).length === 0) {
       setLoading(true);
-      //Clear validation
-      setError('');
 
       try {
         const response = await axios.post(`${API_URL}/login`, formData);
