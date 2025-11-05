@@ -176,7 +176,7 @@ export default function Tasks({
 
 
   // Check if there are any errors
-  const hasRealErrors = () => {
+  const hasValidationErrors = () => {
     return Object.values(validationErrors).some(error => error !== null && error !== undefined);
   };
 
@@ -322,7 +322,7 @@ export default function Tasks({
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="btn-primary" disabled={hasRealErrors()}>
+          <button type="submit" className="btn-primary" disabled={hasValidationErrors()}>
             {editingId ? 'Zapisz' : 'Utwórz'}
           </button>
           {editingId && (
