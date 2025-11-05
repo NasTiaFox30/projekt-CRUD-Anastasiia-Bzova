@@ -71,10 +71,25 @@ export default function App() {
   };
 
   // Navigation views
-  const showHome = () => setCurrentView('home');
-  const showLoginView = () => setCurrentView('login');
-  const showRegisterView = () => setCurrentView('register');
-  const showTasks = () => setCurrentView('tasks');
+  const showHome = () => {
+    setCurrentView('home');
+    setGlobalError('');
+  };
+
+  const showLoginView = () => {
+    setCurrentView('login');
+    setGlobalError('');
+  };
+
+  const showRegisterView = () => {
+    setCurrentView('register');
+    setGlobalError('');
+  };
+
+  const showTasks = () => {
+    setCurrentView('tasks');
+    setGlobalError('');
+  };
 
 // TASKS CRUD:
   // GET all tasks
