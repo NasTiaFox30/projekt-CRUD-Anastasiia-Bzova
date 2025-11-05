@@ -227,6 +227,9 @@ export default function App() {
         </header>
 
         <main>
+          {/* Global Error Display */}
+          {globalError && (<div className="error-message">{globalError}</div>)}
+
           {currentView === 'home' && <Home />}
           {currentView === 'login' && (
             <Login 
@@ -278,6 +281,12 @@ export default function App() {
       </header>
 
       <main>
+        {/* Global Error Display */}
+        {globalError && (<div className="error-message">{globalError}</div>)}
+
+        {/* Global Error Display */}
+        {globalError && (<div className="error-message">{globalError}</div>)}
+
         {currentView === 'home' && <Home />}
         {currentView === 'tasks' && (
           <Tasks 
