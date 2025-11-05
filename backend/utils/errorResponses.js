@@ -33,3 +33,12 @@ export const sendNotFoundError = (res, message = "Not Found") => {
     message
   });
 };
+
+export const sendConflictError = (res, message) => {
+  return res.status(409).json({
+    timestamp: new Date().toISOString(),
+    status: 409,
+    error: "Conflict",
+    message
+  });
+};
