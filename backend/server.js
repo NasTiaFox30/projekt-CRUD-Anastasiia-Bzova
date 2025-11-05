@@ -238,14 +238,14 @@ app.post('/tasks', authenticateToken, async (req, res) => {
     // Prepare data with type conversions
     const queryParams = [
       title_name.trim(),
-      description && description.trim() !== '' ? description.trim() : null,
-      deadline_date && deadline_date !== '' ? deadline_date : null,
+      description?.trim() || null,
+      deadline_date || null,
       priority || 'medium',
       status || 'pending',
-      category && category !== '' ? category : null,
-      assigned_to && assigned_to !== '' ? assigned_to : null,
-      estimated_time && estimated_time !== '' ? parseInt(estimated_time) : null,
-      notes && notes.trim() !== '' ? notes.trim() : null,
+      category?.trim() || null,
+      assigned_to?.trim() || null,
+      estimated_time ? parseFloat(estimated_time) : null,
+      notes?.trim() || null,
       req.user.userId
     ];
 
@@ -285,14 +285,14 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
     // Prepare data with type conversions
     const queryParams = [
       title_name.trim(),
-      description && description.trim() !== '' ? description.trim() : null,
-      deadline_date && deadline_date !== '' ? deadline_date : null,
+      description?.trim() || null,
+      deadline_date || null,
       priority || 'medium',
       status || 'pending',
-      category && category !== '' ? category : null,
-      assigned_to && assigned_to !== '' ? assigned_to : null,
-      estimated_time && estimated_time !== '' ? parseInt(estimated_time) : null,
-      notes && notes.trim() !== '' ? notes.trim() : null,
+      category?.trim() || null,
+      assigned_to?.trim() || null,
+      estimated_time ? parseInt(estimated_time) : null,
+      notes?.trim() || null,
       id,
       req.user.userId
     ];
