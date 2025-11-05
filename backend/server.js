@@ -100,7 +100,7 @@ const authenticateToken = (req, res, next) => {
 // Registration
 app.post('/register', async (req, res) => {
   try {
-    const { login, password } = req.body;
+    const { login, password, confirmPassword} = req.body;
 
     // Check existing user
     const existingUser = await pool.query('SELECT id FROM Users WHERE login = $1', [login]);
