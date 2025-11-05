@@ -133,6 +133,30 @@ export const validateUserData = (userData, isRegistration = false) => {
     }
   }
   
+  // password validation
+  if (!userData.password || userData.password.trim() === '') {
+    fieldErrors.push({
+      field: 'password',
+      code: 'REQUIRED',
+      message: 'Hasło jest wymagane'
+    });
+  } else {
+    if (userData.password.length < 6) {
+      fieldErrors.push({
+        field: 'password',
+        code: 'TOO_SHORT',
+        message: 'Hasło musi mieć co najmniej 6 znaków'
+      });
+    }
+    if (userData.password.length > 255) {
+      fieldErrors.push({
+        field: 'password',
+        code: 'TOO_LONG',
+        message: 'Hasło jest zbyt długie'
+      });
+    }
+  }
+  
   return fieldErrors;
 };
 
