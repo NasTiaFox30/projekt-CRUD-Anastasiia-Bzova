@@ -108,7 +108,31 @@ export const validateTaskData = (taskData) => {
 
 export const validateUserData = (userData, isRegistration = false) => {
   const fieldErrors = [];
-
+  
+  // login/email validation
+  if (!userData.login || userData.login.trim() === '') {
+    fieldErrors.push({
+      field: 'login',
+      code: 'REQUIRED',
+      message: 'Email jest wymagany'
+    });
+  } else {
+    if (!validateEmail(userData.login)) {
+      fieldErrors.push({
+        field: 'login',
+        code: 'INVALID_EMAIL',
+        message: 'Proszę wprowadzić poprawny adres email'
+      });
+    }
+    if (userData.login.length > 100) {
+      fieldErrors.push({
+        field: 'login',
+        code: 'TOO_LONG',
+        message: 'Email nie może przekraczać 100 znaków'
+      });
+    }
+  }
+  
   return fieldErrors;
 };
 
