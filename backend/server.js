@@ -140,7 +140,7 @@ app.post('/login', async (req, res) => {
     const { login, password } = req.body;
 
     // Validation:
-    if (!login || !password) {return res.status(400).json({ error: 'Login & password - required' });}
+    if (!login || !password) return sendBadRequestError(res, 'Login & password - required');
 
     // Search user (login)
     const result = await pool.query('SELECT * FROM Users WHERE login = $1', [login]);
