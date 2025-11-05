@@ -224,10 +224,6 @@ app.post('/tasks', authenticateToken, async (req, res) => {
       notes
     } = req.body;
 
-    // Required field: title_name
-    if (!title_name || title_name.trim() === '') {
-      return res.status(400).json({ error: 'Title of Task - required!' });
-    }
 
     // Prepare data with type conversions
     const queryParams = [
