@@ -284,9 +284,6 @@ export default function App() {
         {/* Global Error Display */}
         {globalError && (<div className="error-message">{globalError}</div>)}
 
-        {/* Global Error Display */}
-        {globalError && (<div className="error-message">{globalError}</div>)}
-
         {currentView === 'home' && <Home />}
         {currentView === 'tasks' && (
           <Tasks 
