@@ -144,8 +144,7 @@ app.post('/login', async (req, res) => {
 
     // Search user (login)
     const result = await pool.query('SELECT * FROM Users WHERE login = $1', [login]);
-    if (result.rows.length === 0) {return res.status(401).json({ error: 'Wrong login or password' });}
-
+    if (result.rows.length === 0) return sendUnauthorizedError(res, 'Wrong login or password'); 
     const user = result.rows[0];
 
     // Check password
