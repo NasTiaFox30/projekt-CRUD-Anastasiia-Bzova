@@ -149,8 +149,8 @@ export default function Login({ onLogin, onSwitchToRegister }) {
   };
 
   // Check if there are any errors
-  const hasRealErrors = () => {
-      return Object.values(validationErrors).some(error => error !== null && error !== undefined);
+  const hasValidationErrors = () => {
+    return Object.values(validationErrors).some(error => error !== null);
   };
 
   return (
@@ -196,7 +196,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
           <button 
             type="submit" 
             className="btn-primary auth-btn"
-            disabled={loading || hasRealErrors()}
+            disabled={loading || hasValidationErrors()}
           >
             {loading ? 'Logowanie...' : 'Zaloguj'}
           </button>
