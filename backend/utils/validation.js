@@ -94,5 +94,14 @@ export const validateTaskData = (taskData) => {
     });
   }
 
+  // notes: max 200
+  if (taskData.notes && taskData.notes.length > 200) {
+    fieldErrors.push({
+      field: 'notes',
+      code: 'TOO_LONG',
+      message: 'Notatki nie mogą przekraczać 200 znaków'
+    });
+  }
+
   return fieldErrors;
 };
