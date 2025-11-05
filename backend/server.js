@@ -106,6 +106,12 @@ app.post('/register', async (req, res) => {
     const existingUser = await pool.query('SELECT id FROM Users WHERE login = $1', [login]);
     if (existingUser.rows.length > 0) {return sendConflictError(res, 'User with that login already exists' );}
 
+    // Validate user input
+    const validationErrors = validateUserData({ login, password, confirmPassword }, true);
+    if (validationErrors.length > 0) {
+      return sendValidationError(res, validationErrors);
+    }
+
     // Hashing password
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(password, saltRounds);
