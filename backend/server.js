@@ -5,6 +5,9 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+// Validation
+import { validateTaskData, validateUserData } from './utils/validation.js';
+
 // Error responses
 import {
   sendValidationError,
