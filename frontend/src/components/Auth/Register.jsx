@@ -14,7 +14,6 @@ export default function Register({ onRegister, onSwitchToLogin }) {
         password: '',
         confirmPassword: ''
     });
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [validationErrors, setValidationErrors] = useState({});
     const [touchedFields, setTouchedFields] = useState({});
