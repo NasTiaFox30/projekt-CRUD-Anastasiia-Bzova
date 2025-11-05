@@ -67,5 +67,23 @@ export const validateTaskData = (taskData) => {
     }
   }
 
+  // category: 2-30
+  if (taskData.category && taskData.category !== '') {
+    if (taskData.category.length < 2) {
+      fieldErrors.push({
+        field: 'category',
+        code: 'TOO_SHORT',
+        message: 'Kategoria musi mieć co najmniej 2 znaki'
+      });
+    }
+    if (taskData.category.length > 30) {
+      fieldErrors.push({
+        field: 'category',
+        code: 'TOO_LONG',
+        message: 'Kategoria nie może przekraczać 30 znaków'
+      });
+    }
+  }
+
   return fieldErrors;
 };
