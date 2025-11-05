@@ -104,7 +104,7 @@ app.post('/register', async (req, res) => {
 
     // Check existing user
     const existingUser = await pool.query('SELECT id FROM Users WHERE login = $1', [login]);
-    if (existingUser.rows.length > 0) {return res.status(400).json({ error: 'User with that login already exists' });}
+    if (existingUser.rows.length > 0) {return sendConflictError(res, 'User with that login already exists' );}
 
     // Hashing password
     const saltRounds = 10;
