@@ -6,3 +6,12 @@ export const sendBadRequestError = (res, message) => {
     message
   });
 };
+
+export const sendUnauthorizedError = (res, message = "Unauthorized") => {
+  return res.status(401).json({
+    timestamp: new Date().toISOString(),
+    status: 401,
+    error: "Unauthorized",
+    message
+  });
+};
