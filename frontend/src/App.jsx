@@ -79,7 +79,7 @@ export default function App() {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      setError('');
+      setGlobalError('');
       const response = await axios.get(API_URL);
       setTasks(response.data);
     } catch (error) {
@@ -115,7 +115,7 @@ export default function App() {
     if (!window.confirm('Chcesz napewno usunąć zadanie ?')) return;
 
     try {
-      setError('');
+      setGlobalError('');
       await axios.delete(`${API_URL}/${id}`);
       fetchTasks();
     } catch (error) {
@@ -156,7 +156,7 @@ export default function App() {
       notes: ''
     });
     setEditingId(null);
-    setError('');
+    setGlobalError('');
   };
 
   // Change handler Task
