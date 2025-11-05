@@ -140,16 +140,3 @@
   color: var(--text-primary);
   transform: translateY(-2px);
 }
-
-/* Error message */
-.error-message {
-  background: linear-gradient(135deg, var(--accent-danger) 0%, #dc2626 100%);
-  color: white;
-  padding: 16px;
-  border-radius: 12px;
-  margin-bottom: 25px;
-  text-align: center;
-  font-weight: 600;
-  box-shadow: var(--shadow-glowing);
-  border: 1px solid rgba(239, 68, 68, 0.3);
-}

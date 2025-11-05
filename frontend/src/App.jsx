@@ -232,12 +232,9 @@ export default function App() {
       <main>
         {currentView === 'home' && <Home />}
         {currentView === 'tasks' && (
-          <>
-          {error && <div className="error-message">{error}</div>}
           <Tasks 
             tasks={tasks}
             loading={loading}
-            error={error}
             currentTask={currentTask}
             editingId={editingId}
             onTaskChange={handleTaskChange}
@@ -246,7 +243,6 @@ export default function App() {
             onEditTask={editTask}
             onResetForm={resetForm}
           />
-          </>
         )}
       </main>
 

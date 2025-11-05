@@ -5,6 +5,20 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+// Validation
+import { validateTaskData, validateUserData } from './utils/validation.js';
+
+// Error responses
+import {
+  sendValidationError,
+  sendConflictError,
+  sendBadRequestError,
+  sendUnauthorizedError,
+  sendForbiddenError,
+  sendNotFoundError,
+  sendServerError
+} from './utils/errorResponses.js';
+
 dotenv.config();
 
 //initialization of App:
@@ -44,7 +58,7 @@ const pool = new Pool(
     }
 );
 
-// Public endpoint
+// Public endpoints:
 app.get('/', (req, res) => {
   res.json({
     message: 'Witamy w aplikacji - Task manager!',
@@ -65,17 +79,15 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Middleware (cheking JWT)
+// Middleware (checking JWT)
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
 
-  if (!token) {
-    return res.status(401).json({ error: 'No access token provided' });
-  }
+  if (!token) return sendUnauthorizedError(res, 'No access token provided');
 
   jwt.verify(token, JWT_SECRET, (err, user) => {
-    if (err) { return res.status(403).json({ error: 'Invalid Token' });}
+    if (err) return sendForbiddenError(res, 'Invalid Token');
     req.user = user;
     next();
   });
@@ -86,16 +98,17 @@ const authenticateToken = (req, res, next) => {
 // Registration
 app.post('/register', async (req, res) => {
   try {
-    const { login, password } = req.body;
-
-    // Validation:
-    if (!login || !password) {return res.status(400).json({ error: 'Login & password - required' });}
-    if (login.length < 3) {return res.status(400).json({ error: 'Login must contain at least 3 characters' });}
-    if (password.length < 6) {return res.status(400).json({ error: 'Password must contain at least 6 characters' });}
+    const { login, password, confirmPassword} = req.body;
 
     // Check existing user
     const existingUser = await pool.query('SELECT id FROM Users WHERE login = $1', [login]);
-    if (existingUser.rows.length > 0) {return res.status(400).json({ error: 'User with that login already exists' });}
+    if (existingUser.rows.length > 0) {return sendConflictError(res, 'User with that login already exists' );}
+
+    // Validate user input
+    const validationErrors = validateUserData({ login, password, confirmPassword }, true);
+    if (validationErrors.length > 0) {
+      return sendValidationError(res, validationErrors);
+    }
 
     // Hashing password
     const saltRounds = 10;
@@ -117,7 +130,7 @@ app.post('/register', async (req, res) => {
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Server Error' });
+    return sendServerError(res);
   }
 });
 
@@ -127,17 +140,16 @@ app.post('/login', async (req, res) => {
     const { login, password } = req.body;
 
     // Validation:
-    if (!login || !password) {return res.status(400).json({ error: 'Login & password - required' });}
+    if (!login || !password) return sendBadRequestError(res, 'Login & password - required');
 
     // Search user (login)
     const result = await pool.query('SELECT * FROM Users WHERE login = $1', [login]);
-    if (result.rows.length === 0) {return res.status(401).json({ error: 'Wrong login or password' });}
-
+    if (result.rows.length === 0) return sendUnauthorizedError(res, 'Wrong login or password'); 
     const user = result.rows[0];
 
     // Check password
     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-    if (!isPasswordValid) {return res.status(401).json({ error: 'Wrong login or password' });}
+    if (!isPasswordValid) return sendUnauthorizedError(res, 'Wrong login or password');
 
     // Generation JWT 
     const token = jwt.sign(
@@ -161,7 +173,7 @@ app.post('/login', async (req, res) => {
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ error: 'Server Error' });
+    return sendServerError(res);
   }
 });
 
@@ -175,7 +187,7 @@ app.get('/tasks', authenticateToken, async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetch data', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res);
   }
 });
 
@@ -184,16 +196,16 @@ app.get('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`> GET task by ID: ${id} for user: ${req.user.userId}`);
+    if (!id || isNaN(parseInt(id))) return sendBadRequestError(res, 'Invalid task ID');
+
     const result = await pool.query('SELECT * FROM Tasks WHERE ID = $1 AND user_id = $2', [id, req.user.userId]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found!' });
-    }
+    if (result.rows.length === 0) return sendNotFoundError(res, 'Task not found');
 
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error fetch data', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res);
   }
 });
 
@@ -201,6 +213,9 @@ app.get('/tasks/:id', authenticateToken, async (req, res) => {
 //POST /tasks     (add new task)
 app.post('/tasks', authenticateToken, async (req, res) => {
   try {
+    const validationErrors = validateTaskData(req.body);
+    if (validationErrors.length > 0) return sendValidationError(res, validationErrors);
+
     const {
       title_name,
       description,
@@ -213,21 +228,26 @@ app.post('/tasks', authenticateToken, async (req, res) => {
       notes
     } = req.body;
 
-    if (!title_name || title_name.trim() === '') {
-      return res.status(400).json({ error: 'Title of Task - required!' });
+    // Task uniqueness check
+    const existingTask = await pool.query(
+      'SELECT id FROM Tasks WHERE title_name = $1 AND user_id = $2',
+      [title_name.trim(), req.user.userId]
+    );
+    if (existingTask.rows.length > 0) {
+      return sendConflictError(res, 'Zadanie z taką nazwą już istnieje');
     }
 
     // Prepare data with type conversions
     const queryParams = [
       title_name.trim(),
-      description && description.trim() !== '' ? description.trim() : null,
-      deadline_date && deadline_date !== '' ? deadline_date : null,
+      description?.trim() || null,
+      deadline_date || null,
       priority || 'medium',
       status || 'pending',
-      category && category !== '' ? category : null,
-      assigned_to && assigned_to !== '' ? assigned_to : null,
-      estimated_time && estimated_time !== '' ? parseInt(estimated_time) : null,
-      notes && notes.trim() !== '' ? notes.trim() : null,
+      category?.trim() || null,
+      assigned_to?.trim() || null,
+      estimated_time ? parseFloat(estimated_time) : null,
+      notes?.trim() || null,
       req.user.userId
     ];
 
@@ -242,7 +262,7 @@ app.post('/tasks', authenticateToken, async (req, res) => {
     res.status(201).json(result.rows[0]);
   } catch (error) {
     console.error('Error creating task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res, 'Wystąpił błąd podczas tworzenia zadania');
   }
 });
 
@@ -251,6 +271,11 @@ app.post('/tasks', authenticateToken, async (req, res) => {
 app.put('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id || isNaN(parseInt(id))) return sendBadRequestError(res, 'Invalid task ID');
+
+    const validationErrors = validateTaskData(req.body);
+    if (validationErrors.length > 0) return sendValidationError(res, validationErrors);
+
     const {
       title_name,
       description,
@@ -263,21 +288,27 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
       notes
     } = req.body;
 
-    if (!title_name || title_name.trim() === '') {
-      return res.status(400).json({ error: 'Title of Task - required!' });
-    }
+    // Task uniqueness check
+    const existingTask = await pool.query('SELECT id FROM Tasks WHERE id = $1 AND user_id = $2', [id, req.user.userId]);
+    if (existingTask.rows.length === 0) return sendNotFoundError(res, 'Task not found');
 
+    const duplicateTask = await pool.query(
+      'SELECT id FROM Tasks WHERE title_name = $1 AND user_id = $2 AND id != $3',
+      [title_name.trim(), req.user.userId, id]
+    );
+    if (duplicateTask.rows.length > 0) return sendConflictError(res, 'Another task with this title already exists');
+    
     // Prepare data with type conversions
     const queryParams = [
       title_name.trim(),
-      description && description.trim() !== '' ? description.trim() : null,
-      deadline_date && deadline_date !== '' ? deadline_date : null,
+      description?.trim() || null,
+      deadline_date || null,
       priority || 'medium',
       status || 'pending',
-      category && category !== '' ? category : null,
-      assigned_to && assigned_to !== '' ? assigned_to : null,
-      estimated_time && estimated_time !== '' ? parseInt(estimated_time) : null,
-      notes && notes.trim() !== '' ? notes.trim() : null,
+      category?.trim() || null,
+      assigned_to?.trim() || null,
+      estimated_time ? parseInt(estimated_time) : null,
+      notes?.trim() || null,
       id,
       req.user.userId
     ];
@@ -299,15 +330,13 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
       queryParams
     );
     
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found' });
-    }
+    if (result.rows.length === 0) return sendNotFoundError(res, 'Task not found');
 
     console.log('Success! Task updated by user:', req.user.userId);
     res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error('Error updating task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res);
   }
 });
 
@@ -317,17 +346,17 @@ app.delete('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`> DELETE Task by ID - ${id} for user: ${req.user.userId}`);
+    if (!id || isNaN(parseInt(id))) return sendBadRequestError(res, 'Invalid task ID');
+
     const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 AND user_id = $2 RETURNING *', [id, req.user.userId]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found' });
-    }
+    if (result.rows.length === 0) return sendNotFoundError(res, 'Task not found');
 
     console.log('Success! Task deleted by user:', req.user.userId);
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res);
   }
 });
 
