@@ -213,6 +213,9 @@ app.get('/tasks/:id', authenticateToken, async (req, res) => {
 //POST /tasks     (add new task)
 app.post('/tasks', authenticateToken, async (req, res) => {
   try {
+    const validationErrors = validateTaskData(req.body);
+    if (validationErrors.length > 0) return sendValidationError(res, validationErrors);
+
     const {
       title_name,
       description,
@@ -269,6 +272,9 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     if (!id || isNaN(parseInt(id))) return sendBadRequestError(res, 'Invalid task ID');
+
+    const validationErrors = validateTaskData(req.body);
+    if (validationErrors.length > 0) return sendValidationError(res, validationErrors);
 
     const {
       title_name,
