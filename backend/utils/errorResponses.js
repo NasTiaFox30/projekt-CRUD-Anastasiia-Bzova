@@ -42,3 +42,13 @@ export const sendConflictError = (res, message) => {
     message
   });
 };
+
+export const sendValidationError = (res, fieldErrors) => {
+  return res.status(422).json({
+    timestamp: new Date().toISOString(),
+    status: 422,
+    error: "Unprocessable Entity",
+    message: "Validation failed",
+    fieldErrors
+  });
+};
