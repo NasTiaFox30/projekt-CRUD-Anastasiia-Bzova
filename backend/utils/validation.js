@@ -85,5 +85,14 @@ export const validateTaskData = (taskData) => {
     }
   }
 
+  // assigned_to: max 50
+  if (taskData.assigned_to && taskData.assigned_to.length > 50) {
+    fieldErrors.push({
+      field: 'assigned_to',
+      code: 'TOO_LONG',
+      message: 'Nazwa osoby nie może przekraczać 100 znaków'
+    });
+  }
+
   return fieldErrors;
 };
