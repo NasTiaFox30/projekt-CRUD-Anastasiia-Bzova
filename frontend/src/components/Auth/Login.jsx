@@ -8,7 +8,7 @@ const API_URL = import.meta.env.VITE_API_URL
   ? import.meta.env.VITE_API_URL
   : 'http://localhost:3001';
 
-export default function Login({ onLogin, onSwitchToRegister }) {
+export default function Login({ onLogin, onSwitchToRegister, onError }) {
   const [formData, setFormData] = useState({
     login: '',
     password: ''
