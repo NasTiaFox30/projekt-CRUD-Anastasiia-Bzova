@@ -2,13 +2,13 @@
 -- Creating table of "Tasks"
 CREATE TABLE IF NOT EXISTS Tasks (
     ID SERIAL PRIMARY KEY,
-    title_name VARCHAR(150) NOT NULL,
+    title_name VARCHAR(50) NOT NULL,
     description TEXT,
     deadline_date DATE,
     status VARCHAR(50) CHECK (status IN ('pending', 'in-progress', 'completed')),
     priority VARCHAR(50) CHECK (priority IN ('low', 'medium', 'high')),
-    category VARCHAR(100),
-    assigned_to VARCHAR(100),
+    category VARCHAR(30),
+    assigned_to VARCHAR(50),
     estimated_time INTEGER,
     notes TEXT,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
