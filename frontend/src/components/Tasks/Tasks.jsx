@@ -12,7 +12,8 @@ export default function Tasks({
   onSaveTask,
   onDeleteTask,
   onEditTask,
-  onResetForm 
+  onResetForm,
+  onError
 }) {
   const [validationErrors, setValidationErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
