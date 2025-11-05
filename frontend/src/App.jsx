@@ -110,8 +110,23 @@ export default function App() {
       fetchTasks();
     } catch (error) {
       console.error('Save error:', error);
-      if (error.response?.status === 401) { handleLogout();}
-      setError(error.response?.data?.error || 'Nie zapisano dane.');
+      if (error.response?.status === 401) { 
+        handleLogout();
+      } else if (error.response?.status === 422) {
+        // Validation failed
+        const fieldErrors = error.response.data.fieldErrors;
+        if (fieldErrors && fieldErrors.length > 0) {
+          const firstError = fieldErrors[0]?.message;
+          setGlobalError(firstError);
+        } else {
+          setGlobalError('Błąd walidacji danych');
+        }
+      } else if (error.response?.status === 409) {
+        // Conflict validation
+        setGlobalError(error.response.data.message);
+      } else {
+        setGlobalError(error.response?.data?.message || 'Nie zapisano dane.');
+      }
     }
   };
 
