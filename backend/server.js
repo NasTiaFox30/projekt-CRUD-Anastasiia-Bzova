@@ -131,7 +131,7 @@ app.post('/register', async (req, res) => {
     });
   } catch (error) {
     console.error('Registration error:', error);
-    res.status(500).json({ error: 'Server Error' });
+    return sendServerError(res);
   }
 });
 
@@ -175,7 +175,7 @@ app.post('/login', async (req, res) => {
     });
   } catch (error) {
     console.error('Login error:', error);
-    res.status(500).json({ error: 'Server Error' });
+    return sendServerError(res);
   }
 });
 
@@ -189,7 +189,7 @@ app.get('/tasks', authenticateToken, async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetch data', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res);
   }
 });
 
@@ -207,7 +207,7 @@ app.get('/tasks/:id', authenticateToken, async (req, res) => {
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error fetch data', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res);
   }
 });
 
@@ -322,7 +322,7 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
     res.status(200).json(result.rows[0]);
   } catch (error) {
     console.error('Error updating task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res);
   }
 });
 
@@ -342,7 +342,7 @@ app.delete('/tasks/:id', authenticateToken, async (req, res) => {
     res.status(204).send();
   } catch (error) {
     console.error('Error deleting task:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    return sendServerError(res);
   }
 });
 
