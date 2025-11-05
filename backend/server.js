@@ -199,9 +199,7 @@ app.get('/tasks/:id', authenticateToken, async (req, res) => {
     console.log(`> GET task by ID: ${id} for user: ${req.user.userId}`);
     const result = await pool.query('SELECT * FROM Tasks WHERE ID = $1 AND user_id = $2', [id, req.user.userId]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found!' });
-    }
+    if (result.rows.length === 0) return sendNotFoundError(res, 'Task not found');
 
     res.json(result.rows[0]);
   } catch (error) {
@@ -313,9 +311,7 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
       queryParams
     );
     
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found' });
-    }
+    if (result.rows.length === 0) return sendNotFoundError(res, 'Task not found');
 
     console.log('Success! Task updated by user:', req.user.userId);
     res.status(200).json(result.rows[0]);
@@ -333,9 +329,7 @@ app.delete('/tasks/:id', authenticateToken, async (req, res) => {
     console.log(`> DELETE Task by ID - ${id} for user: ${req.user.userId}`);
     const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 AND user_id = $2 RETURNING *', [id, req.user.userId]);
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'Task not found' });
-    }
+    if (result.rows.length === 0) return sendNotFoundError(res, 'Task not found');
 
     console.log('Success! Task deleted by user:', req.user.userId);
     res.status(204).send();
