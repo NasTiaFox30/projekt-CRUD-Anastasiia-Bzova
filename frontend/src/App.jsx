@@ -56,6 +56,7 @@ export default function App() {
     setUser(userData);
     setIsAuthenticated(true);
     setCurrentView('tasks');
+    setGlobalError('');
   };
 
   const handleLogout = () => {
@@ -66,6 +67,7 @@ export default function App() {
     setIsAuthenticated(false);
     setTasks([]);
     setCurrentView('home');
+    setGlobalError('');
   };
 
   // Navigation views
