@@ -8,12 +8,11 @@ const API_URL = import.meta.env.VITE_API_URL
   ? import.meta.env.VITE_API_URL
   : 'http://localhost:3001';
 
-export default function Login({ onLogin, onSwitchToRegister }) {
+export default function Login({ onLogin, onSwitchToRegister, onError }) {
   const [formData, setFormData] = useState({
     login: '',
     password: ''
   });
-  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [validationErrors, setValidationErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
@@ -50,9 +49,6 @@ export default function Login({ onLogin, onSwitchToRegister }) {
       ...prev,
       [name]: value
     }));
-    
-    setError('');
-
     // Real-time validation (touched)
     if (touchedFields[name]) {
       const error = validateField(name, value);
@@ -125,8 +121,6 @@ export default function Login({ onLogin, onSwitchToRegister }) {
     // If no errors:
     if (Object.keys(errors).length === 0) {
       setLoading(true);
-      //Clear validation
-      setError('');
 
       try {
         const response = await axios.post(`${API_URL}/login`, formData);
@@ -141,7 +135,15 @@ export default function Login({ onLogin, onSwitchToRegister }) {
         
         onLogin(user);
       } catch (error) {
-        setError(error.response?.data?.error || 'Błąd logowania');
+        const errorMsg = error.response?.data?.message || 'Błąd logowania';
+        
+        // Send critical errors to global handler
+        if (error.response?.status === 401 || error.response?.status === 500) {
+          onError(errorMsg);
+        } else {
+          // Network errors
+          onError('Problem z połączeniem. Spróbuj ponownie.');
+        }
       } finally {
         setLoading(false);
       }
@@ -149,15 +151,14 @@ export default function Login({ onLogin, onSwitchToRegister }) {
   };
 
   // Check if there are any errors
-  const hasRealErrors = () => {
-      return Object.values(validationErrors).some(error => error !== null && error !== undefined);
+  const hasValidationErrors = () => {
+    return Object.values(validationErrors).some(error => error !== null);
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h2>Logowanie</h2>
-        {error && <div className="error-message">{error}</div>}
         
         <form onSubmit={handleSubmit} className="auth-form" noValidate>
           <div className="form-group">
@@ -196,7 +197,7 @@ export default function Login({ onLogin, onSwitchToRegister }) {
           <button 
             type="submit" 
             className="btn-primary auth-btn"
-            disabled={loading || hasRealErrors()}
+            disabled={loading || hasValidationErrors()}
           >
             {loading ? 'Logowanie...' : 'Zaloguj'}
           </button>

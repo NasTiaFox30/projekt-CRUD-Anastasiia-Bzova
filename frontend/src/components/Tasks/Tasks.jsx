@@ -12,7 +12,8 @@ export default function Tasks({
   onSaveTask,
   onDeleteTask,
   onEditTask,
-  onResetForm 
+  onResetForm,
+  onError
 }) {
   const [validationErrors, setValidationErrors] = useState({});
   const [touchedFields, setTouchedFields] = useState({});
@@ -96,6 +97,7 @@ export default function Tasks({
     const updatedTask = { ...currentTask, [field]: value };
     onTaskChange(updatedTask);
 
+    // Real-time validation (touched) 
     if (touchedFields[field]) {
       const error = validateField(field, value);
       setValidationErrors(prev => {
@@ -175,8 +177,8 @@ export default function Tasks({
 
 
   // Check if there are any errors
-  const hasRealErrors = () => {
-    return Object.values(validationErrors).some(error => error !== null && error !== undefined);
+  const hasValidationErrors = () => {
+    return Object.values(validationErrors).some(error => error !== null);
   };
 
   return (
@@ -321,7 +323,7 @@ export default function Tasks({
         </div>
 
         <div className="form-actions">
-          <button type="submit" className="btn-primary" disabled={hasRealErrors()}>
+          <button type="submit" className="btn-primary" disabled={hasValidationErrors()}>
             {editingId ? 'Zapisz' : 'Utwórz'}
           </button>
           {editingId && (

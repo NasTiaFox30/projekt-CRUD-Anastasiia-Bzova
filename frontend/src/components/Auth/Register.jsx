@@ -8,13 +8,12 @@ const API_URL = import.meta.env.VITE_API_URL
     ? import.meta.env.VITE_API_URL
     : 'http://localhost:3001';
 
-export default function Register({ onRegister, onSwitchToLogin }) {
+export default function Register({ onRegister, onSwitchToLogin, onError }) {
     const [formData, setFormData] = useState({
         login: '',
         password: '',
         confirmPassword: ''
     });
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [validationErrors, setValidationErrors] = useState({});
     const [touchedFields, setTouchedFields] = useState({});
@@ -68,8 +67,6 @@ export default function Register({ onRegister, onSwitchToLogin }) {
             [name]: value
         }));
         
-        setError('');
-
         // Real-time validation (touched)
         if (touchedFields[name]) {
             const error = validateField(name, value);
@@ -107,7 +104,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
     // Field error rendering
     const renderFieldError = (field) => {
         if (validationErrors[field] && touchedFields[field]) {
-        return <div className="field-error">{validationErrors[field]}</div>;
+            return <div className="field-error">{validationErrors[field]}</div>;
         }
         return null;
     };
@@ -143,8 +140,6 @@ export default function Register({ onRegister, onSwitchToLogin }) {
         // If no errors:
         if (Object.keys(errors).length === 0) {
             setLoading(true);
-            //Clear validation
-            setError('');
 
             try {
                 const response = await axios.post(`${API_URL}/register`, {
@@ -155,7 +150,15 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                 alert('Rejestracja udana! Teraz zaloguj się do systemu.');
                 onSwitchToLogin();
             } catch (error) {
-                setError(error.response?.data?.error || 'Błąd rejestracji');
+                const errorMsg = error.response?.data?.message || 'Błąd rejestracji';
+                
+                // Send critical errors to global handler
+                if (error.response?.status === 500 || error.response?.status >= 400) {
+                    onError(errorMsg);
+                } else {
+                    // Network errors
+                    onError('Problem z połączeniem. Spróbuj ponownie.');
+                }
             } finally {
                 setLoading(false);
             }
@@ -163,15 +166,14 @@ export default function Register({ onRegister, onSwitchToLogin }) {
     };
 
     // Check if there are any errors
-    const hasRealErrors = () => {
-        return Object.values(validationErrors).some(error => error !== null && error !== undefined);
+    const hasValidationErrors = () => {
+        return Object.values(validationErrors).some(error => error !== null);
     };
 
     return (
         <div className="auth-container">
             <div className="auth-card">
                 <h2>Rejestracja</h2>
-                {error && <div className="error-message">{error}</div>}
                 
                 <form onSubmit={handleSubmit} className="auth-form" noValidate>
                     <div className="form-group">
@@ -226,7 +228,7 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                     <button 
                         type="submit" 
                         className="btn-primary auth-btn"
-                        disabled={loading || hasRealErrors()}
+                        disabled={loading || hasValidationErrors()}
                     >
                         {loading ? 'Rejestracja...' : 'Zarejestruj się'}
                     </button>

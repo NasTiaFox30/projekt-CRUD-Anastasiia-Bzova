@@ -32,7 +32,7 @@ export default function App() {
   });
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [globalError, setGlobalError] = useState('');
 
   // Check for existing token (authorization)
   useEffect(() => {
@@ -56,6 +56,7 @@ export default function App() {
     setUser(userData);
     setIsAuthenticated(true);
     setCurrentView('tasks');
+    setGlobalError('');
   };
 
   const handleLogout = () => {
@@ -66,26 +67,45 @@ export default function App() {
     setIsAuthenticated(false);
     setTasks([]);
     setCurrentView('home');
+    setGlobalError('');
   };
 
   // Navigation views
-  const showHome = () => setCurrentView('home');
-  const showLoginView = () => setCurrentView('login');
-  const showRegisterView = () => setCurrentView('register');
-  const showTasks = () => setCurrentView('tasks');
+  const showHome = () => {
+    setCurrentView('home');
+    setGlobalError('');
+  };
+
+  const showLoginView = () => {
+    setCurrentView('login');
+    setGlobalError('');
+  };
+
+  const showRegisterView = () => {
+    setCurrentView('register');
+    setGlobalError('');
+  };
+
+  const showTasks = () => {
+    setCurrentView('tasks');
+    setGlobalError('');
+  };
 
 // TASKS CRUD:
   // GET all tasks
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      setError('');
+      setGlobalError('');
       const response = await axios.get(API_URL);
       setTasks(response.data);
     } catch (error) {
       console.error('Fetch error:', error);
-      if (error.response?.status === 401) { handleLogout(); }
-      setError('Nie udało się załadować dane.');
+      if (error.response?.status === 401) { 
+        handleLogout(); 
+      } else {
+        setGlobalError('Nie udało się załadować dane.');
+      }
     } finally {
       setLoading(false);
     }
@@ -105,8 +125,23 @@ export default function App() {
       fetchTasks();
     } catch (error) {
       console.error('Save error:', error);
-      if (error.response?.status === 401) { handleLogout();}
-      setError(error.response?.data?.error || 'Nie zapisano dane.');
+      if (error.response?.status === 401) { 
+        handleLogout();
+      } else if (error.response?.status === 422) {
+        // Validation failed
+        const fieldErrors = error.response.data.fieldErrors;
+        if (fieldErrors && fieldErrors.length > 0) {
+          const firstError = fieldErrors[0]?.message;
+          setGlobalError(firstError);
+        } else {
+          setGlobalError('Błąd walidacji danych');
+        }
+      } else if (error.response?.status === 409) {
+        // Conflict validation
+        setGlobalError(error.response.data.message);
+      } else {
+        setGlobalError(error.response?.data?.message || 'Nie zapisano dane.');
+      }
     }
   };
 
@@ -115,13 +150,18 @@ export default function App() {
     if (!window.confirm('Chcesz napewno usunąć zadanie ?')) return;
 
     try {
-      setError('');
+      setGlobalError('');
       await axios.delete(`${API_URL}/${id}`);
       fetchTasks();
     } catch (error) {
       console.error('Delete error:', error);
-      if (error.response?.status === 401) { handleLogout();}
-      setError('Nie udało się usunąć zadanie.');
+      if (error.response?.status === 401) { 
+        handleLogout();
+      } else if (error.response?.status === 404) {
+        setGlobalError('Zadanie nie zostało znalezione');
+      } else {
+        setGlobalError('Nie udało się usunąć zadanie.');
+      }
     }
   };
 
@@ -156,7 +196,7 @@ export default function App() {
       notes: ''
     });
     setEditingId(null);
-    setError('');
+    setGlobalError('');
   };
 
   // Change handler Task
@@ -187,12 +227,23 @@ export default function App() {
         </header>
 
         <main>
+          {/* Global Error Display */}
+          {globalError && (<div className="error-message">{globalError}</div>)}
+
           {currentView === 'home' && <Home />}
           {currentView === 'login' && (
-            <Login onLogin={handleLogin} onSwitchToRegister={showRegisterView} />
+            <Login 
+              onLogin={handleLogin} 
+              onSwitchToRegister={showRegisterView} 
+              onError={setGlobalError}
+            />
           )}
           {currentView === 'register' && (
-            <Register onRegister={handleLogin} onSwitchToLogin={showLoginView} />
+            <Register 
+              onRegister={handleLogin} 
+              onSwitchToLogin={showLoginView} 
+              onError={setGlobalError}
+            />
           )}
           {currentView === 'home' && (
             <div className="auth-prompt">
@@ -230,6 +281,9 @@ export default function App() {
       </header>
 
       <main>
+        {/* Global Error Display */}
+        {globalError && (<div className="error-message">{globalError}</div>)}
+
         {currentView === 'home' && <Home />}
         {currentView === 'tasks' && (
           <Tasks 
@@ -242,6 +296,7 @@ export default function App() {
             onDeleteTask={deleteTask}
             onEditTask={editTask}
             onResetForm={resetForm}
+            onError={setGlobalError}
           />
         )}
       </main>
