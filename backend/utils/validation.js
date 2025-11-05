@@ -25,5 +25,14 @@ export const validateTaskData = (taskData) => {
     }
   }
 
+  // description: max 500 
+  if (taskData.description && taskData.description.length > 500) {
+    fieldErrors.push({
+      field: 'description',
+      code: 'TOO_LONG',
+      message: 'Opis nie może przekraczać 500 znaków'
+    });
+  }
+
   return fieldErrors;
 };
