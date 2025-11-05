@@ -5,6 +5,17 @@ import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
+// Error responses
+import {
+  sendValidationError,
+  sendConflictError,
+  sendBadRequestError,
+  sendUnauthorizedError,
+  sendForbiddenError,
+  sendNotFoundError,
+  sendServerError
+} from './utils/errorResponses.js';
+
 dotenv.config();
 
 //initialization of App:
