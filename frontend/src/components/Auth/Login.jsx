@@ -141,6 +141,14 @@ export default function Login({ onLogin, onSwitchToRegister, onError }) {
         onLogin(user);
       } catch (error) {
         const errorMsg = error.response?.data?.message || 'Błąd logowania';
+        
+        // Send critical errors to global handler
+        if (error.response?.status === 401 || error.response?.status === 500) {
+          onError(errorMsg);
+        } else {
+          // Network errors
+          onError('Problem z połączeniem. Spróbuj ponownie.');
+        }
       } finally {
         setLoading(false);
       }
