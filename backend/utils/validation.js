@@ -49,5 +49,23 @@ export const validateTaskData = (taskData) => {
     }
   }
 
+  // estimated_time: 0-1000 hours
+  if (taskData.estimated_time !== undefined && taskData.estimated_time !== null && taskData.estimated_time !== '') {
+    const estimatedTime = parseFloat(taskData.estimated_time);
+    if (isNaN(estimatedTime) || estimatedTime < 0) {
+      fieldErrors.push({
+        field: 'estimated_time',
+        code: 'INVALID_NUMBER',
+        message: 'Czas musi być liczbą większą lub równą 0'
+      });
+    } else if (estimatedTime > 1000) {
+      fieldErrors.push({
+        field: 'estimated_time',
+        code: 'TOO_LARGE',
+        message: 'Czas nie może przekraczać 1000 godzin'
+      });
+    }
+  }
+
   return fieldErrors;
 };
