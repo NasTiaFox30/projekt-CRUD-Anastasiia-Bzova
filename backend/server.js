@@ -224,6 +224,14 @@ app.post('/tasks', authenticateToken, async (req, res) => {
       notes
     } = req.body;
 
+    // Task uniqueness check
+    const existingTask = await pool.query(
+      'SELECT id FROM Tasks WHERE title_name = $1 AND user_id = $2',
+      [title_name.trim(), req.user.userId]
+    );
+    if (existingTask.rows.length > 0) {
+      return sendConflictError(res, 'Zadanie z taką nazwą już istnieje');
+    }
 
     // Prepare data with type conversions
     const queryParams = [
