@@ -151,7 +151,15 @@ export default function Register({ onRegister, onSwitchToLogin }) {
                 alert('Rejestracja udana! Teraz zaloguj się do systemu.');
                 onSwitchToLogin();
             } catch (error) {
-                setError(error.response?.data?.error || 'Błąd rejestracji');
+                const errorMsg = error.response?.data?.message || 'Błąd rejestracji';
+                
+                // Send critical errors to global handler
+                if (error.response?.status === 500 || error.response?.status >= 400) {
+                    onError(errorMsg);
+                } else {
+                    // Network errors
+                    onError('Problem z połączeniem. Spróbuj ponownie.');
+                }
             } finally {
                 setLoading(false);
             }
