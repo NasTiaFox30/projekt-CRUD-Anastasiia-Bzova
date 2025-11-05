@@ -156,7 +156,24 @@ export const validateUserData = (userData, isRegistration = false) => {
       });
     }
   }
-  
+
+  // confirm password for registration
+  if (isRegistration) {
+    if (!userData.confirmPassword || userData.confirmPassword.trim() === '') {
+      fieldErrors.push({
+        field: 'confirmPassword',
+        code: 'REQUIRED',
+        message: 'Potwierdzenie hasła jest wymagane'
+      });
+    } else if (userData.confirmPassword !== userData.password) {
+      fieldErrors.push({
+        field: 'confirmPassword',
+        code: 'PASSWORD_MISMATCH',
+        message: 'Hasła nie są zgodne'
+      });
+    }
+  }
+
   return fieldErrors;
 };
 
