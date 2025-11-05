@@ -149,7 +149,7 @@ app.post('/login', async (req, res) => {
 
     // Check password
     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
-    if (!isPasswordValid) {return res.status(401).json({ error: 'Wrong login or password' });}
+    if (!isPasswordValid) return sendUnauthorizedError(res, 'Wrong login or password');
 
     // Generation JWT 
     const token = jwt.sign(
