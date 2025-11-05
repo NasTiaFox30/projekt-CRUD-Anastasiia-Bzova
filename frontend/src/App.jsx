@@ -32,7 +32,7 @@ export default function App() {
   });
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [globalError, setGlobalError] = useState('');
 
   // Check for existing token (authorization)
   useEffect(() => {
