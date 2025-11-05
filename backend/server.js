@@ -286,6 +286,11 @@ app.put('/tasks/:id', authenticateToken, async (req, res) => {
     const existingTask = await pool.query('SELECT id FROM Tasks WHERE id = $1 AND user_id = $2', [id, req.user.userId]);
     if (existingTask.rows.length === 0) return sendNotFoundError(res, 'Task not found');
 
+    const duplicateTask = await pool.query(
+      'SELECT id FROM Tasks WHERE title_name = $1 AND user_id = $2 AND id != $3',
+      [title_name.trim(), req.user.userId, id]
+    );
+    if (duplicateTask.rows.length > 0) return sendConflictError(res, 'Another task with this title already exists');
     
     // Prepare data with type conversions
     const queryParams = [
