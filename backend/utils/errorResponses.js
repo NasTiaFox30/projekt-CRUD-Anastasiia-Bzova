@@ -15,3 +15,12 @@ export const sendUnauthorizedError = (res, message = "Unauthorized") => {
     message
   });
 };
+
+export const sendForbiddenError = (res, message = "Forbidden") => {
+  return res.status(403).json({
+    timestamp: new Date().toISOString(),
+    status: 403,
+    error: "Forbidden",
+    message
+  });
+};
