@@ -96,6 +96,7 @@ export default function Tasks({
     const updatedTask = { ...currentTask, [field]: value };
     onTaskChange(updatedTask);
 
+    // Real-time validation (touched) 
     if (touchedFields[field]) {
       const error = validateField(field, value);
       setValidationErrors(prev => {
