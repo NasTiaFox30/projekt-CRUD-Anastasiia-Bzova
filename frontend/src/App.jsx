@@ -84,8 +84,11 @@ export default function App() {
       setTasks(response.data);
     } catch (error) {
       console.error('Fetch error:', error);
-      if (error.response?.status === 401) { handleLogout(); }
-      setError('Nie udało się załadować dane.');
+      if (error.response?.status === 401) { 
+        handleLogout(); 
+      } else {
+        setGlobalError('Nie udało się załadować dane.');
+      }
     } finally {
       setLoading(false);
     }
