@@ -237,7 +237,6 @@ export default function App() {
           <Tasks 
             tasks={tasks}
             loading={loading}
-            error={error}
             currentTask={currentTask}
             editingId={editingId}
             onTaskChange={handleTaskChange}
