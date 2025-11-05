@@ -159,7 +159,6 @@ export default function Login({ onLogin, onSwitchToRegister, onError }) {
     <div className="auth-container">
       <div className="auth-card">
         <h2>Logowanie</h2>
-        {error && <div className="error-message">{error}</div>}
         
         <form onSubmit={handleSubmit} className="auth-form" noValidate>
           <div className="form-group">
