@@ -197,6 +197,8 @@ app.get('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`> GET task by ID: ${id} for user: ${req.user.userId}`);
+    if (!id || isNaN(parseInt(id))) return sendBadRequestError(res, 'Invalid task ID');
+
     const result = await pool.query('SELECT * FROM Tasks WHERE ID = $1 AND user_id = $2', [id, req.user.userId]);
 
     if (result.rows.length === 0) return sendNotFoundError(res, 'Task not found');
@@ -328,6 +330,8 @@ app.delete('/tasks/:id', authenticateToken, async (req, res) => {
   try {
     const { id } = req.params;
     console.log(`> DELETE Task by ID - ${id} for user: ${req.user.userId}`);
+    if (!id || isNaN(parseInt(id))) return sendBadRequestError(res, 'Invalid task ID');
+
     const result = await pool.query('DELETE FROM Tasks WHERE ID = $1 AND user_id = $2 RETURNING *', [id, req.user.userId]);
 
     if (result.rows.length === 0) return sendNotFoundError(res, 'Task not found');
