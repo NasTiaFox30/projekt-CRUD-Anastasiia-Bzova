@@ -52,3 +52,12 @@ export const sendValidationError = (res, fieldErrors) => {
     fieldErrors
   });
 };
+
+export const sendServerError = (res, message = "Internal Server Error") => {
+  return res.status(500).json({
+    timestamp: new Date().toISOString(),
+    status: 500,
+    error: "Internal Server Error",
+    message
+  });
+};
