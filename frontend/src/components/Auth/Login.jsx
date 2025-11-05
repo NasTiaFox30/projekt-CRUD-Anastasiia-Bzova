@@ -140,7 +140,7 @@ export default function Login({ onLogin, onSwitchToRegister, onError }) {
         
         onLogin(user);
       } catch (error) {
-        setError(error.response?.data?.error || 'Błąd logowania');
+        const errorMsg = error.response?.data?.message || 'Błąd logowania';
       } finally {
         setLoading(false);
       }
