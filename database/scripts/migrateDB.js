@@ -103,6 +103,12 @@ async function runMigrations(environment, databaseUrl = null) {
       }
     }
 
+    // === Migration process ===
+    // Czytamy plik migracji
+    const migrationPath = join(__dirname, '../migration.sql');
+    console.log(`\n📖 Odczytywanie pliku migracji: ${migrationPath}`);
+    
+
     // === Dodatkowe informacje o tabelach ===
     console.log('\n📈 Szczegółowe informacje:');
     
