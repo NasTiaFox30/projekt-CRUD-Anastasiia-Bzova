@@ -99,6 +99,9 @@ async function cleanupDatabase(environment, databaseUrl = null) {
       return;
     }
 
+    console.log('\n🔄 Rozpoczynanie usuwania tabel...');
+
+    
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
     
