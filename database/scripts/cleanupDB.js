@@ -101,6 +101,11 @@ async function cleanupDatabase(environment, databaseUrl = null) {
 
     console.log('\n🔄 Rozpoczynanie usuwania tabel...');
 
+    // Delete tables (Avoid errors - foreign key)
+    console.log('\n🗑️  Usuwanie tabeli Tasks...');
+
+    console.log('🗑️  Usuwanie tabeli Users...');
+    
     
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
