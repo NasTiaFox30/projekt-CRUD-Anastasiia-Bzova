@@ -28,6 +28,17 @@ async function cleanupDatabase(environment, databaseUrl = null) {
   let pool;
   let config;
   
+  try {
+    
+    
+  } catch (error) {
+    
+  } finally {
+    if (pool) {
+      await pool.end();
+      console.log('=== Połączenie z bazą danych zostało zamknięte ===');
+    }
+  }
 }
 
 async function main() {
