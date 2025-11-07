@@ -127,6 +127,23 @@ async function cleanupDatabase(environment, databaseUrl = null) {
       console.log('ℹ️  Indeksy już usunięte lub nie istnieją');
     }
 
+    // Sprawdzamy wyniki
+    const remainingTables = await pool.query(`
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public'
+      AND table_type = 'BASE TABLE'
+    `);
+    
+    console.log('\n📊 Wyniki czyszczenia:');
+    console.log(`   Pozostało tabel: ${remainingTables.rows.length}`);
+    
+    if (remainingTables.rows.length > 0) {
+      console.log('\n📋 Pozostałe tabele:');
+      remainingTables.rows.forEach(table => {
+        console.log(`   - ${table.table_name}`);
+      });
+    }
     
     console.log(`\n🎉 Baza danych została pomyślnie oczyszczona! Wszystkie tabele zostały usunięte.`);
     console.log(`💡 Teraz możesz uruchomić migracje, aby utworzyć nowe tabele.`);
