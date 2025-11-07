@@ -34,6 +34,20 @@ async function runMigrations(environment, databaseUrl = null) {
   } catch (error) {
     console.error('\n❌ Błąd migracji:', error.message);
     
+    if (error.code === '28P01') {
+      console.log('💡 Sprawdź poprawność hasła/nazwy użytkownika Bazy Danych');
+    } else if (error.code === 'ECONNREFUSED') {
+      console.log('💡 Sprawdź:');
+      console.log('   - Czy PostgreSQL jest uruchomione');
+      console.log('   - Poprawność hosta/portu');
+    } else if (error.code === '3D000') {
+      console.log('💡 Baza danych nie istnieje');
+    } else if (error.code === '42P07') {
+      console.log('💡 Tabela już istnieje. Może powinieneś najpierw wyczyścić bazę danych.');
+    } else if (error.code === '23505') {
+      console.log('💡 Błąd unikalności: możliwe, że dane już istnieją');
+    }
+    
   } finally {
     if (pool) {
       await pool.end();
