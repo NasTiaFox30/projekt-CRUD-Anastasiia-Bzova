@@ -110,6 +110,27 @@ async function runMigrations(environment, databaseUrl = null) {
     
     const migrationSQL = readFileSync(migrationPath, 'utf8');
     
+    console.log('🔄 Wykonywanie migracji...');
+    
+    // Wykonujemy migracje po jednym zapytaniu (avoid errors)
+    const statements = migrationSQL.split(';').filter(stmt => stmt.trim());
+    
+    for (let i = 0; i < statements.length; i++) {
+      const statement = statements[i].trim();
+      if (statement) {
+        try {
+          await pool.query(statement + ';');
+          console.log(`   ✅ Wykonano zapytanie ${i + 1}/${statements.length}`);
+        } catch (error) {
+          // Ignorujemy błędy "tabela już istnieje" dla CREATE TABLE IF NOT EXISTS
+          if (error.code === '42P07' && statement.toUpperCase().includes('CREATE TABLE')) {
+            console.log(`   ℹ️  Tabela już istnieje (zapytanie ${i + 1})`);
+          } else {
+            throw error;
+          }
+        }
+      }
+    }
 
     // === Dodatkowe informacje o tabelach ===
     console.log('\n📈 Szczegółowe informacje:');
