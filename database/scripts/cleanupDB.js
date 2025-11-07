@@ -9,3 +9,5 @@ const __dirname = dirname(__filename);
 
 // ENV
 dotenv.config({ path: join(__dirname, '../../backend/.env') });
+
+const { Pool } = pkg;
