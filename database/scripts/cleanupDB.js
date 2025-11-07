@@ -11,3 +11,9 @@ const __dirname = dirname(__filename);
 dotenv.config({ path: join(__dirname, '../../backend/.env') });
 
 const { Pool } = pkg;
+
+// Readline interface (console input)
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
