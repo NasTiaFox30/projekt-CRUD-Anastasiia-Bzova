@@ -80,6 +80,10 @@ async function runMigrations(environment, databaseUrl = null) {
       AND table_type = 'BASE TABLE'
     `);
 
+    // Actual state of DB:
+    console.log('\n📊 Aktualny stan bazy danych:');
+    console.log(`   Znaleziono tabel: ${existingTables.rows.length}`);
+    
     
   } catch (error) {
     console.error('\n❌ Błąd migracji:', error.message);
