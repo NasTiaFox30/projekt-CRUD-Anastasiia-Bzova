@@ -46,6 +46,11 @@ async function main() {
       ).then(answer => answer.toLowerCase().trim());
     }
 
+    if (!['local', 'remote'].includes(environment)) {
+      console.log('❌ Nieprawidłowy wybór. Dostępne opcje: local, remote');
+      return;
+    }
+
     
   } catch (error) {
     console.error('❌ Błąd:', error.message);
