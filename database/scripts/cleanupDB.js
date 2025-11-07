@@ -24,6 +24,10 @@ function askQuestion(question) {
   });
 }
 
+async function cleanupDatabase(environment, databaseUrl = null) {
+  
+}
+
 async function main() {
   console.log('🗑️ Skrypt pełnego czyszczenia bazy danych');
   console.log('='.repeat(50));
