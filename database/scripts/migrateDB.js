@@ -62,6 +62,12 @@ async function runMigrations(environment, databaseUrl = null) {
       throw new Error(`Nieznane środowisko: ${environment}`);
     }
 
+    // Connect, Check connection & fetch info
+    pool = new Pool(config);
+    console.log('⏳ Sprawdzanie połączenia...');
+    await pool.query('SELECT 1');
+    console.log('✅ Połączenie powiodło się!');
+
     
   } catch (error) {
     console.error('\n❌ Błąd migracji:', error.message);
