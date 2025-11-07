@@ -92,8 +92,16 @@ async function runMigrations(environment, databaseUrl = null) {
       });
       console.log('\n⚠️  Uwaga: Migracje będą dodawać tabele do istniejących');
       
-    }
+      // Pytamy o potwierdzenie
+      const confirmation = await askQuestion(
+        `\n❓ Kontynuować migrację? Istniejące tabele mogą zostać nadpisane (y/N): `
+      );
 
+      if (confirmation.toLowerCase() !== 'y') {
+        console.log('❌ Migracja anulowana');
+        return;
+      }
+    }
 
     // === Dodatkowe informacje o tabelach ===
     console.log('\n📈 Szczegółowe informacje:');
