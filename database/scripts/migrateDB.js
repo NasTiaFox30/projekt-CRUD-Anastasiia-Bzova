@@ -108,6 +108,8 @@ async function runMigrations(environment, databaseUrl = null) {
     const migrationPath = join(__dirname, '../migration.sql');
     console.log(`\n📖 Odczytywanie pliku migracji: ${migrationPath}`);
     
+    const migrationSQL = readFileSync(migrationPath, 'utf8');
+    
 
     // === Dodatkowe informacje o tabelach ===
     console.log('\n📈 Szczegółowe informacje:');
