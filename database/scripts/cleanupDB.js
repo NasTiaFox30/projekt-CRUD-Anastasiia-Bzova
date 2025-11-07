@@ -94,8 +94,11 @@ async function cleanupDatabase(environment, databaseUrl = null) {
       `   Ta operacja usunie WSZYSTKIE tabele i wszystkie dane! (y/N): `
     );
 
+    if (confirmation.toLowerCase() !== 'y') {
+      console.log('❌ Operacja anulowana');
+      return;
+    }
 
-    
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
     
