@@ -84,6 +84,15 @@ async function runMigrations(environment, databaseUrl = null) {
     console.log('\n📊 Aktualny stan bazy danych:');
     console.log(`   Znaleziono tabel: ${existingTables.rows.length}`);
     
+    // Process if tables exist
+    if (existingTables.rows.length > 0) {
+      console.log('\n📋 Istniejące tabele:');
+      existingTables.rows.forEach(table => {
+        console.log(`   - ${table.table_name}`);
+      });
+      
+    }
+
 
     // === Dodatkowe informacje o tabelach ===
     console.log('\n📈 Szczegółowe informacje:');
