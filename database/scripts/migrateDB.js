@@ -84,6 +84,38 @@ async function runMigrations(environment, databaseUrl = null) {
     console.log('\n📊 Aktualny stan bazy danych:');
     console.log(`   Znaleziono tabel: ${existingTables.rows.length}`);
     
+
+    // === Dodatkowe informacje o tabelach ===
+    console.log('\n📈 Szczegółowe informacje:');
+    
+    // Liczba użytkowników
+    try {
+      const usersCount = await pool.query('SELECT COUNT(*) FROM Users');
+      console.log(`   👥 Użytkownicy: ${usersCount.rows[0].count}`);
+    } catch (error) {
+      console.log('   👥 Użytkownicy: tabela nie została utworzona lub jest pusta');
+    }
+
+    // Liczba zadań
+    try {
+      const tasksCount = await pool.query('SELECT COUNT(*) FROM Tasks');
+      console.log(`   📝 Zadania: ${tasksCount.rows[0].count}`);
+    } catch (error) {
+      console.log('   📝 Zadania: tabela nie została utworzona lub jest pusta');
+    }
+
+    // Sprawdzamy indeksy
+    try {
+      const indexes = await pool.query(`
+        SELECT indexname 
+        FROM pg_indexes 
+        WHERE schemaname = 'public'
+        AND tablename IN ('tasks', 'users')
+      `);
+      console.log(`   🔍 Indeksy: ${indexes.rows.length} znaleziono`);
+    } catch (error) {
+      console.log('   🔍 Indeksy: nie udało się sprawdzić');
+    }
     
   } catch (error) {
     console.error('\n❌ Błąd migracji:', error.message);
