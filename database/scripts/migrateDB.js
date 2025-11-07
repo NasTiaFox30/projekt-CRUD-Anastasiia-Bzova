@@ -131,6 +131,22 @@ async function runMigrations(environment, databaseUrl = null) {
         }
       }
     }
+    
+    console.log('✅ Wszystkie migracje zostały pomyślnie wykonane!');
+    
+    // Sprawdzamy utworzone tabele
+    const tables = await pool.query(`
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public'
+      AND table_type = 'BASE TABLE'
+      ORDER BY table_name
+    `);
+    
+    console.log('\n📊 Utworzone tabele:');
+    tables.rows.forEach(table => {
+      console.log(`   ✅ ${table.table_name}`);
+    });
 
     // === Dodatkowe informacje o tabelach ===
     console.log('\n📈 Szczegółowe informacje:');
