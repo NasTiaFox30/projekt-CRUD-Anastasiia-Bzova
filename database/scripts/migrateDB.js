@@ -29,6 +29,17 @@ async function runMigrations(environment, databaseUrl = null) {
   let pool;
   let config;
   
+  try {
+    
+  } catch (error) {
+    console.error('\n❌ Błąd migracji:', error.message);
+    
+  } finally {
+    if (pool) {
+      await pool.end();
+      console.log('\n === Połączenie z bazą danych zamknięte ===');
+    }
+  }
 }
 
 async function main() {
