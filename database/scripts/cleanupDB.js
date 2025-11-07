@@ -20,7 +20,9 @@ const rl = readline.createInterface({
 
 
 async function main() {
- 
+  console.log('🗑️ Skrypt pełnego czyszczenia bazy danych');
+  console.log('='.repeat(50));
+  
 }
 
 main();
