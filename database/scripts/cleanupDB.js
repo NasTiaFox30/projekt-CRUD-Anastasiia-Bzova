@@ -164,7 +164,7 @@ async function cleanupDatabase(environment, databaseUrl = null) {
   } finally {
     if (pool) {
       await pool.end();
-      console.log('=== Połączenie z bazą danych zostało zamknięte ===');
+      console.log('\n === Połączenie z bazą danych zostało zamknięte ===');
     }
   }
 }
