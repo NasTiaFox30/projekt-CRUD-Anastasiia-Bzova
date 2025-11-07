@@ -31,6 +31,13 @@ async function cleanupDatabase(environment, databaseUrl = null) {
   try {
     console.log(`🧹 Przygotowanie do wyczyszczenia bazy danych (${environment})...`);
     
+    if (environment === 'local') {
+    } 
+    else if (environment === 'remote') {
+    }
+    else {
+      throw new Error(`Nieznane środowisko: ${environment}`);
+    }
     
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
