@@ -34,6 +34,16 @@ async function cleanupDatabase(environment, databaseUrl = null) {
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
     
+    if (error.code === '28P01') {
+      console.log('💡 Sprawdź poprawność hasła/loginu do bazy danych');
+    } else if (error.code === 'ECONNREFUSED') {
+      console.log('💡 Sprawdź:');
+      console.log('   - Czy PostgreSQL jest uruchomiony');
+      console.log('   - Poprawność hosta/portu');
+    } else if (error.code === '3D000') {
+      console.log('💡 Baza danych nie istnieje');
+    }
+    
   } finally {
     if (pool) {
       await pool.end();
