@@ -10,7 +10,9 @@
     "cleanup:remote": "node scripts/cleanupDB.js remote",
     "migrate": "node scripts/migrateDB.js",
     "migrate:local": "node scripts/migrateDB.js local",
-    "migrate:remote": "node scripts/migrateDB.js remote"
+    "migrate:remote": "node scripts/migrateDB.js remote",
+    "reset": "npm run cleanup:local && npm run migrate:local",
+    "reset:remote": "npm run cleanup:remote && npm run migrate:remote"
   },
   "keywords": ["database", "postgresql", "scripts"],
   "author": "Anastasiia Bzova",
