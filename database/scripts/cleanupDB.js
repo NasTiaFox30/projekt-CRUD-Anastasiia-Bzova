@@ -39,7 +39,13 @@ async function main() {
         environment = 'remote';
         databaseUrl = args[0];
       }
-    } 
+    } else {
+      // Interactive mode:
+      environment = await askQuestion(
+        'Wybierz środowisko (local/remote): '
+      ).then(answer => answer.toLowerCase().trim());
+    }
+
     
   } catch (error) {
     console.error('❌ Błąd:', error.message);
