@@ -103,6 +103,12 @@ async function cleanupDatabase(environment, databaseUrl = null) {
 
     // Delete tables (Avoid errors - foreign key)
     console.log('\n🗑️  Usuwanie tabeli Tasks...');
+    try {
+      await pool.query('DROP TABLE IF EXISTS Tasks CASCADE');
+      console.log('✅ Tabela Tasks została usunięta');
+    } catch (error) {
+      console.log('❌ Błąd usuwania Tasks:', error.message);
+    }
 
     console.log('🗑️  Usuwanie tabeli Users...');
     
