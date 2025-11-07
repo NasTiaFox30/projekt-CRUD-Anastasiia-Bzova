@@ -115,7 +115,7 @@ export default function App() {
   const saveTask = async (e) => {
     e.preventDefault();
     try {
-      setError('');
+      setGlobalError('');
       if (editingId)
         await axios.put(`${API_URL}/${editingId}`, currentTask);
       else
