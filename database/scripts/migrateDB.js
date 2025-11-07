@@ -68,6 +68,18 @@ async function runMigrations(environment, databaseUrl = null) {
     await pool.query('SELECT 1');
     console.log('✅ Połączenie powiodło się!');
 
+    const dbInfo = await pool.query('SELECT current_database(), current_user');
+    console.log(`📊 Baza danych: ${dbInfo.rows[0].current_database}`);
+    console.log(`👤 Użytkownik: ${dbInfo.rows[0].current_user}`);
+
+    // Check existing tables
+    const existingTables = await pool.query(`
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public'
+      AND table_type = 'BASE TABLE'
+    `);
+
     
   } catch (error) {
     console.error('\n❌ Błąd migracji:', error.message);
