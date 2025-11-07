@@ -31,6 +31,9 @@ async function main() {
   console.log('='.repeat(50));
   
   try {
+    let environment;
+    let databaseUrl = null;
+
 
     console.log('\n' + '='.repeat(50));
     
