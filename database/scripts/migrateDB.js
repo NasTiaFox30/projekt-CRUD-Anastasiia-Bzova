@@ -24,3 +24,12 @@ function askQuestion(question) {
     rl.question(question, resolve);
   });
 }
+
+
+async function main() {
+  console.log('✈️ Skrypt migracji bazy danych');
+  console.log('='.repeat(50));
+
+}
+
+main();
