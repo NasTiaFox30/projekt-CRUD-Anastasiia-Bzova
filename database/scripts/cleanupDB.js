@@ -29,6 +29,7 @@ async function cleanupDatabase(environment, databaseUrl = null) {
   let config;
   
   try {
+    console.log(`🧹 Przygotowanie do wyczyszczenia bazy danych (${environment})...`);
     
     
   } catch (error) {
