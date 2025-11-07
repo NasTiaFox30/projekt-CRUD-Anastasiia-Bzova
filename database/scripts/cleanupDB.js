@@ -68,6 +68,23 @@ async function main() {
       }
     }
 
+    console.log('\n' + '='.repeat(50));
+    
+    if (environment === 'local') {
+      console.log('📍 Wybrano lokalną bazę danych');
+      console.log('   Host: ', process.env.DB_HOST);
+      console.log('   Baza danych: ', process.env.DB_NAME);
+    } else {
+      console.log('🌐 Wybrano zdalną bazę danych');
+      const urlToShow = databaseUrl;
+      if (urlToShow) {
+        const maskedUrl = urlToShow.replace(/\/\/([^:]+):([^@]+)@/, '//***:***@');
+        console.log('   URL:', maskedUrl);
+      }
+    }
+    
+    console.log('='.repeat(50));
+
     
   } catch (error) {
     console.error('❌ Błąd:', error.message);
