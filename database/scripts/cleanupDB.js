@@ -230,6 +230,7 @@ async function main() {
     
     console.log('='.repeat(50));
 
+    await cleanupDatabase(environment, databaseUrl);
     
   } catch (error) {
     console.error('❌ Błąd:', error.message);
