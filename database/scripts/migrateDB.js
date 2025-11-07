@@ -25,6 +25,11 @@ function askQuestion(question) {
   });
 }
 
+async function runMigrations(environment, databaseUrl = null) {
+  let pool;
+  let config;
+  
+}
 
 async function main() {
   console.log('✈️ Skrypt migracji bazy danych');
