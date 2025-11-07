@@ -30,6 +30,38 @@ async function runMigrations(environment, databaseUrl = null) {
   let config;
   
   try {
+    console.log(`🚀 Uruchamianie migracji dla ${environment} bazy danych...`);
+    
+    if (environment === 'local') {
+      config = {
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT
+      };
+      
+      if (!config.password) {
+        throw new Error('Hasło Bazy Danych nie zostało podane w pliku .env (DB_PASSWORD)');
+      }
+    } 
+    else if (environment === 'remote') {
+      // Dla remote używamy przekazanego URL
+      const finalDatabaseUrl = databaseUrl;
+      
+      if (!finalDatabaseUrl) {
+        throw new Error('DATABASE_URL nie zostało podane. Wprowadź je ręcznie');
+      }
+      
+      config = {
+        connectionString: finalDatabaseUrl,
+        ssl: { rejectUnauthorized: false }
+      };
+    }
+    else {
+      throw new Error(`Nieznane środowisko: ${environment}`);
+    }
+
     
   } catch (error) {
     console.error('\n❌ Błąd migracji:', error.message);
