@@ -265,6 +265,8 @@ async function main() {
     }
     
     console.log('='.repeat(50));
+
+    await runMigrations(environment, databaseUrl);
     
   } catch (error) {
     console.error('❌ Błąd:', error.message);
