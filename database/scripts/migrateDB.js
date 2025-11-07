@@ -90,6 +90,7 @@ async function runMigrations(environment, databaseUrl = null) {
       existingTables.rows.forEach(table => {
         console.log(`   - ${table.table_name}`);
       });
+      console.log('\n⚠️  Uwaga: Migracje będą dodawać tabele do istniejących');
       
     }
 
