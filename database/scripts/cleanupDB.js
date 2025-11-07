@@ -32,6 +32,13 @@ async function cleanupDatabase(environment, databaseUrl = null) {
     console.log(`🧹 Przygotowanie do wyczyszczenia bazy danych (${environment})...`);
     
     if (environment === 'local') {
+      config = {
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME,
+        password: process.env.DB_PASSWORD,
+        port: process.env.DB_PORT
+      };
     } 
     else if (environment === 'remote') {
     }
