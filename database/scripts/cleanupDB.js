@@ -32,6 +32,7 @@ async function cleanupDatabase(environment, databaseUrl = null) {
     
     
   } catch (error) {
+    console.error('\n❌ Błąd podczas czyszczenia:', error.message);
     
   } finally {
     if (pool) {
