@@ -89,6 +89,12 @@ async function cleanupDatabase(environment, databaseUrl = null) {
       return;
     }
 
+    const confirmation = await askQuestion(
+      `\n⚠️  CZY NA PEWNO CHCESZ CAŁKOWICIE USUNĄĆ WSZYSTKIE TABELE?\n` +
+      `   Ta operacja usunie WSZYSTKIE tabele i wszystkie dane! (y/N): `
+    );
+
+
     
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
