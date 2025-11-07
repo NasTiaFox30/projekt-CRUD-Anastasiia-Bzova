@@ -62,6 +62,10 @@ async function main() {
         'Wprowadź DATABASE_URL (postgresql://...): '
       );
       
+      if (!databaseUrl.startsWith('postgresql://')) {
+        console.log('❌ Nieprawidłowy format DATABASE_URL');
+        return;
+      }
     }
 
     
