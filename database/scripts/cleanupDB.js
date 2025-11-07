@@ -111,7 +111,13 @@ async function cleanupDatabase(environment, databaseUrl = null) {
     }
 
     console.log('🗑️  Usuwanie tabeli Users...');
-    
+    try {
+      await pool.query('DROP TABLE IF EXISTS Users CASCADE');
+      console.log('✅ Tabela Users została usunięta');
+    } catch (error) {
+      console.log('❌ Błąd usuwania Users:', error.message);
+    }
+
     
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
