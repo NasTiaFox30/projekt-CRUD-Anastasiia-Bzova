@@ -23,6 +23,15 @@ async function main() {
   console.log('🗑️ Skrypt pełnego czyszczenia bazy danych');
   console.log('='.repeat(50));
   
+  try {
+    
+    
+  } catch (error) {
+    console.error('❌ Błąd:', error.message);
+  } finally {
+    rl.close();
+    console.log('\n === Skrypt zakończony ===');
+  }
 }
 
 main();
