@@ -36,6 +36,40 @@ async function main() {
 
     const args = process.argv.slice(2);
     
+    if (args.length > 0) {
+      environment = args[0].toLowerCase();
+      
+      // Jeśli URL został przekazany jako drugi argument lub jako jedyny argument
+      if (args.length > 1 && args[1].startsWith('postgresql://')) {
+        databaseUrl = args[1];
+      } else if (args[0].startsWith('postgresql://')) {
+        environment = 'remote';
+        databaseUrl = args[0];
+      }
+    } else {
+      // Interactive mode:
+      environment = await askQuestion(
+        'Wybierz środowisko (local/remote): '
+      ).then(answer => answer.toLowerCase().trim());
+    }
+
+    if (!['local', 'remote'].includes(environment)) {
+      console.log('❌ Nieprawidłowy wybór. Dostępne opcje: local, remote');
+      return;
+    }
+
+    // Dla remote pytamy o URL, jeśli nie został podany
+    if (environment === 'remote' && !databaseUrl) {
+      databaseUrl = await askQuestion(
+        'Wprowadź DATABASE_URL (postgresql://...): '
+      );
+      
+      if (!databaseUrl.startsWith('postgresql://')) {
+        console.log('❌ Nieprawidłowy format DATABASE_URL');
+        return;
+      }
+    }
+
     console.log('\n' + '='.repeat(50));
     
     if (environment === 'local') {
