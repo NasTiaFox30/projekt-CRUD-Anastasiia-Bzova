@@ -25,6 +25,8 @@ function askQuestion(question) {
 }
 
 async function cleanupDatabase(environment, databaseUrl = null) {
+  let pool;
+  let config;
   
 }
 
