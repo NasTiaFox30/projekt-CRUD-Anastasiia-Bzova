@@ -71,6 +71,14 @@ async function cleanupDatabase(environment, databaseUrl = null) {
     console.log(`📊 Baza danych: ${dbInfo.rows[0].current_database}`);
     console.log(`👤 Użytkownik: ${dbInfo.rows[0].current_user}`);
 
+    // Check existing tables
+    const existingTables = await pool.query(`
+      SELECT table_name 
+      FROM information_schema.tables 
+      WHERE table_schema = 'public'
+      AND table_type = 'BASE TABLE'
+    `);
+
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
     
