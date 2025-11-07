@@ -56,6 +56,14 @@ async function main() {
       return;
     }
 
+    // Dla remote pytamy o URL, jeśli nie został podany
+    if (environment === 'remote' && !databaseUrl) {
+      databaseUrl = await askQuestion(
+        'Wprowadź DATABASE_URL (postgresql://...): '
+      );
+      
+    }
+
     
   } catch (error) {
     console.error('❌ Błąd:', error.message);
