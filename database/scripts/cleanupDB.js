@@ -43,6 +43,11 @@ async function cleanupDatabase(environment, databaseUrl = null) {
     else if (environment === 'remote') {
       // Dla remote używamy przekazanego URL
       const finalDatabaseUrl = databaseUrl;
+      
+      config = {
+        connectionString: finalDatabaseUrl,
+        ssl: { rejectUnauthorized: false }
+      };
     }
     else {
       throw new Error(`Nieznane środowisko: ${environment}`);
