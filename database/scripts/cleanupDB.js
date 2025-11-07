@@ -41,6 +41,8 @@ async function cleanupDatabase(environment, databaseUrl = null) {
       };
     } 
     else if (environment === 'remote') {
+      // Dla remote używamy przekazanego URL
+      const finalDatabaseUrl = databaseUrl;
     }
     else {
       throw new Error(`Nieznane środowisko: ${environment}`);
