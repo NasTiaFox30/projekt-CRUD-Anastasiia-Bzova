@@ -118,6 +118,15 @@ async function cleanupDatabase(environment, databaseUrl = null) {
       console.log('❌ Błąd usuwania Users:', error.message);
     }
 
+    // Usuwamy indeksy, jeśli pozostały
+    console.log('🗑️  Usuwanie indeksów...');
+    try {
+      await pool.query('DROP INDEX IF EXISTS idx_tasks_user_id CASCADE');
+      console.log('✅ Indeksy zostały usunięte');
+    } catch (error) {
+      console.log('ℹ️  Indeksy już usunięte lub nie istnieją');
+    }
+
     
     console.log(`\n🎉 Baza danych została pomyślnie oczyszczona! Wszystkie tabele zostały usunięte.`);
     console.log(`💡 Teraz możesz uruchomić migracje, aby utworzyć nowe tabele.`);
