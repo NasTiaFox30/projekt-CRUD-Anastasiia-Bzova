@@ -39,6 +39,10 @@ async function cleanupDatabase(environment, databaseUrl = null) {
         password: process.env.DB_PASSWORD,
         port: process.env.DB_PORT
       };
+      
+      if (!config.password) {
+        throw new Error('Hasło do bazy danych nie jest ustawione w pliku .env (DB_PASSWORD)');
+      }
     } 
     else if (environment === 'remote') {
       // Dla remote używamy przekazanego URL
