@@ -27,6 +27,19 @@ async function main() {
     let environment;
     let databaseUrl = null;
 
+    const args = process.argv.slice(2);
+    
+    if (args.length > 0) {
+      environment = args[0].toLowerCase();
+      
+      // Jeśli URL został przekazany jako drugi argument lub jako jedyny argument
+      if (args.length > 1 && args[1].startsWith('postgresql://')) {
+        databaseUrl = args[1];
+      } else if (args[0].startsWith('postgresql://')) {
+        environment = 'remote';
+        databaseUrl = args[0];
+      }
+    } 
     
   } catch (error) {
     console.error('❌ Błąd:', error.message);
