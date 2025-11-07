@@ -119,6 +119,9 @@ async function cleanupDatabase(environment, databaseUrl = null) {
     }
 
     
+    console.log(`\n🎉 Baza danych została pomyślnie oczyszczona! Wszystkie tabele zostały usunięte.`);
+    console.log(`💡 Teraz możesz uruchomić migracje, aby utworzyć nowe tabele.`);
+    
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
     
