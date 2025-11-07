@@ -24,7 +24,9 @@ async function main() {
   console.log('='.repeat(50));
   
   try {
-    
+    let environment;
+    let databaseUrl = null;
+
     
   } catch (error) {
     console.error('❌ Błąd:', error.message);
