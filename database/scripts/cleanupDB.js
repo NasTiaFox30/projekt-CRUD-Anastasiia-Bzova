@@ -18,6 +18,11 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+function askQuestion(question) {
+  return new Promise((resolve) => {
+    rl.question(question, resolve);
+  });
+}
 
 async function main() {
   console.log('🗑️ Skrypt pełnego czyszczenia bazy danych');
