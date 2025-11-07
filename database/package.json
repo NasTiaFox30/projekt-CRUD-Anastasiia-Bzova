@@ -8,7 +8,6 @@
     "cleanup": "node scripts/cleanupDB.js",
     "cleanup:local": "node scripts/cleanupDB.js local",
     "cleanup:remote": "node scripts/cleanupDB.js remote",
-    "cleanup:custom": "node scripts/cleanupDB.js custom",
     "migrate": "node scripts/migrateDB.js",
     "reset": "npm run cleanup:local && npm run migrate"
   },
