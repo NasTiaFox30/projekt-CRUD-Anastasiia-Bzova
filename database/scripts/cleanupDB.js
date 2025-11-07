@@ -48,6 +48,10 @@ async function cleanupDatabase(environment, databaseUrl = null) {
       // Dla remote używamy przekazanego URL
       const finalDatabaseUrl = databaseUrl;
       
+      if (!finalDatabaseUrl) {
+        throw new Error('DATABASE_URL nie został podany. Wprowadź go ręcznie');
+      }
+      
       config = {
         connectionString: finalDatabaseUrl,
         ssl: { rejectUnauthorized: false }
