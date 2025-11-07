@@ -34,7 +34,8 @@ async function main() {
     let environment;
     let databaseUrl = null;
 
-
+    const args = process.argv.slice(2);
+    
     console.log('\n' + '='.repeat(50));
     
     if (environment === 'local') {
