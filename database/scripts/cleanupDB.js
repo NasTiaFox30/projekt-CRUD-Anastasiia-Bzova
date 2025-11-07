@@ -66,7 +66,11 @@ async function cleanupDatabase(environment, databaseUrl = null) {
     console.log('⏳ Sprawdzanie połączenia...');
     await pool.query('SELECT 1');
     console.log('✅ Połączenie powiodło się!');
-    
+
+    const dbInfo = await pool.query('SELECT current_database(), current_user');
+    console.log(`📊 Baza danych: ${dbInfo.rows[0].current_database}`);
+    console.log(`👤 Użytkownik: ${dbInfo.rows[0].current_user}`);
+
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
     
