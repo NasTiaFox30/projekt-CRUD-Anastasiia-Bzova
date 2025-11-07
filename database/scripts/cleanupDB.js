@@ -79,6 +79,17 @@ async function cleanupDatabase(environment, databaseUrl = null) {
       AND table_type = 'BASE TABLE'
     `);
 
+    console.log('\n📋 Znalezione tabele w bazie danych:');
+    existingTables.rows.forEach(table => {
+      console.log(`   - ${table.table_name}`);
+    });
+
+    if (existingTables.rows.length === 0) {
+      console.log('ℹ️  W bazie danych nie ma tabel do usunięcia');
+      return;
+    }
+
+    
   } catch (error) {
     console.error('\n❌ Błąd podczas czyszczenia:', error.message);
     
