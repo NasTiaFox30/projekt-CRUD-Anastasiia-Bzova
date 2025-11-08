@@ -6,7 +6,6 @@
     "test:all": "cd backend && npm test",
     "dev:backend": "cd backend && npm run dev",
     "dev:frontend": "cd frontend && npm run dev",
-    "dev:all": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "build:all": "cd frontend && npm run build"
   }
 }
